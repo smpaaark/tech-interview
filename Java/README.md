@@ -63,8 +63,7 @@ GC는 힙 영역에서 사용하지 않는 객체들을 제거하는 작업을 �
 ### GC의 동작 방식
 > 가장 간단한 Serial GC 방식으로 설명한다.   
 
-![GC]()
-
+![GC](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/GC.PNG)
 
 GC는 Minor GC, Major GC로 구분할 수 있다.   
 Minor GC는 young 영역에서, Major GC는 old 영역에서 일어난다고 정의한다.   
