@@ -1,6 +1,7 @@
 # Java
 * [JVM의 구조](#jvm의-구조)
 * [Java의 실행 방식](#java의-실행-방식)
+* [GC에 대한 설명](#gC에-대한-설명)
 
 ## JVM의 구조
 자바 가상 머신의 약자를 따서 줄여 부르는 용어로 JVM의 역할은 자바 애플리케이션을 클래스 로더를 통해 읽어 자바 API와 함께 실행하는 것이다.      
@@ -50,3 +51,44 @@ JVM의 구조는 Class Loader, Execution Engine, Runtime Data Area, JNI, Native 
 
 ### 참고
 * [Backend-Interview-Question](https://github.com/ksundong/backend-interview-question#java)
+
+## GC에 대한 설명
+### GC란 무엇인가
+GC는 힙 영역에서 사용하지 않는 객체들을 제거하는 작업을 총칭한다.
+
+### GC가 필요한 이유는 무엇인가
+자바는 개발자가 메모리를 직접 해제해줄 수 없는 언어이다.   
+따라서 객체를 사용하고 제거하는 기능이 필요하게 된다.   
+
+### GC의 동작 방식
+> 가장 간단한 Serial GC 방식으로 설명한다.   
+
+![GC]()
+
+
+GC는 Minor GC, Major GC로 구분할 수 있다.   
+Minor GC는 young 영역에서, Major GC는 old 영역에서 일어난다고 정의한다.   
+GC를 수행할 때는 GC를 수행하는 스레드 이외의 스레드는 모두 정지한다.   
+* 이를 Stop-the-world라고 한다.
+
+Minor GC
+* Eden 영역이 가득 참에서 부터 시작된다.   
+* Eden 영역에서 참조가 남아있는 객체를 mark하고 survivor 영역으로 복사한다.
+* 그리고 Eden 영역을 비운다.
+* Survivor 영역도 가득차면 같은 방식으로 다른 Survivor 영역에 복사하고 비운다.
+* 이를 반복하다 보면 계속 해서 살아남는 객체는 old 영역으로 이동하게 된다.
+
+Major GC
+* old 영역에서 일어난다.
+* 위와 반대로 삭제되어야 하는 객체를 mark한다.
+* 그리고 지운다.(sweep)
+* 메모리는 단편화 된 상태이므로 이를 한 군데에 모아주는 것을 Compaction이라 하며 compact라고 한다.
+* 그래서 Mark-Sweep-Compact 알고리즘이라고 한다.
+
+### 주의점
+GC 수행시 시스템이 멈추기 때문에 의도치 않은 장애의 원인이 될 수 있다.   
+따라서 이를 위해 힙 영역을 조정하는 것을 GC 튜닝이라고 하고 JVM 메모리는 절대 마음대로 조정해선 안된다.
+
+### 참고
+* [Backend-Interview-Question](https://github.com/ksundong/backend-interview-question#java)
+* [JAVA GC (Garbage Collector)](https://code-factory.tistory.com/48)
