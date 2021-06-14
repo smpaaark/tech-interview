@@ -1,73 +1,52 @@
 # Java
 * [JVM의 구조](#jvm의-구조)
+* [Java의 실행 방식](#java의-실행-방식)
 
 ## JVM의 구조
-JVM은 Java를 **운영체제에 독립적**으로 실행될 수 있도록 해주고 가비지 컬렉터로 **메모리 관리**를 자동으로 해준다.   
+자바 가상 머신의 약자를 따서 줄여 부르는 용어로 JVM의 역할은 자바 애플리케이션을 클래스 로더를 통해 읽어 자바 API와 함께 실행하는 것이다.      
+메모리 관리(GC)을 수행하며 스택기반의 가상머신이다.   
 ![JVM구조](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/JVM%EA%B5%AC%EC%A1%B0.png)
 
-### Class Loader
-.class 파일(바이트코드)들을 JVM 메모리영역(Runtime Data Area)으로 **로딩**시킨다.
+JVM의 구조는 Class Loader, Execution Engine, Runtime Data Area, JNI, Native Method Library로 이루어져 있다.   
+* Class Loader(클래스 로더)
+  * JVM내로 클래스를 로드하고, 링크를 통해 배치하는 작업을 수행하는 모듈
 
-### Runtime Data Area
-Method Area
-* 모든 스레드가 **공유**
-* **JVM이 시작될 때** 생성되는 공간으로 바이트코드가 이 영역에 저장된다.
-* 클래스 정보, 변수 정보, static으로 선언한 변수가 저장된다.   
+* Execution Engine(실행 엔진)
+  * 바이트 코드를 실행시키는 역할
+  * 인터프리터
+    * 바이트 코드를 한줄 씩 실행한다.
+  * JIT 컴파일러
+    * 인터프리터 효율을 높이기 위한 컴파일러로 인터프리터가 반복되는 코드를 발견하면 JIT 컴파일러가 반복되는 코드를 네이티브 코드로 바꿔준다.   
+    * 그 다음부터 인터프리터는 네이티브 코드로 컴파일된 코드를 바로 사용합니다.   
+  * GC(Garbage Collector)
+    * 가비지 컬렉터로 힙 영역에서 사용되지 않는 객체들을 제거하는 작업을 의미한다.
 
-Heap
-* 모든 스레드가 **공유**
-* **동적으로 생성된 객체**가 저장되는 영역이다.
-* new 연산을 통해 동적으로 생성된 인스턴스 변수가 저장된다.
-  * 클래스의 객체, 배열 등이 있다.
-* 생성된 인스턴스 변수는 해당 객체가 소멸되기 전이나 **가비지 컬렉터**가 정리하기 전까지는 이 영역에 남아있다.   
-  * 쉽게 소멸되는 데이터가 아니다.
-* **GC의 대상**이 되는 공간이다.
-  * 효율적인 GC를 위해서 5가지 영역으로 나뉜다.   
+* Runtime Data Area
+  * 프로그램 실행 중에 사용되는 다양한 영역이다.
+  * PC Register
+    * Thread가 시작될 때 생성되며 현재 수행 중인 JVM 명령의 주소를 갖고 있습니다.
+  * Stack Area
+    * 지역 변수, 파라미터 등이 생성되는 영역. 
+    * 실제 객체는 Heap에 할당되고 해당 레퍼런스만 Stack에 저장된다.
+  * Heap Area
+    * 동적으로 생성된 오브젝트와 배열이 저장되는 곳으로 GC의 대상 영역이다.
+  * Method Area
+    * 클래스 멤버 변수, 메소드 정보, Type 정보, Constant Pool, static, final 변수 등이 생성된다.
 
-Stack
-* **스레드마다 1개씩 생성**된다.
-* 지역변수나 메서드의 매개변수, 임시적으로 사용되는 변수, 메서드의 정보가 저장되는 영역이다.   
-* 해당 **메서드의 호출이 종료되면 이 안에 선언된 변수들은 사라진다.**  
-* 즉 금방 사용되고 사용이 끝나는 데이터가 저장되는 영역이다.
-
-> Stack, Heap 예시
-```
-Person p = new Person("박성민", 31);
-```
-변수 p는 Stack에 저장된다.   
-동적으로 생성한 Person 객체 자체는 Heap 영역에 저장된다.   
-Reference Type의 진짜 메모리는 Heap 영역에 저장된다.   
-* 그 메모리의 주소를 참조하는 변수는 Stack 영역에 저장된다.
-
-PC Register
-* **스레드마다 1개씩 생성**된다.
-* 운영체제를 공부할때 나오는 CPU Register 내부의 Program Counter랑은 다른 것이다.
-* 현재 수행중인 JVM의 명령어 주소를 저장하는 공간이다.
-  * 즉 **스레드가 어떤 부분을 명령어로 수행할지를 저장하는 공간**이다. 
-
-Native Method Stack
-* **스레드마다 1개씩 생성**된다.
-* **Java가 아닌 다른 언어**로 작성된 코드를 위한 공간이다.
-  * 즉, JNI(Java Native Interface)를 통해 호출하는 C/C++등의 코드를 수행하기 위한 공간이다.
-  * 바이트코드가 아닌 실제 실행할 수 있는 **기계어**로 작성된 프로그램을 실행시키는 영역이다.
-
-### Execution Engine
-Runtime Data Area에 로딩된 **클래스파일을 해석**해준다.   
-로드된 클래스파일의 바이트코드를 **실행**하는 엔진이다.   
-바이트코드를 실행시키기 위해서는 컴퓨터가 이해할 수 있는 **기계어로 바꾸는 작업**이 필요하다.      
-* Interpreter
-  * 명령어를 **한줄 한줄 해석**하면서 실행한다.
-* JIT Complier (Just In Time Complier)
-  * Interpreter의 단점을 해결하기 위한 방법으로, **런타임시간에 한꺼번에 변경**하여 실행한다.
-
-이제 이렇게 기계어로 해석된 것들이 Runtime Data Area에 배치되어 스레드 동기화나 가비지 컬렉션을 수행하게 된다.
-
-### Native Method Interface(JNI)
-JVM에 의해 실행되는 코드 중 네이티브로 실행하는 것이 있다면 해당 **네이티브 코드를 호출**하거나 호출 될 수 있도록 만든 일종의 프레임워크이다.
-
-### Native Method Libraries
-네이티브 메소드 실행에 필요한 **라이브러리**
+* JNI(Java Native Interface)
+  * C, C++, 어셈블리어로 작성된 함수를 사용할 수 있는 방법을 제공해준다.
+* Native Method Library
+  * C, C++로 작성된 라이브러리이다.
 
 ### 참고
-* [자바 메모리 구조 뿌시기 [ JVM이란? ]](https://youtu.be/AWXPnMDZ9I0)
+* [Backend-Interview-Question](https://github.com/ksundong/backend-interview-question#java)
 * [JVM 구조](https://goodgid.github.io/Java-JVM/)
+
+## Java의 실행 방식
+* 자바 컴파일러(javac)가 자바 소스코드(.java)를 읽어 자바 바이트코드(.class)로 변환시킨다.
+* Class Loader를 통해 class 파일들을 JVM으로 로딩한다.
+* 로딩된 class 파일들은 Execution Engine을 통해 해석된다.
+* 해석된 바이트코드는 Runtime Data Areas 에 배치되어 실질적인 수행이 이루어진다.
+
+### 참고
+* [Backend-Interview-Question](https://github.com/ksundong/backend-interview-question#java)
