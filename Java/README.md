@@ -3,7 +3,7 @@
 
 ## JVM의 구조
 JVM은 Java를 **운영체제에 독립적**으로 실행될 수 있도록 해주고 가비지 컬렉터로 **메모리 관리**를 자동으로 해준다.   
-![JVM구조]()
+![JVM구조](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/JVM%EA%B5%AC%EC%A1%B0.png)
 
 ### Class Loader
 .class 파일(바이트코드)들을 JVM 메모리영역(Runtime Data Area)으로 **로딩**시킨다.
