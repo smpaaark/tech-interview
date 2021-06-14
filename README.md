@@ -1,4 +1,4 @@
-## tech-interview
+## Tech-Interview
 기술 면접 대비 저장소
 
 ## 목차
