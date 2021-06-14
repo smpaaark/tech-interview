@@ -2,6 +2,7 @@
 * [JVM의 구조](#jvm의-구조)
 * [Java의 실행 방식](#java의-실행-방식)
 * [GC에 대한 설명](#gC에-대한-설명)
+* [컬렉션 프레임워크](#컬렉션-프레임워크)
 
 ## JVM의 구조
 자바 가상 머신의 약자를 따서 줄여 부르는 용어로 JVM의 역할은 자바 애플리케이션을 클래스 로더를 통해 읽어 자바 API와 함께 실행하는 것이다.      
@@ -91,3 +92,10 @@ GC 수행시 시스템이 멈추기 때문에 의도치 않은 장애의 원인�
 ### 참고
 * [Backend-Interview-Question](https://github.com/ksundong/backend-interview-question#java)
 * [JAVA GC (Garbage Collector)](https://code-factory.tistory.com/48)
+
+## 컬렉션 프레임워크
+널리 알려져 있는 자료구조를 바탕으로 객체, 데이터들을 효율적으로 관리 할 수 있는 자료구조들이 있는 라이브러리를 컬렉션 프레임워크라고 한다.   
+List, Set은 Collection 인터페이스을 상속받지만, Map 인터페이스는 구조상의 차이라 별도로 정의한다.   
+
+### 참고
+* [Backend-Interview-Question](https://github.com/ksundong/backend-interview-question#java)
