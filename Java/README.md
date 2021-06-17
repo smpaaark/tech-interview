@@ -1,6 +1,6 @@
 # Java
 * [JDK, JRE, JVM 설명](#jdk-jre-jvm-설명)
-* [public static void main (String args []) 설명](#public-static-void-main-(String-args-[]))
+* [public static void main (String args []) 설명](#public-static-void-main-string-args--설명)
 
 ## JDK, JRE, JVM 설명
 ### JDK
