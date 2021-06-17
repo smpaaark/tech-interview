@@ -1,5 +1,5 @@
 # Java
-* [JDK, JRE, JVM 설명](#jDK,-JRE,-JVM-설명)
+* [JDK, JRE, JVM 설명](#jdk-jre-jvm-설명)
 * [public static void main (String args []) 설명](#public-static-void-main-(String-args-[]))
 
 ## JDK, JRE, JVM 설명
