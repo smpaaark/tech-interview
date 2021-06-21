@@ -8,18 +8,18 @@
 * [final variable이란?](#final-variable이란)
 * [transient variable이란?](#transient-variable이란)
 * [volatile variable이란?](#volatile-variable이란)
-* [스레드의 동기화(synchronization)란?]()
-* [동기화 블록 코드 예시]()
-* [static method를 동기화할 수 있나요?]()
-* [Thread 클래스의 join 메서드에 대한 설명]()
-* [Thread 클래스의 주요 메서드]()
-* [교착상태(deadlock)이란?]()
-* [스레드 간 통신을 위해 중요한 Method는?]()
-* [wait 메서드]()
-* [notify 메서드]()
-* [notifyAll 메서드]()
-* [wait 및 notify 메서드로 동기화된 프로그램 코드 예시]()
-* [Java에서 synchronization의 대안책은 무엇입니까?]()
+* [스레드의 동기화(synchronization)란?](#스레드의-동기화synchronization란)
+* [동기화 블록 코드 예시](#동기화-블록-코드-예시)
+* [static method를 동기화할 수 있나요?](#static-method를-동기화할-수-있나요)
+* [Thread 클래스의 join 메서드에 대한 설명](#thread-클래스의-join-메서드에-대한-설명)
+* [Thread 클래스의 주요 메서드](#thread-클래스의-주요-메서드)
+* [교착상태(deadlock)이란?](#교착상태deadlock이란)
+* [스레드 간 통신을 위해 중요한 Method는?](#스레드-간-통신을-위해-중요한-method는)
+* [wait 메서드](#wait-메서드)
+* [notify 메서드](#notify-메서드)
+* [notifyAll 메서드](#notifyall-메서드)
+* [wait 및 notify 메서드로 동기화된 프로그램 코드 예시](#wait-및-notify-메서드로-동기화된-프로그램-코드-예시)
+* [Java에서 synchronization의 대안책은 무엇입니까?](#java에서-synchronization의-대안책은-무엇입니까)
 
 ## primitive variable와 reference variable의 차이점
 primitive variable은 기본 리터럴 값을 갖는 변수이다.
@@ -185,7 +185,7 @@ notify를 받을때까지 대기한다.
 [맨위로](#java)
 
 ## notify 메서드
-Object 클래스에 정의되어 있다.
+Object 클래스에 정의되어 있다.   
 다른 wait 중인 스레드에게 notify 한다.
 
 [맨위로](#java)
