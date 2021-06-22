@@ -22,7 +22,7 @@
 * [Java에서 synchronization의 대안책은 무엇입니까?](#java에서-synchronization의-대안책은-무엇입니까)
 
 ## primitive variable와 reference variable의 차이점
-(keyword: 리터럴, Object)
+> (keyword: 리터럴, Object)
 primitive variable은 **기본 리터럴** 값을 갖는 변수이다.   
 reference variable은 **Object에 대한 참조** 값을 갖는 변수이다.
 
