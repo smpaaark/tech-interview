@@ -1,12 +1,12 @@
 # Mybatis
-* [mybatis란?]()
-* [mybatis의 장점]()
-* [mybatis의 단점]()
-* [mybatis를 사용하면 좋은 경우]()
-* [Mybatis와 Hibernate의 차이점]()
-* [#{}와 ${}의 차이점]()
-* [엔티티 클래스의 필드명이 테이블의 필드명과 다른 경우 어떻게 해야될까?]()
-* [Dao 인터페이스의 작동 원리]()
+* [mybatis란?](#mybatis란)
+* [mybatis의 장점](#mybatis의-장점)
+* [mybatis의 단점](#mybatis의-단점)
+* [mybatis를 사용하면 좋은 경우](#mybatis를-사용하면-좋은-경우)
+* [Mybatis와 Hibernate의 차이점](#mybatis와-hibernate의-차이점)
+* [#{}와 ${}의 차이점](#와-의-차이점)
+* [엔티티 클래스의 필드명이 테이블의 필드명과 다른 경우 어떻게 해야될까?](#엔티티-클래스의-필드명이-테이블의-필드명과-다른-경우-어떻게-해야될까)
+* [Dao 인터페이스의 작동 원리](#dao-인터페이스의-작동-원리)
 * [Dao 인터페이스의 메소드는 매개 변수가 다른 경우 메소드를 오버로드 할 수 있나요?]()
 * [Mybatis는 어떻게 페이징됩니까?]()
 * [페이징 플러그인의 원리]()
@@ -101,12 +101,12 @@ mybatisrk ${}를 처리할 때 ${}를 변수 값으로 바꾼다.
 Mapper 인터페이스는 구현 클래스가 없다.   
 인터페이스 메서드가 호출되면 인터페이스 이름 + 메서드 이름을 연결한 문자열이 key값으로 사용된다.   
 이를 통해 MappedStatement를 찾을 수 있다.      
-ex) com.mybatis3.mappers.StudentDto.findStudentById
-Mybatis에서 각 <select>, <insert>, <update>, <delete> 태그는 MappedStatement Object로 파싱된다.
+ex) com.mybatis3.mappers.StudentDto.findStudentById   
+Mybatis에서 각 \<select>, \<insert>, \<update>, \<delete> 태그는 MappedStatement Object로 파싱된다.   
 
 Dao 인터페이스의 작동 원리는 JDK 동적 프록시이다.   
 Mybatis 런타임은 JDK 동적 프록시를 사용하여 Dao 인터페이스에 대한 프록시 객체를 생성한다.   
-프록시는 인터페이스 메소드를 캐치해서 MappedStatement가 나타내는 sql을 실행한 후 SQL 실행 결과를 반환한다.
+프록시는 인터페이스 메소드를 캐치해서 MappedStatement가 나타내는 sql을 실행한 후 SQL 실행 결과를 반환한다.   
 
 [맨위로](#Mybatis)
 
@@ -197,9 +197,9 @@ Mybatis는 9개의 동적 SQL 태그를 제공한다.
 [맨위로](#Mybatis)
 
 ## XML 맵핑 파일에서 일반적인 select, insert, update, delete 태그 외에 어떤 다른 태그가 있습니까?
-<resultMap>, <parameterMap>, <sql>, <include>, <selectKey> 및 동적 SQL에 대한 9개의 태그가 있다.   
+\<resultMap>, \<parameterMap>, \<sql>, \<include>, \<selectKey> 및 동적 SQL에 대한 9개의 태그가 있다.   
 trim, where, set, foreach, if, choose, otherwhise, bind 등등   
-여기서 <sql>은 sql fragment 태그, sql fragment는 <include> 태그를 통해 도입되고, <selectKey>는 자동 증가를 지원하지 않는 기본 키에 대한 정책 태그를 생성한다.   
+여기서 \<sql>은 sql fragment 태그, sql fragment는 \<include> 태그를 통해 도입되고, \<selectKey>는 자동 증가를 지원하지 않는 기본 키에 대한 정책 태그를 생성한다.   
 
 [맨위로](#Mybatis)
 
