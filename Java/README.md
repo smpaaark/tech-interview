@@ -9,7 +9,7 @@
 * [transient variable이란?](#transient-variable이란)
 * [volatile variable이란?](#volatile-variable이란)
 * [스레드의 동기화(synchronization)란?](#스레드의-동기화synchronization란)
-* [동기화 블록 코드 예시](#동기화-블록-코드-예시)
+* [동기화 코드 예시](#동기화-코드-예시)
 * [static method를 동기화할 수 있나요?](#static-method를-동기화할-수-있나요)
 * [Thread 클래스의 join 메서드에 대한 설명](#thread-클래스의-join-메서드에-대한-설명)
 * [Thread 클래스의 주요 메서드](#thread-클래스의-주요-메서드)
@@ -22,113 +22,230 @@
 * [Java에서 synchronization의 대안책은 무엇입니까?](#java에서-synchronization의-대안책은-무엇입니까)
 
 ## primitive variable와 reference variable의 차이점
-> (keyword: 리터럴, Object)
+Java에는 기본적으로 primitive variable과 reference variable이라는 2가지 변수가 있습니다.   
+primitive variable은 리터럴 값이고, reference variable은 객체에 대한 참조 값입니다.   
+```
+class MyClass {
+	//primitive variable 선언 - var1,
+	//var1은 리터럴 값 123
+	int var1 = 123; 
 
-primitive variable은 **기본 리터럴** 값을 갖는 변수이다.   
-reference variable은 **Object에 대한 참조** 값을 갖는 변수이다.
+	//Reference variable 선언 - var2,
+	//var2은 'Box' 타입의 객체에 대한 참조값
+	Box var2 = new Box(); 
+}
+```
 
 [맨위로](#java)
 
 ## Java 변수의 종류
-기본적으로는 primitive variable과 reference variable 두 종류가 있다.   
-primitive variable은 기본 리터럴 값을 갖는 변수이며,   
-reference variable은 Object에 대한 참조 값을 갖는 변수이다.   
+Java에는 기본적으로 primitive variable과 reference variable이라는 2가지 변수가 있습니다.   
+primitive variable은 리터럴 값이고, reference variable은 객체에 대한 참조 값입니다.   
 
-변수의 scope에 따라서는 class variable, instance variable, local variable, Block variable 4가지로 나뉜다.      
-scope은 클래스 내에 선언된 위치에 따라 결정된다.
+scope에 따라 변수는 class variable, instance variable, local variable, block variable 4가지로 나뉠수 있습니다.         
+변수의 scope은 Java 클래스 내에서 선언된 위치에 따라 결정됩니다.   
 * Class variable(static field)
-  * 메서드나 블럭 외부에 선언된다.
-  * 'static' 키워드로 선언된다.
-  * 가장 긴 scope을 갖는다.
-  * 클래스가 로드될때 생성되며 클래스가 JVM에 로드된 상태로 유지되는 한 계속 메모리에 남아 있다.
-* Instance variable(Non-static fields)
-  * 메서드나 블럭 외부에 선언된다.
-  * 'static' 키워드 없이 선언된다.
-  * 두번째로 긴 scope을 갖는다.
-  * 새 클래스 인스턴스가 생성될 때 생성되며 인스턴스가 메모리에서 제거 될 때까지 유지된다.
+  * 클래스 본문 내에서 메서드 또는 블록 외부에 선언된 변수이며, 'static' 키워드로 선언됩니다.   
+  * scope이 가장 깁니다.
+    * 클래스가 로드될 때 생성되며 클래스가 JVM에서 로드된 상태로 유지되는 한 메모리에 유지됩니다.   
+
+* Instance variable(Non-static field)
+  * 클래스 본문 내에서 메서드 또는 블록 외부에 선언된 변수이며, 'static' 키워드 없이 선언된 변수입니다.   
+  * scope이 두번째로 깁니다.   
+    * 새 클래스 인스턴스가 생성될 때 생성되며, 인스턴스가 메모리에서 제거될 때까지 유지됩니다.   
 * Local variable
-  * 메서드 본문 내에 선언된 변수이다.
-  * 선언된 메서드가 스택에 남아있는 동안만 유지된다.
+  * 메서드 본문 내에 선언된 변수입니다.
+  * 선언된 메서드가 스택에 남아 있는 동안만 유지됩니다.   
 * Block variable
-  * init block이나 for문과 같은 block 내에서 선언된 변수이다.
-  * block을 실행하는 동안에만 살고 가장 짧게 삶아있는 변수이다.
+  * init block 또는 for 루프와 같은 block 내에서 선언된 변수입니다.   
+  * block을 실행하는 동안에만 유지되며 scope이 가장 짧은 변수입니다.   
 
-[맨위로](#java)
-## static variable이란?
-메서드 또는 블록 외부에 선언되며 'static' 키워드로 선언된 변수이다.   
-scope이 가장 길다.    
-클래스가 로드될때 생성되며 클래스가 JVM에 로드된 상태로 유지되는 한 계속 메모리에 남아 있다.      
-전역 변수이다.   
-모든 객체간에 공유된다.   
-클래스의 모든 인스턴스는 동일한 static variable을 공유한다.   
-객체 인스턴스를 만들지 않고 클래스를 사용하여 접근할 수 있다.   
-Heap에 저장된다.   
-
-[맨위로](#java)
-## instance variable이란?
-메서드나 블럭 외부에 선언된다.   
-'static' 키워드 없이 선언된다.   
-두번째로 긴 scope을 갖는다.   
-새 클래스 인스턴스가 생성될 때 생성되며 인스턴스가 메모리에서 제거 될 때까지 유지된다.   
-Heap에 저장된다.   
-
-[맨위로](#java)
-## local variable이란?
-메서드 본문 내에 선언된 변수이다.   
-선언된 메서드가 스택에 남아있는 동안만 유지된다.   
-Stack에 저장된다.
-
-## block variable이란?
-init block이나 for문과 같은 block 내에서 선언된 변수이다.   
-block을 실행하는 동안에만 살고 가장 짧게 삶아있는 변수이다.    
-Stack에 저장된다.
-
-[맨위로](#java)
-## final variable이란?
-'final' 키워드로 선언된 변수이다.   
-값을 변경할 수 없다.   
-primitive variable일 경우 리터럴을 변경할 수 없다.   
-reference variable이고 객체가 할당된 경우 다른 객체를 참조하도록 변경할 수 없다.   
-참조하는 객체의 속성은 변경될 수 있다.   
-
-[맨위로](#java)
-## transient variable이란?
-객체가 직렬화 될때 값이 직렬화되지 않는 변수이다.   
-객체가 역직렬화 될때 primitive variable은 기본 값으로 초기화된다.   
-객체가 역직렬화 될때 reference variable은 null로 초기화된다.   
-
-[맨위로](#java)
-## volatile variable이란?
-여러 스레드가 객체의 변수에 접근하는 멀티 스레드 프로그래밍과 관련이 있다.   
-'volatile' 키워드로 선언된다.
-일반적인 변수의 경우 스레드는 변수의 값을 메모리에 캐싱하고 필요할 때 이 캐시된 값을 참조한다.   
-다른 스레드에 의해 이 변수가 업데이트 되더라도 이 스레드에 반영되지 않는다.   
-
-volatile variable은 JVM에 이 변수가 여러 스레드에 의해 업데이트되고 항상 메인 메모리에서 값을 가져오도록 지시한다.   
-따라서 모든 스레드가 접근할때 메인 메모리에서 volatile variable 값을 얻고 스레드의 메모리에 값을 캐싱하지 않는다.   
-
-[맨위로](#java)
-
-## 스레드의 동기화(synchronization)란?
-스레드는 병렬로 실행되기 때문에 스레드1과 스레드2가 동시에 데이터를 수정하면 동기화 문제가 발생한다.   
-여러 스레드가 동일한 메서드를 실행하지 못하도록 방지하는 방법은 해당 메서드에 synchronized 키워드를 사용하는 것이다.   
-메서드에 synchronized 키워드가 붙어 있다면 현재 이 메서드를 실행중인 스레드가 없을 경우에만 다른 스레드가 이 메서드에 접근할 수 있다.   
 ```
-synchronized int setAndGetSum(int a1, int a2) {
+class MyClass {
 
-  ...
+	//Static variable
+	static String string1 = 'test string 1';
+
+	//Instance variable
+	String string2 = 'test string 2';
+
+	//Block variable in init block
+	{
+        String string3 = 'test string 3'
+    }
+
+	void perform() {
+		//Local variable 
+		String string4 = 'test string 4' 
+
+		//Block variable in for loop
+		for (int i=0; i < 4; i++) {
+            ...
+        }
+	}
 
 }
 ```
 
 [맨위로](#java)
 
-## 동기화 블록 코드 예시
-블록 안의 모든 코드는 현재 객체에서 동기화된다.
+## static variable이란?
+클래스 본문 내에서 메서드 또는 블록 외부에 선언된 변수이며, 'static' 키워드로 선언됩니다.  
+scope이 가장 깁니다.   
+* 클래스가 로드될 때 생성되며 클래스가 JVM에서 로드된 상태로 유지되는 한 메모리에 유지됩니다.      
+
+전역 변수입니다.   
+* 모든 객체간에 공유됩니다.      
+* 클래스의 모든 인스턴스는 동일한 static variable을 공유합니다.      
+
+객체 인스턴스를 만들지 않고 클래스를 사용하여 접근할 수 있습니다.   
+Heap에 저장됩니다.   
+
 ```
-void synchronizedExample() {
-    synchronized (this) {
-        ...
+class MyClass {
+	//Static variable
+	static String string1 = 'test string 1';
+}
+```
+
+[맨위로](#java)
+
+## instance variable이란?
+클래스 본문 내에서 메서드 또는 블록 외부에 선언된 변수이며, 'static' 키워드 없이 선언된 변수입니다.   
+scope이 두번째로 깁니다.   
+* 새 클래스 인스턴스가 생성될 때 생성되며, 인스턴스가 메모리에서 제거될 때까지 유지됩니다.  
+
+Heap에 저장됩니다.   
+
+```
+class MyClass {
+	//instance variable
+	String string1 = 'test string 1';
+}
+```
+
+[맨위로](#java)
+
+## local variable이란?
+메서드 본문 내에 선언된 변수입니다.   
+선언된 메서드가 스택에 남아 있는 동안만 유지됩니다.   
+Stack에 저장됩니다.   
+
+```
+class MyClass {
+	void perform() {
+		//Local variable 
+		Integer speed = 100;
+	}
+}
+```
+
+[맨위로](#java)
+
+## block variable이란?
+init block 또는 for 루프와 같은 block 내에서 선언된 변수입니다.   
+block을 실행하는 동안에만 유지되며 scope이 가장 짧은 변수입니다.   
+Stack에 저장됩니다.   
+
+```
+class MyClass {
+	//Block variable in for loop
+		for (int i=0; i < 4; i++) {...}
+	}
+}
+```
+
+[맨위로](#java)
+
+## final variable이란?
+'final' 키워드로 선언된 변수입니다.   
+값을 변경할 수 없습니다.   
+
+primitive variable일 경우 리터럴을 변경할 수 없습니다.   
+reference variable이고 객체가 할당된 경우 다른 객체를 참조하도록 변경할 수 없습니다.   
+* 참조하는 객체의 속성은 변경될 수 있습니다.   
+
+```
+class MyClass {
+	//final primitive variable var1,
+	//var1 값은 123에서 변경할 수 없습니다.
+	final int var1 = 123;
+
+	//final reference variable - var2
+	//var2는 다른 Box 객체를 참조하도록 변경할 수 없습니다.
+	//Box 객체의 속성은 변경될 수 있습니다.
+	final Box var2 = new Box();
+}
+```
+
+[맨위로](#java)
+
+## transient variable이란?
+객체가 직렬화 될 때 값이 직렬화되지 않는 변수입니다.      
+객체가 역직렬화 될 때 primitive variable은 기본 값으로 초기화됩니다.   
+객체가 역직렬화 될 때 reference variable은 null로 초기화됩니다.   
+
+```
+class MyClass {
+	// Transient variable
+	transient int var1 = 123;
+}
+```
+
+[맨위로](#java)
+
+## volatile variable이란?
+여러 스레드가 객체의 변수에 접근하는 멀티 스레드 프로그래밍과 관련이 있습니다.   
+'volatile' 키워드로 선언됩니다.   
+
+일반적인 변수의 경우 스레드는 변수의 값을 메모리에 캐싱하고 필요한 경우 이 캐시된 값을 참조합니다.      
+* 다른 스레드에 의해 이 변수가 업데이트된 내용은 이 스레드에 반영되지 않습니다.   
+
+JVM에 이 변수가 여러 스레드에 의해 업데이트되며 항상 메인 메모리에서 값을 가져오도록 한다.      
+* 따라서 모든 스레드는 메인 메모리에서 volatile variable의 값에 접근하고 스레드 메모리에 값을 캐싱하지 않습니다.   
+
+```
+class MyClass {
+	// Volatile variable
+	volatile int var1 = 123;
+}
+```
+
+[맨위로](#java)
+
+## 스레드의 동기화(synchronization)란?
+스레드는 병렬로 실행되기 때문에 스레드1과 스레드2가 동시에 데이터를 수정하는 문제가 발생할 수 있습니다.    
+이 문제를 동기화 문제라고 합니다.   
+
+동기화 문제를 해결하기 위한 방법은 'synchronized' 키워드를 사용하는 것입니다.   
+* 이 경우 스레드는 현재 실행중인 다른 스레드가 없는 경우에만 접근할 수 있습니다.   
+
+
+[맨위로](#java)
+
+## 동기화 코드 예시
+메서드 동기화   
+* 메서드 안의 모든 코드는 동기화된다.   
+
+```
+synchronized int setandGetSum(int a1, int a2, int a3) {
+    cell1 = a1;
+    sleepForSomeTime();
+    cell2 = a2;
+    sleepForSomeTime();
+    cell3 = a3;
+    sleepForSomeTime();
+    return cell1 + cell2 + cell3;
+}
+```
+
+블록 동기화   
+* 블록 안의 모든 코드는 동기화된다.
+
+```
+void synchronizedExample2() {
+    synchronized (this){
+        code...
     }
 }
 ```
@@ -136,61 +253,64 @@ void synchronizedExample() {
 [맨위로](#java)
 
 ## static method를 동기화할 수 있나요?
-동기화 할 수 있다.   
-static method와 block은 클래스에서 동기화된다.   
-instance method와 block은 클래스의 인스턴스에서 동기화된다.   
-static synchorinized method와 instance synchronized method는 서로 영향을 주지 않는다.   
+동기화 할 수 있습니다.   
+static method와 block은 클래스에서 동기화됩니다.   
+instance method와 block은 클래스의 인스턴스에서 동기화됩니다.   
+static synchorinized method와 instance synchronized method는 서로 영향을 주지 않습니다.   
 
 [맨위로](#java)
 
 ## Thread 클래스의 join 메서드에 대한 설명
-thread의 join 메서드를 호출하면 해당 thread가 실행을 완료할 때까지 main 메소드의 실행을 강제로 중지한다.   
-join메서드에 ms 단위의 시간을 매개 변수로 받는 메서드도 있다.   
+thread의 join 메서드를 호출하면 해당 thread가 실행을 완료할 때까지 main 메소드의 실행을 강제로 중지합니다.   
+join메서드에 ms 단위의 시간을 매개 변수로 받는 오버로드된 메서드도 있습니다.   
+
 ```
 thread.join(2000);
 ```
-위 코드를 예로 들면 이 메서드는 최소 2000ms 또는 해당 스레드의 실행 종료를 기다린다.   
+위 코드를 예로 들면 메인 메서드는 2000ms 또는 해당 스레드의 실행 종료 중 최소 시간 동안 중지합니다.     
 
 [맨위로](#java)
 
 ## Thread 클래스의 주요 메서드
 yield 메서드
-* static method이다.
-* 스레드 상태가 RUNNING에서 RUNNABLE로 변경된다.
-* 하지만 해당 스레드가 가장 우선순위가 높은 스레드일 경우 다시 RUNNING 상태로 변경할 수 있다.
+* static method입니다.   
+* 다른 스레드에게 실행을 양보하는 개념입니다.   
+  * 스레드 상태를 RUNNING에서 RUNNABLE로 변경합니다.   
+  * 하지만 해당 스레드가 가장 우선순위가 높은 스레드일 경우 다시 RUNNING 상태로 변경될 수 있습니다.   
 
 sleep 메서드
-* static method이다.
-* InterruptedException을 던질 수 있다.
-* 실행중인 스레드를 지정된 ms 동안 절전 상태로 전환한다.
+* static method입니다.  
+* InterruptedException을 던질 수 있습니다.   
+* 실행중인 스레드가 지정된 시간(ms) 동안 절전 모드로 전환됩니다.   
 
 [맨위로](#java)
 
 ## 교착상태(deadlock)이란?
-thread1이 thread2를 기다리고 있고 thread2가 thread1을 기다리고 있는 상황.   
-교착 상태에서 이 두 스레드는 서로를 영원히 기다린다.
+thread1이 thread2를 기다리고 thread2가 thread1을 기다리고 있는 상황을 교착상태라고 합니다.      
+교착 상태에서는 이 두 스레드는 서로를 영원히 기다립니다.   
 
 [맨위로](#java)
 
 ## 스레드 간 통신을 위해 중요한 Method는?
-wait, notify, notifyAll
+wait, notify, notifyAll 메서드입니다.   
 
 [맨위로](#java)
 
 ## wait 메서드
-Object 클래스에 정의되어 있다.   
-notify를 받을때까지 대기한다.
+Object 클래스에 정의되어 있습니다.   
+notify를 받을때까지 스레드가 대기하게 됩니다.   
 
 [맨위로](#java)
 
 ## notify 메서드
-Object 클래스에 정의되어 있다.   
-다른 wait 중인 스레드에게 notify 한다.
+Object 클래스에 정의되어 있습니다.   
+다른 wait 중인 스레드에게 notify하는 것입니다.   
+* [wait 메서드](#wait-메서드) 설명 참고   
 
 [맨위로](#java)
 
 ## notifyAll 메서드
-둘 이상의 스레드가 wait 상태인 경우 notifyAll 메서드를 사용하여 모든 스레드에게 notify 할 수 있다.
+둘 이상의 스레드가 wait 상태인 경우 notifyAll 메서드를 사용하여 모든 스레드에게 notify 할 수 있습니다.   
 
 [맨위로](#java)
 
@@ -238,10 +358,17 @@ class ThreadWaitAndNotify {
 }
 ```
 
+결과
+```
+Million done
+499999500000
+Ten Million done
+```
+
 [맨위로](#java)
 
 ## Java에서 synchronization의 대안책은 무엇입니까?
-Java Concurrent Collections
+Java는 스레드의 동시성을 해결을 위해 Concurrent Collections을 도입했습니다.   
 
 [맨위로](#java)
 
