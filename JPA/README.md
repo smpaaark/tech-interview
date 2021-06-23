@@ -1,6 +1,6 @@
 # JPA
-* [JPA(Java Persistence API)란?]()
-* [JPA는 데이터 접근, 유지, 관리와 같은 실제 작업을 수행합니까?]()
+* [JPA(Java Persistence API)란?](#jpajava-persistence-api란)
+* [JPA는 데이터 접근, 유지, 관리와 같은 실제 작업을 수행합니까?](#jpa는-데이터-접근-유지-관리와-같은-실제-작업을-수행합니까)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
