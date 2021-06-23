@@ -20,6 +20,9 @@
 * [notifyAll 메서드](#notifyall-메서드)
 * [wait 및 notify 메서드로 동기화된 프로그램 코드 예시](#wait-및-notify-메서드로-동기화된-프로그램-코드-예시)
 * [Java에서 synchronization의 대안책은 무엇입니까?](#java에서-synchronization의-대안책은-무엇입니까)
+* [참고](#참고)
+
+[목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
 
 ## primitive variable와 reference variable의 차이점
 Java에는 기본적으로 primitive variable과 reference variable이라는 2가지 변수가 있습니다.   
