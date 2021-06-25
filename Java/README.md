@@ -29,6 +29,14 @@
 * [mutable 인스턴스 변수를 사용하는 경우 어떤 조치를 취해야 합니까?](#mutable-인스턴스-변수를-사용하는-경우-어떤-조치를-취해야-합니까)
 * [immutable 객체가 HashMap에 적합한 key로 간주되는 이유는 무엇입니까?](#immutable-객체가-hashmap에-적합한-key로-간주되는-이유는-무엇입니까)
 * [immutable 클래스의 좋은 예](#immutable-클래스의-좋은-예)
+* [ConcurrentHashMap이란 무엇입니까?]()
+* [ConcurrentHashMap은 Thread-safe 합니까?]()
+* [ConcurrentHashMap은 어떤 원리로 thread-safe 합니까?]()
+* [여러 스레드가 동시에 ConcurrentHashMap 값을 읽을 수 있습니까?]()
+* [ConcurrentHashMap 내부적으로 어떻게 작동합니까?]()
+* [ConcurrentHashMap에서 값을 어떻게 자동으로 업데이트합니까?]()
+* [ConcurrentHashMap을 순회하면서 map을 제거하려면 어떻게 해야 합니까?]()
+* [ConcurrentHashMap의 Iterator는 fail-safe 입니까 fail-fast 입니까?]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -515,9 +523,107 @@ Date는 immutable 클래스가 아닙니다.
 
 [맨위로](#java)
 
+## ConcurrentHashMap이란 무엇입니까?
+동기화된 HashMap 구현을 대체하는 JDK 1.5에 추가된 Concurrent Collection 클래스입니다.   
+HashTable 및 동기화된 HashMap 보다 성능 및 확장성이 뛰어나고 위험성은 거의 없습니다.   
+
+[맨위로](#java)
+
+## ConcurrentHashMap은 Thread-safe 합니까?
+ConcurrentHashMap은 Thread-safe 합니다.   
+즉, 두 개의 스레드가 내부 데이터 구조를 손상시키지 않고 map을 수정할 수 있습니다.   
+
+Thread-safe하지 않는 HashMap은 여러 스레드에 노출되면 내부 데이터 구조가 손상될 수 있으며 잘못된 element를 가져오게 될 수 있습니다.
+
+[맨위로](#java)
+
+## ConcurrentHashMap은 어떤 원리로 thread-safe 합니까?
+Map을 분할하고 전체 Map을 Locking 하는 대신 필요한 부분(segment)만 Locking하는 방식으로 Thread-safe를 달성합니다.  
+즉, HashMap과 달리 map 전체를 locking하는게 아니기 때문에 성능이 향상됩니다.   
+이 기술을 lock stripping이라고도 합니다.   
+
+[맨위로](#java)
+
+## 여러 스레드가 동시에 ConcurrentHashMap 값을 읽을 수 있습니까?
+ConcurrentHashMap은 읽기 작업에 Locking을 하지 않으므로 동시 읽기를 허용합니다.   
+
+[맨위로](#java)
+
+## ConcurrentHashMap에서 동시에 한 스레드는 읽고 다른 스레드는 쓰기 작업을 할 수 있습니까?
+각기 다른 부분(segment)에 대한 작업이라면 가능하지만, 같은 부분(segment)을 작업하는 것이라면 쓰기 작업이 완료될 때까지 읽기 작업이 차단됩니다.   
+
+[맨위로](#java)
+
+## ConcurrentHashMap 내부적으로 어떻게 작동합니까?
+key/value를 저장하고 조회하는 것은 HashMap과 유사하게 작동합니다.   
+차이점은 동시성과 Thread-safe을 구현하는 방법에 있습니다.   
+디폴트로 16개의 부분(segment)로 나눠지고, 이를 동기화 레벨이라고도 합니다.
+
+전체 Map이 Locking 되지 않고 관련된 부분(segment)만 Locking 되기 때문에 concurrent한 get(), put(), contains() 작업을 할 수 있습니다.   
+이것은 읽기와 쓰기 작업이 동시에 될 수 있고 제한된 수의 쓰기 작업이 동시에 가능하다는 것을 의미합니다.   
+그 결과 처리량과 확장성이 향상됩니다.   
+
+기본적으로 버킷과 해시 엔트리가 LinkedList로 구성되어있는 미니 해시 테이블에 불과합니다.   
+
+[맨위로](#java)
+
+## ConcurrentHashMap에서 값을 어떻게 자동으로 업데이트합니까?
+기존에 존재하는 값을 원자적으로 수정하려는 경우 replace()를 사용할 수 있습니다.  
+
+기존 값과 새로운 값을 모두 받은 후 Map의 기존 값이 제공받은 기존 값과 일치하는 경우에만 Map을 수정합니다.   
+즉, Map이 호출되는 동안 동시에 수정되지 않습니다.   
+
+기존 값이 변경되어 제공받은 기존 값과 일치하지 않으면 false을 반환받으며 실패합니다.   
+아래와 같이 성공할 때까지 while문에서 replace() 메서드를 호출할 수 있습니다.    
+```
+ConcurrentMap<String, Long> populationByCities = new ConcurrentHashMap<>();
+do{
+    Long currentValue = populationByCities.get("New York");
+    Long newValue = currentValue == null ? 1 : currentValue + 1;
+} while(!populationByCities.replace("New York", currentValue, newValue));
+```
+
+[맨위로](#java)
+
+## ConcurrentHashMap을 순회하면서 map을 제거하려면 어떻게 해야 합니까?
+```
+Map<String, Integer> bookAndPrice = new ConcurrentHashMap<>();
+bookAndPrice.put("Effective Java", 42);
+bookAndPrice.put("Head First Java", 29);
+bookAndPrice.put("Java Concurrency in Practice", 33);
+bookAndPrice.put("Head First Design Patterns", 41);
+
+System.out.println("before removing : " + bookAndPrice);
+Iterator<String> iterator = bookAndPrice.keySet().iterator();
+
+while(iterator.hasNext()){
+    if(iterator.next().contains("Java")){
+        iterator.remove();
+    }
+}
+
+System.out.println("after removing : " + bookAndPrice);
+```
+
+출력
+```
+before removing : {Java Concurrency in Practice=33,
+    Head First Design Patterns=41, Effective Java=42, Head First Java=29}
+after removing : {Head First Design Patterns=41}
+```
+
+[맨위로](#java)
+
+## ConcurrentHashMap의 Iterator는 fail-safe 입니까 fail-fast 입니까?
+fail-safe하며 이것은 ConcurrentModificationException을 발생시키지 않음을 의미합니다.   
+따라서 순회하는 동안 map을 locking할 필요가 없습니다.   
+
+[맨위로](#java)
+
 ## 참고
 * [Java - Variables Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_variables)
 * [Java Synchronization Interview Questions](http://www.javainterview.in/p/java-synchronization-interview-questions.html)
 * [Immutable class interview questions](https://java2blog.com/immutable-class-interview-questions/)
+* [Top 10 Java ConcurrentHashMap Interview](https://javarevisited.blogspot.com/2017/08/top-10-java-concurrenthashmap-interview.html)
 
 [맨위로](#java)
