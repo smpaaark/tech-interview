@@ -25,6 +25,8 @@
 * [JPA Cascade의 목적은 무엇입니까?](#jpa-cascade의-목적은-무엇입니까)
 * [JPA가 지원하는 Cascade 유형은 무엇입니까?](#jpa가-지원하는-cascade-유형은-무엇입니까)
 * [JPQL이란 무엇입니까?](#jpql이란-무엇입니까)
+* [JPQL의 특징]()
+* [Criteria API란 무엇입니까?]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -367,6 +369,24 @@ JPQL(Java Persistence Query Language)는 영속성 엔티티에 대한 조회를
 데이터베이스 테이블 대신 JPQL은 엔티티 객체 모델을 사용하여 SQL 조회를 작동합니다.   
 여기서 JPA의 역할은 JPQL을 SQL로 변환하는 것입니다.   
 개발자가 SQL 작업을 쉽게 처리할 수 있는 플랫폼을 제공합니다.   
+
+[맨위로](#JPA)
+
+## JPQL의 특징
+* 간단하고 견고합니다.
+* 플랫폼 독립적인 쿼리 언어입니다.
+* 정적, 동적 쿼리가 모두 가능합니다.
+* MySQL, Oracle과 같은 모든 데이터베이스에서 사용할 수 있습니다.
+
+[맨위로](#JPA)
+
+## Criteria API란 무엇입니까?
+Java API를 사용하여 작성된 Type-safe한 쿼리를 제공하는 스펙입니다.   
+엔티티 및 영속 상태에 대한 쿼리를 구성하는 방법 중 하나입니다.   
+JPA 쿼리를 정의하는 방법입니다.   
+Java 언어로 작성된 플랫폼 독립적인 쿼리를 정의합니다.   
+JPA 2.0부터 제공되었습니다.   
+주된 목적은 쿼리를 Type-safe하게 작성하도록 하는 것입니다.   
 
 [맨위로](#JPA)
 
