@@ -20,6 +20,15 @@
 * [notifyAll 메서드](#notifyall-메서드)
 * [wait 및 notify 메서드로 동기화된 프로그램 코드 예시](#wait-및-notify-메서드로-동기화된-프로그램-코드-예시)
 * [Java에서 synchronization의 대안책은 무엇입니까?](#java에서-synchronization의-대안책은-무엇입니까)
+* [immutable class가 무엇입니까?]()
+* [immutable class를 만드는 방법은 무엇입니까?]()
+* [아래의 Employee 클래스는 immutable인가요?]()
+* [위의 Employee 클래스를 immutable로 만드려면 어떻게 해야 합니까?]()
+* [immutable 클래스의 예시]()
+* [immutable 클래스는 Thread safe 합니까?]()
+* [mutable 인스턴스 변수를 사용하는 경우 어떤 조치를 취해야 합니까?]()
+* [immutable 객체가 HashMap에 적합한 key로 간주되는 이유는 무엇입니까?]()
+* [immutable 클래스의 좋은 예]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -375,8 +384,140 @@ Java는 스레드의 동시성을 해결을 위해 Concurrent Collections을 도
 
 [맨위로](#java)
 
+## immutable class가 무엇입니까?
+생성되면 상태를 변경할 수 없는 객체입니다.   
+* ex) String, Integer ...
+
+[맨위로](#java)
+
+## immutable class를 만드는 방법은 무엇입니까?
+* final 클래스로 만듭니다.
+  * 클래스를 final 클래스로 만들면 클래스를 확장할 수 없으므로 이 클래스의 메서드를 재정의할 수 없습니다.   
+* 모든 인스턴스 변수를 private final로 선언합니다.
+  * 인스턴스 변수를 private으로 설정하면 외부 클래스가 인스턴스 변수에 접근할 수 없으며, final로 설정하면 변경할 수 없습니다.   
+* setter 메서드를 만들지 않습니다.
+  * 인스턴스 변수에 대한 setter 메서드를 만들지 않으면 인스턴스 변수를 변경할 방법은 없습니다.
+* 생성자에서 모든 변수를 초기화합니다.
+* getter 메서드에서 mutable 객체로 복사하여 리턴합니다.
+  * 원래 객체가 리턴되지 않으므로 원래 객체는 그대로 유지됩니다.
+
+[맨위로](#java)
+
+## 아래의 Employee 클래스는 immutable인가요?
+```
+package org.arpit.java2blog.bean;
+import java.util.ArrayList;
+ 
+public final class Employee {
+ 
+    private final String name;
+    private final ArrayList addresses;
+
+    public Employee(String name, ArrayList addresses) {
+        super();
+        this.name = name;
+        ArrayList tempAdd=new ArrayList();
+        for (int i = 0; i < addresses.size(); i++) {
+            tempAdd.add(addresses.get(i));
+        }
+        this.addresses = tempAdd;
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList getAddresses() {
+        return addresses;
+    } 
+
+}
+```
+immutable 클래스가 아닙니다.   
+왜냐하면 employee.getAddress().add("New address")를 통해 직원을 계속 추가할 수 있기 때문입니다.   
+
+[맨위로](#java)
+
+## 위의 Employee 클래스를 immutable로 만드려면 어떻게 해야 합니까?
+```
+public ArrayList getAddresses() {
+    return (ArrayList) addresses.clone();
+}
+```
+getAddress() 메서드에서 addresses의 clone 객체를 반환해야 합니다.   
+그러면 employee.getAddress().add("New address")를 해도 실제 addresses에는 아무 영향이 없습니다.   
+
+[맨위로](#java)
+
+## immutable 클래스의 예시
+```
+package org.arpit.java2blog.bean;
+ 
+import java.util.ArrayList;
+ 
+public final class Country {
+
+    // declared private final instance variable
+    private final String countryName;
+    // Mutable object
+    private final ArrayList listOfStates;
+
+    public Country(String countryName, ArrayList listOfStates) {
+        super();
+        this.countryName = countryName;
+        // Creating deep copy for mutable object
+        ArrayList tempList = new ArrayList();
+
+        for (int i = 0; i < listOfStates.size(); i++) {
+            tempList.add(listOfStates.get(i));
+        }
+        this.listOfStates = tempList;
+    }
+
+    public String getCountryName() {
+        // Do not need to do cloning as it is immutable object
+        return countryName;
+    }
+
+    public ArrayList getListOfStates() {
+        // Returning cloned object 
+        return (ArrayList) listOfStates.clone();
+    }
+}
+```
+
+[맨위로](#java)
+
+## immutable 클래스는 Thread safe 합니까?
+Immutable 클래스는 객체의 상태를 변경할 수 없으므로 thread safe 합니다.   
+그래서 두 개의 스레드가 동시에 접근해도 아무 문제가 없습니다.   
+
+[맨위로](#java)
+
+## mutable 인스턴스 변수를 사용하는 경우 어떤 조치를 취해야 합니까?
+* 생성자에서 변수를 초기화합니다.   
+* 해당 인스턴스 변수의 getter에서 인스턴스 변수의 클론 객체를 반환합니다.   
+
+[맨위로](#java)
+
+## immutable 객체가 HashMap에 적합한 key로 간주되는 이유는 무엇입니까?
+Immutable 객체의 해시코드는 변경되지 않습니다.   
+즉, 각 key에 따른 해시코드를 캐싱할 수 있으므로 key 검색 속도가 빨라집니다.   
+
+mutable 객체의 경우 mutable 필드에 의해 해시코드가 변경이 될 수 있습니다.   
+만약 필드 값이 변경되면 해시 코드가 변경될 수 있으므로 HashMap에서 key를 찾을 수 없습니다.   
+
+[맨위로](#java)
+
+## immutable 클래스의 좋은 예
+String, Integer, Long, Double, Character, Boolean 등이 있습니다.   
+Date는 immutable 클래스가 아닙니다.   
+
+[맨위로](#java)
+
 ## 참고
 * [Java - Variables Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_variables)
 * [Java Synchronization Interview Questions](http://www.javainterview.in/p/java-synchronization-interview-questions.html)
+* [Immutable class interview questions](https://java2blog.com/immutable-class-interview-questions/)
 
 [맨위로](#java)
