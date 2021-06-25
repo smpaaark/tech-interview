@@ -25,8 +25,8 @@
 * [JPA Cascade의 목적은 무엇입니까?](#jpa-cascade의-목적은-무엇입니까)
 * [JPA가 지원하는 Cascade 유형은 무엇입니까?](#jpa가-지원하는-cascade-유형은-무엇입니까)
 * [JPQL이란 무엇입니까?](#jpql이란-무엇입니까)
-* [JPQL의 특징]()
-* [Criteria API란 무엇입니까?]()
+* [JPQL의 특징](#jpql의-특징)
+* [Criteria API란 무엇입니까?](#criteria-api란-무엇입니까)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
