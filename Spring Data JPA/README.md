@@ -1,5 +1,5 @@
 # Spring Data JPA
-* [JPA란 무엇입니까?]()
+* [JPA란 무엇입니까?](#jpa란-무엇입니까)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -12,9 +12,9 @@ JPA는 Java Persistence API의 약자입니다.
 
 Java에서는 Hibernate와 같은 많은 인기 있는 JPA 구현체들이 있습니다.   
 
-[맨위로]()
+[맨위로](#spring-data-jpa)
 
 ## 참고
 * [Top 15 Spring Data JPA Interview Questions with ... - Java67](https://www.java67.com/2021/01/spring-data-jpa-interview-questions-answers-java.html)
 
-[맨위로]()
+[맨위로](#spring-data-jpa)
