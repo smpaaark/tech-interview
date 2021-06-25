@@ -24,7 +24,7 @@ JPA는 Java Persistence API의 약자입니다.
 
 Java에서는 Hibernate와 같은 많은 인기 있는 JPA 구현체들이 있습니다.   
 
-![1]()
+![1](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Spring%20Data%20JPA/1.PNG)
 
 [맨위로](#spring-data-jpa)
 
