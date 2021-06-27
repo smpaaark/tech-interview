@@ -37,7 +37,8 @@
 * [ConcurrentHashMap에서 값을 어떻게 자동으로 업데이트합니까?](#concurrenthashmap에서-값을-어떻게-자동으로-업데이트합니까)
 * [ConcurrentHashMap을 순회하면서 map을 제거하려면 어떻게 해야 합니까?](#concurrenthashmap을-순회하면서-map을-제거하려면-어떻게-해야-합니까)
 * [ConcurrentHashMap의 Iterator는 fail-safe 입니까 fail-fast 입니까?](#concurrenthashmap의-iterator는-fail-safe-입니까-fail-fast-입니까)
-* [한 스레드가 반복되는 동안 ConcurrentHashMap에 새로운 매핑을 추가하면 어떻게 됩니까?]()
+* [한 스레드가 반복되는 동안 ConcurrentHashMap에 새로운 매핑을 추가하면 어떻게 됩니까?](#한-스레드가-반복되는-동안-concurrenthashmap에-새로운-매핑을-추가하면-어떻게-됩니까)
+* [Map 타입 변수에 ConcurrentHahsMap를 전달할 수 있습니까?](#map-타입-변수에-concurrenthahsmap를-전달할-수-있습니까)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
