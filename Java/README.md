@@ -37,6 +37,7 @@
 * [ConcurrentHashMap에서 값을 어떻게 자동으로 업데이트합니까?](#concurrenthashmap에서-값을-어떻게-자동으로-업데이트합니까)
 * [ConcurrentHashMap을 순회하면서 map을 제거하려면 어떻게 해야 합니까?](#concurrenthashmap을-순회하면서-map을-제거하려면-어떻게-해야-합니까)
 * [ConcurrentHashMap의 Iterator는 fail-safe 입니까 fail-fast 입니까?](#concurrenthashmap의-iterator는-fail-safe-입니까-fail-fast-입니까)
+* [한 스레드가 반복되는 동안 ConcurrentHashMap에 새로운 매핑을 추가하면 어떻게 됩니까?]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -619,6 +620,27 @@ fail-safe하며 이것은 ConcurrentModificationException을 발생시키지 않
 따라서 순회하는 동안 map을 locking할 필요가 없습니다.   
 
 [맨위로](#java)
+
+## 한 스레드가 반복되는 동안 ConcurrentHashMap에 새로운 매핑을 추가하면 어떻게 됩니까?
+ConcurrentHashMap의 iterator는 fail-safe하기 때문에 ConcurrentModificationException으로 실패하지 않습니다.   
+그러나 반복이 시작되면 아무것도 수정되지 않을 수 있습니다.   
+구현에 따라 다르지만, JDK는 일반적으로 기존 ConcurrentHashMap을 통해 반복하는 대신 별도의 ConcurrentHashMap 복사본을 생성합니다.   
+
+[맨위로](#java)
+
+## Map 타입 변수에 ConcurrentHahsMap를 전달할 수 있습니까?
+전달할 수 있습니다.   
+ConcurrentHashMap은 Map 인터페이스를 구현하기 때문입니다.   
+따라서 아래와 같은 코드가 가능합니다.   
+```
+Map<String, Integer> bookAndPrice = new ConcurrentHashMap<>();
+```
+
+하지만 이는 ConcurrentHashMap 클래스에 선언된 메서드는 사용하지 못할 수 있습니다.   
+* ex) Java 8에 추가된 forEachKey() 또는 forEachValue()
+
+[맨위로](#java)
+
 
 ## 참고
 * [Java - Variables Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_variables)
