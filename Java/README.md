@@ -39,6 +39,10 @@
 * [ConcurrentHashMap의 Iterator는 fail-safe 입니까 fail-fast 입니까?](#concurrenthashmap의-iterator는-fail-safe-입니까-fail-fast-입니까)
 * [한 스레드가 반복되는 동안 ConcurrentHashMap에 새로운 매핑을 추가하면 어떻게 됩니까?](#한-스레드가-반복되는-동안-concurrenthashmap에-새로운-매핑을-추가하면-어떻게-됩니까)
 * [Map 타입 변수에 ConcurrentHahsMap를 전달할 수 있습니까?](#map-타입-변수에-concurrenthahsmap를-전달할-수-있습니까)
+* [Atomic 데이터 타입이 무엇입니까?]()
+* [Atomic 데이터 타입의 종류]()
+* [Atomic 데이터 타입은 언제 사용할 수 있습니까?]()
+* [Atomic 데이터 타입, volatile 변수, synchronization의 차이점은 무엇입니까?]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -642,11 +646,139 @@ Map<String, Integer> bookAndPrice = new ConcurrentHashMap<>();
 
 [맨위로](#java)
 
+## Atomic 데이터 타입이 무엇입니까?
+Java에서 java.util.concurrent.atomic에는 AtomicBoolean, AtomicInteger, AtomicLong, AtomicReference, AtomicLongArray 등의 클래스가 있습니다.   
+이 클래스들에는 get(), set(int value), lazySet(int value), compareAndSet(int expect, int update) 등의 값을 읽고 쓰는데 사용되는 메서드들이 있습니다.   
+
+Atomic 클래스는 구현하는 방법은 다르지만 volatile + synchronzied와 동일한 효과가 있습니다.   
+내부적으로 Atomic 클래스 구현을 살펴보면 어떠한 동기화도 선언되지 않았음을 알 수 있습니다.   
+하지만 Atomic 변수는 단일 변수에 대해 무잠금 thread-safe 프로래밍이 정의되어 있기 때문에 동기화가 됩니다.   
+Atomic 클래스 내부적으로 value 값은 volatile variable로 저장됩니다.   
+
+[맨위로](#java)
+
+## Atomic 데이터 타입의 종류
+모든 Atomic 데이터 유형은 java.util.concurrent.atomic 내에 정의됩니다.   
+모든 Atomic 데이터 타입에는 get(), set() 메서드가 포함되어 있습니다.   
+* AtomicInteger
+  * int형 값을 원자적으로 읽고 쓰는데 사용됩니다.
+  * getAndDecrement(), getAndIncrement(), incrementAndGet(), decrementAndGet(), addAndGet(), getAndAdd() 등의 메서드가 있습니다.
+* AtomicBoolean
+  * boolean형 값을 원자적으로 읽고 쓰는데 사용됩니다.
+  * getAndSet, weakCompareAndSetPlain, getPlain(),compareAndExchange 등의 메서드가 있습니다.   
+* AtomicIntegerArray
+  * 기본적인 int형 배열에 대한 operation들을 제공하며, 원자적으로 읽고 쓸 수 있습니다.   
+  * addAndGet, compareAndSet, decrementAndGet, getAndDecrement, getAndIncrement 등의 atomic operation 도 있습니다.   
+* AtomicIntegerFieldUpdater
+  * 지정된 클래스의 지정된 volatile int형 필드를 atomic 업데이트를 할 수 있는 유틸리티 입니다.
+  * getAndIncrement, getAndDecrement, getAndAdd, incrementAndGet, decrementAndGet 등과 같은 메서드가 있습니다.
+* AtomicMarkableReference
+  * 객체에 대한 참조와 boolean 플래그를 모두 캡슐화하는 일반적인 클래스입니다.   
+  * 이 두 필드는 함께 또는 개별적으로 결합되며 원자적으로 업데이트 될 수 있습니다.
+  * compareAndSet, attemptMark, weakCompareAndSet 등과 같은 메서드가 있습니다.   
+* AtomicReference
+  * 원자적으로 읽고 쓸 수 있는 객체 참조 변수를 제공합니다.
+  * 동일한 AtomicReference를 변경하려고 시도하는 여러 스레드가 AtomicReference를 불일치 상태로 만들지 않음을 의미합니다.   
+  * compareAndSet, weakCompareAndSetPlain, getAndAccumulate 등의 메서드가 있습니다.
+
+long 타입의 경우 AtomicLong, AtomicLongArray, AtomicLongFieldUpdater 등의 유형이 있습니다.   
+AtomicReference의 경우 추가적으로 AtomicReferenceArray, AtomicReferenceFieldUpdater, AtomicStampedReference 등의 유형이 있습니다.
+
+[맨위로](#java)
+
+## Atomic 데이터 타입은 언제 사용할 수 있습니까?
+아래 예제에서 두 스레드의 각 스레드에서 for문을 통해 일반 변수, volatile 변수, atomic 변수의 값을 하나씩 증가시키고 있습니다.   
+```
+public class AtomicTest {
+
+	public static int result = 0;
+	public static volatile int volatileResult = 0;
+	public static volatile AtomicInteger atomicResult = new AtomicInteger();
+	public static Object lock = new Object();
+
+	public static void main(String[] args) throws InterruptedException {
+
+		Thread t1 = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for (int i = 0; i < 100000; i++) {
+					result++;
+					volatileResult++;
+					atomicResult.incrementAndGet();
+				}
+
+			}
+		});
+
+		Thread t2 = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for (int i = 0; i < 100000; i++) {
+					result++;
+					volatileResult++;
+					atomicResult.incrementAndGet();
+				}
+
+			}
+		});
+		t1.start();
+		t2.start();
+		t1.join();
+		t2.join();
+
+		System.out.println("result value -> " + result);
+		System.out.println("volatileResult value -> " + volatileResult);
+		System.out.println("atomicResult value -> " + atomicResult);
+	}
+
+}
+```
+
+실행 결과
+```
+result value -> 182462
+volatileResult value -> 179853
+atomicResult value -> 200000
+```
+
+atomic 변수는 올바른 결과가 출력되고, 나머지는 값이 부족하게 출력되었습니다.   
+여기서 atomic 변수의 incrementAndGet() 메서드는 여러 스레드로 방해할 수 없으므로 올바른 결과가 출력됩니다.   
+
+Atomic 데이터 클래스 내의 작업은 여러 스레드에 의해 간섭될 수 없습니다.   
+따라서 여러 스레드에서 데이터를 반복적으로 수정하는 경우 Atomic 데이터 타입을 사용할 수 있습니다.   
+이러한 경우 Atomic 데이터 타입을 사용하지 않으면 동기화 처리가 필요하며 이는 성능에 영향을 줄 수 있습니다.   
+
+[맨위로](#java)
+
+## Atomic 데이터 타입, volatile 변수, synchronization의 차이점은 무엇입니까?
+Volatile Variable
+* 값을 수정하면 변수의 실제 메모리에 즉시 영향을 미칩니다.
+* 컴파일러는 변수에 대한 참조를 최적화 할 수 없습니다.
+* 하나의 스레드가 변수를 수정하면 다른 모든 스레드가 새 값을 즉시 확인할 수 있습니다.
+
+Atomic Variables
+* 변수에 대해 수행된 작업이 원자적으로 수행되도록 보장합니다.
+* 작업이 실행되는 스레드 내에서 완료되며 다른 스레드에 의해 중단되지 않습니다.
+* 예를들어 증가 테스트를 수행하려면 변수를 증가시킨 다음 다른 값과 비교해야 합니다.   
+* atomic 연산은 이 두 단계가 마치 하나의 중단 불가능한 작업인 것처럼 완료되도록 보장합니다.
+
+Synchronization
+* 변수에 대한 접근흘 동기화하는 것은 한 번에 하나의 스레드만 변수에 접근할 수 있습니다.   
+* 그리고 다른 스레드들은 해당 스레드가 변수에 대한 접근을 해제할 때까지 기다리게 합니다. 
+
+Synchronization은 atomic과 유사하지만, atomic은 좀 더 세부적인 수준의 프로그래밍에서 구현됩니다.
+일부는 동기화하고 일부는 동기화하지 않는 작업이 가능합니다.   
+* ex) 모든 write 작업은 동기화하고 읽기 작업은 동기화 하지 않는 것
+
+atomic, volatile, synchronization 모두 독립적인 속성이지만 변수 접근을 하기 위한 적절한 스레드 협력을 적용하는데 함께 사용됩니다.   
+
+[맨위로](#java)
 
 ## 참고
 * [Java - Variables Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_variables)
 * [Java Synchronization Interview Questions](http://www.javainterview.in/p/java-synchronization-interview-questions.html)
 * [Immutable class interview questions](https://java2blog.com/immutable-class-interview-questions/)
 * [Top 10 Java ConcurrentHashMap Interview](https://javarevisited.blogspot.com/2017/08/top-10-java-concurrenthashmap-interview.html)
+* [Java Atomic Datatype: Interview Reference | by Anish Antony ...](https://medium.com/javarevisited/java-atomic-datatype-interview-reference-a463632d0d1a)
 
 [맨위로](#java)
