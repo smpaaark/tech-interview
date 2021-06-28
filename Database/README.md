@@ -116,6 +116,6 @@
 [맨위로](#database)
 
 ## 참고
-* [Top 50+ Database Interview Questions and Answers](https://www.softwaretestinghelp.com/database-interview-questions/)
+* [TOP 250+ Database Design Interview Questions and Answers ...](https://www.wisdomjobs.com/e-university/database-design-interview-questions.html)
 
 [맨위로](#database)
