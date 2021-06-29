@@ -265,7 +265,7 @@ SYN, ACK, FIN flags(1bit)를 사용하여 두 엔드포인트를 연결합니다
 TCP/IP는 네트워크의 정보 흐름을 설명하는 대체 모델입니다.   
 OSI 모델에 비해 더 간단한 표현이지만 OSI 모델보다 프로토콜에 대한 세부 정보가 적게 포함되어 있습니다.   
 
-![1]()
+![1](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Network/1.PNG)
 
 [맨위로](#network)
 
@@ -293,7 +293,7 @@ UDP 패킷 형식에는 4개의 필드가 있습니다.
 * Checksum (16 bits)
   * 패킷 무결성 검사를 허용합니다. (optional)
 
-![2]()
+![2](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Network/2.PNG)
 
 [맨위로](#network)
 
@@ -310,12 +310,12 @@ UDP 패킷 형식에는 4개의 필드가 있습니다.
 * Urgent pointer (16 bits)
 * Options (가변 길이) & Data (가변 길이)
 
-![3]()
+![3](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Network/3.PNG)
 
 [맨위로](#network)
 
 ## TCP/IP 포트와 프로토콜을 나열해보세요.
-![4]()
+![4](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Network/4.PNG)
 
 [맨위로](#network)
 
