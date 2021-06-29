@@ -33,6 +33,17 @@
 * [UDP 패킷 형식은 무엇입니까?](#udp-패킷-형식은-무엇입니까)
 * [TCP 패킷 형식은 무엇입니까?](#tcp-패킷-형식은-무엇입니까)
 * [TCP/IP 포트와 프로토콜을 나열해보세요.](#tcpip-포트와-프로토콜을-나열해보세요)
+* [SSL/TLS 인증서란 무엇입니까?]()
+* [SSL/TLS의 작동 방식을 설명해보세요.]()
+* [비대칭, 대칭 암호화란 무엇입니까?]()
+* [SSL/TLS는 비대칭 암호화와 대칭 암호화를 어떻게 사용합니까?]()
+* [CSR(Certificate Signing Request)이란 무엇입니까?]()
+* [CSR은 어떻게 생겼습니까?]()
+* [SSL에 사용되는 공개키 암호화 알고리즘에 대해 설명해보세요.]()
+* [SSL/TLS 인증서의 인증 레벨은 어떻게 됩니까?]()
+* [SSL의 DV(Domain Validation)에 대해 설명해보세요.]()
+* [SSL의 OV(Organization Validation)에 대해 설명해보세요.]()
+* [SSL의 EV(Extended Validation)에 대해 설명해보세요.]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -320,8 +331,92 @@ UDP 패킷 형식에는 4개의 필드가 있습니다.
 
 [맨위로](#network)
 
+## SSL/TLS 인증서란 무엇입니까?
+SSL/TLS는 전송 중에 데이터의 기밀성과 무결성을 보장하는 표준 보안 프로토콜입니다.   
+웹 브라우저와 웹 서버 간의 데이터 흐름을 암호화하므로 기밀성이 보장됩니다.   
+또한 웹 서버와 웹 브라우저는 데이터를 복호화하기 위해 key를 교환하며, 이를 통해 데이터의 무결성이 보장됩니다.   
+
+[맨위로](#network)
+
+## SSL/TLS의 작동 방식을 설명해보세요.
+SSL/TLS 계층은 데이터가 소스에서 목적지로 전송되는 동안 기밀성과 무결성을 제공합니다.   
+1. 사용자는 웹 사이트 주소를 입력하여 연결을 시작합니다.   
+* 브라우저는 웹 사이트의 서버에 메시지를 전송하여 SSL/TLS 통신을 시작합니다.   
+2. 웹 사이트의 서버가 고용 키 또는 인증서를 사용자의 브라우저로 다시 보냅니다.   
+3. 사용자의 브라우저에서 공용 키 또는 인증서를 확인합니다.  
+* 정상이면 대칭 키가 생성되어 웹 사이트의 서버로 다시 전송됩니다.
+* 인증서가 정상 상태가 아니면 통신이 실패합니다.
+4. 대칭키를 받고나서 웹 사이트 서버는 key를 전송하고 요청 데이터를 암호화 합니다.
+5. 사용자 브라우저는 대칭키를 사용하여 내용을 복호화하여 SSL/TLS handshake를 완료합니다.   
+* 이제 사용자는 내용을 확인 할 수 있습니다.
+
+[맨위로](#network)
+
+## 비대칭, 대칭 암호화란 무엇입니까?
+대칭과 비대칭 암호화의 주요한 차이점은 대칭 암호화의 경우 암호화와 복호화를 위해 단일 키를 사용하는 반면, 비대칭 암호화의 경우 암호화와 복호화를 위해 공용 및 개인 키를 사용한다는 것입니다.   
+
+[맨위로](#network)
+
+## SSL/TLS는 비대칭 암호화와 대칭 암호화를 어떻게 사용합니까?
+SSL은 브라우저와 웹 서버 간의 데이터를 암호화하기 위해 대칭 암호화를 사용합니다.   
+비대칭 암호화는 생성된 대칭 키를 교환하는데 사용되고, 클라이언트와 서버의 ID를 검증합니다.   
+
+[맨위로](#network)
+
+## CSR(Certificate Signing Request)이란 무엇입니까?
+CSR은 공통 이름, 조직 이름, email 주소, 시/도, 국가 등이 포함된 신청자의 정보가 암호화됩니다.   
+이 암호화된 정보는 인증 기관(CA)으로부터 신청자에게 SSL 인증서를 발급하기 위해 사용됩니다.
+
+[맨위로](#network)
+
+## CSR은 어떻게 생겼습니까?
+"—–BEGIN CERTIFICATE REQUEST—–"으로 시작하고 "—–END CERTIFICATE REQUEST—–"로 끝나는 base 64 인코딩 텍스트 입니다.   
+
+[맨위로](#network)
+
+## SSL에 사용되는 공개키 암호화 알고리즘에 대해 설명해보세요.
+브라우저와 웹 서버 간에 대칭 키를 교환하는 데 사용됩니다.   
+ECC(Elliptic curve cryptography), RSA 등이 알고리즘으로 사용됩니다.   
+
+[맨위로](#network)
+
+## 사전 공유 키(pre-shared key) 알고리즘이란 무엇입니까?
+브라우저와 웹 서버간의 데이터를 암호화하는 데 사용되는 대칭 키를 참조합니다.
+Twofish, AES, Blowfish 등이 알고리즘으로 사용됩니다.
+
+[맨위로](#network)
+
+## SSL/TLS 인증서의 인증 레벨은 어떻게 됩니까?
+인증 수준은 호스팅된 URL의 신뢰성을 나타냅니다.   
+CA(인증기관, Certifying Authority)는 ID 검증에 관한 인증서를 조직에 발급합니다.   
+주로 DV(Domain Validation), OV(Organization Validation), EV(Extended Validation)로 분류됩니다.
+
+[맨위로](#network)
+
+## SSL의 DV(Domain Validation)에 대해 설명해보세요.
+CA(인증기관, Certifying Authority)가 조직에 인증서를 발급하기 위해 수행하는 최저 수준의 검증입니다.   
+여기서 CA는 조직이 도메인을 제어 하는지 여부만 확인합니다.   
+이 과정은 이메일을 통해 수행할 수 있습니다.
+
+[맨위로](#network)
+
+## SSL의 OV(Organization Validation)에 대해 설명해보세요.
+CA(인증기관, Certifying Authority)가 조직에 인증서를 발급하기 위해 수행하는 중간 수준의 검증입니다. 
+여기서 CA는 조직의 이름, 상태, 국가를 확인합니다.   
+이 과정은 조직의 위치를 물리적으로 확인하는 방법으로 수행할 수 있습니다.
+
+[맨위로](#network)
+
+## SSL의 EV(Extended Validation)에 대해 설명해보세요.
+CA(인증기관, Certifying Authority)가 조직에 인증서를 발급하기 위해 수행하는 최고 수준의 검증입니다. 
+여기서 CA는 조직의 소유권, 물리적 위치, 국가를 확인합니다.   
+이 과정은 조직의 위치를 물리적으로 확인하고 법적 존재 여부를 확인하는 방식으로 수행될 수 있습니다.
+
+[맨위로](#network)
+
 ## 참고
 * [Top 20+ HTTP Interview Questions (2021) - javatpoint](https://www.javatpoint.com/http-interview-questions)
 * [Top 10 Interview Questions & Answers | TCP/UDP - All About ...](https://allabouttesting.org/top-10-interview-questions-tcpudp/)
+* [Top 12 SSL/TLS Interview Questions | Network Security - All ...](https://allabouttesting.org/top-12-ssl-interview-questions-and-answers-network-security/)
 
 [맨위로](#network)
