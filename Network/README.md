@@ -23,6 +23,15 @@
 * [HTTP의 컨텐츠 협상(Content Negotiation)이란 무엇입니까?](#http의-컨텐츠-협상content-negotiation이란-무엇입니까)
 * [HTTP 컨텐츠 협상(Content Negotiation)의 다른 유형은 무엇이 있습니까?](#http-컨텐츠-협상content-negotiation의-다른-유형은-무엇이-있습니까)
 * [HTTP에서 100 Continue 응답 코드는 무엇입니까?](#http에서-100-continue-응답-코드는-무엇입니까)
+* [TCP(Transmission Control Protocol)에 대해 설명해보세요.]()
+* [UDP(User Datagram Protocol)에 대해 설명해보세요.]()
+* [TCP는 어떻게 작동합니까?]()
+* [common TCP/IP 프로토콜을 나열해보세요.]()
+* [TCP/IP와 OSI 모델을 비교해보세요.]()
+* [UDP가 TCP보다 좋습니까?]()
+* [Telnet 과 DNS의 포트 번호는 무엇입니까?]()
+* [UDP 패킷 형식은 무엇입니까?]()
+* [TCP/IP 포트와 프로토콜을 나열해보세요.]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -219,7 +228,99 @@ HTTPS는 웹 서버에서 반환되는 사용자 HTTP 페이지 또는 HTTP 페�
 
 [맨위로](#network)
 
+## TCP(Transmission Control Protocol)에 대해 설명해보세요.
+* 연결 지향 프로토콜입니다.
+  * 이것은 데이터가 소스에서 목적지로 전송될 때, 전송 중에 패킷이 손실될 경우 프로토콜이 데이터 패킷을 재전송함으로써 데이터 무결성을 관리한다는 것을 의미합니다.
+* 신뢰성과 오류 없는 데이터 스트림을 보장합니다.
+* TCP 패킷에는 Sequence Number, AcK number, Data offset, Reserved, Control bit, Window, Urgent Pointer, Options, Padding, checksum, Source Port, Destination port 등이 포함됩니다.
+
+[맨위로](#network)
+
+## UDP(User Datagram Protocol)에 대해 설명해보세요.
+* 비연결 프로토콜입니다.
+  * 전송 중에 패킷이 손실되어도 패킷을 재전송 하지 않습니다.
+* 사소한 데이터 손실이 주요 이슈가 아닌 경우에 적합합니다.
+
+[맨위로](#network)
+
+## TCP는 어떻게 작동합니까?
+3-way-handshake를 사용하여 클라이언트와 서버 간의 연결을 설정합니다.   
+SYN, ACK, FIN flags(1bit)를 사용하여 두 엔드포인트를 연결합니다.   
+연결 후 순차적으로 데이터가 전송됩니다.   
+패킷 손실이 있는 경우 데이터를 재전송합니다.
+
+[맨위로](#network)
+
+## TCP/IP 프로토콜을 나열해보세요.
+* HTTP
+  * 웹 클라이언트와 웹 서버 간에 보안되지 않은 데이터 전송에 사용됩니다.
+* HTTPS
+  * 웹 클라이언트와 웹 서버 간에 보안된 데이터 전송에 사용됩니다.   
+* FTP
+  * 두 대 이상의 컴퓨터 간에 파일을 전송하는데 사용됩니다.
+
+[맨위로](#network)
+
+## TCP/IP와 OSI 모델을 비교해보세요.
+TCP/IP는 네트워크의 정보 흐름을 설명하는 대체 모델입니다.   
+OSI 모델에 비해 더 간단한 표현이지만 OSI 모델보다 프로토콜에 대한 세부 정보가 적게 포함되어 있습니다.   
+
+![1]()
+
+[맨위로](#network)
+
+## UDP가 TCP보다 좋습니까?
+두 프로토콜은 서로 다른 용도로 사용됩니다.   
+사용자가 오류 없는 데이터 전송을 원할 경우 TCP를 선택할 수 있습니다.   
+사용자가 빠른 데이터 전송을 원하고 약간의 데이터 손실이 문제가 되지 않는다면 UDP를 선택할 수 있습니다.
+
+[맨위로](#network)
+
+## Telnet 과 DNS의 포트 번호는 무엇입니까?
+* Telnet은 원격 서버에 접근하는데 사용되는 프로토콜이지만 안전하지 않습니다.
+  * 포트 번호는 23입니다.
+* DNS는 도메인 이름을 IP 주소로 변환하는데 사용되는 프로토콜입니다.
+  * 포트 번호는 53입니다.
+
+[맨위로](#network)
+
+## UDP 패킷 형식은 무엇입니까?
+UDP 패킷 형식에는 4개의 필드가 있습니다.
+* Source Port와 Destination Port (각각 16 bits)
+  * Connection의 Endpoints
+* Length (16 bits)
+  * 헤더와 데이터의 길이
+* Checksum (16 bits)
+  * 패킷 무결성 검사를 허용합니다. (optional)
+
+![2]()
+
+[맨위로](#network)
+
+## TCP 패킷 형식은 무엇입니까?
+* Source Port와 Destination Port (각각 16 bits)
+* Sequence Number (32 bits)
+* Acknowledgement Number (32 bits)
+* Data Offset (= Header Length) (가변 길이)
+* Reserved (6 bits)
+* Flags (6 bits)
+  * URG,  ACK, PSH, RST, SYN, FIN
+* Window (16 bits)
+* Checksum (16 bits)
+* Urgent pointer (16 bits)
+* Options (가변 길이) & Data (가변 길이)
+
+![3]()
+
+[맨위로](#network)
+
+## TCP/IP 포트와 프로토콜을 나열해보세요.
+![4]()
+
+[맨위로](#network)
+
 ## 참고
 * [Top 20+ HTTP Interview Questions (2021) - javatpoint](https://www.javatpoint.com/http-interview-questions)
+* [Top 10 Interview Questions & Answers | TCP/UDP - All About ...](https://allabouttesting.org/top-10-interview-questions-tcpudp/)
 
 [맨위로](#network)
