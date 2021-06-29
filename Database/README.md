@@ -20,6 +20,12 @@
 * [일대일 연관 관계란?](#일대일-연관-관계란)
 * [일대다 연관 관계란?](#일대다-연관-관계란)
 * [다대다 연관 관계란?](#다대다-연관-관계란)
+* [select문 문법]()
+* [Truncate와 Delete의 차이점은 무엇입니까?]()
+* [Having과 Where의 차이점은 무엇입니까?]()
+* [테이블에서 중복된 레코드를 삭제하는 방법은 무엇입니까?]()
+* [UNION과 UNION ALL의 차이점은 무엇입니까?]()
+* [primary key, foreign key, unique key란 무엇입니까?]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -187,6 +193,58 @@
 * 학생은 1년에 하나 이상의 과목을 선택할 수 있습니다.
 * 마찬가지로 과목은 한 명 이상의 학생에게 선택 될 수 있습니다.
 * 그래서 다대다 관계를 구현하기 위해 연결 테이블을 만듭니다.
+
+[맨위로](#database)
+
+## select문 문법
+```
+SELECT Columns | *
+FROM   Table_Name
+[WHERE  Search_Condition]
+[GROUP BY Group_By_Expression]
+[HAVING Search_Condition]
+[ORDER BY Order_By_Expression [ASC|DESC]]
+```
+
+[맨위로](#database)
+
+## Truncate와 Delete의 차이점은 무엇입니까?
+truncate와 delete 모두 테이블에서 데이터를 삭제하는 데 사용됩니다.   
+* Truncate는 DDL(Data Definition Language), Delete는 DML(Data Manipulation Language) 입니다.
+* delete는 커밋하기 전에 롤백이 가능하지만, truncate는 롤백이 불가능합니다.
+* Truncate는 테이블에 생성된 삭제 트리거를 발생시키지 않지만, Delete는 발생시킵니다.
+
+[맨위로](#database)
+
+## Having과 Where의 차이점은 무엇입니까?
+* Where절은 그룹화하기 전에 행을 필터링하고, Having절은 그룹화 후에 행이 필터링됩니다.   
+* Where절에는 집계 함수를 사용할 수 없고, Having절에는 집계 함수를 사용할 수 있습니다.
+  * ex) 집계 함수 예: sum, avg, count 등등
+
+[맨위로](#database)
+
+## 테이블에서 중복된 레코드를 삭제하는 방법은 무엇입니까?
+```
+DELETE FROM <table name>
+WHERE <primary key columns> NOT IN
+ (SELECT MAX(rowid) FROM <table name>
+  Group by <primary key columns>;
+```
+
+[맨위로](#database)
+
+## UNION과 UNION ALL의 차이점은 무엇입니까?
+* UNION과 UNION ALL 모두 둘 이상의 테이블에서 행을 병합하는 데 사용됩니다.
+* UNION은 중복된 레코드를 제거하지만 UNION ALL은 중복된 레코드를 제거하지 않습니다.
+* UNION은 데이터를 오름차순으로 정렬하지만 UNION ALL은 그렇지 않습니다.
+* UNION ALL이 UNION 보다 빠릅니다.
+
+[맨위로](#database)
+
+## primary key, foreign key, unique key란 무엇입니까?
+* 기본키(primary key): primary key는 테이블의 각 행을 고유하게 식별하는 데 사용되며 null 값은 허용하지 않습니다.
+* 외래키(foreign key): foreign key는 다른 테이블의 primary key 값을 기반으로 하는 하나 이상의 열입니다.
+* 고유키(unique key): unique key는 테이블의 각 행을 고유하게 식별하며, null 값을 허용합니다.
 
 [맨위로](#database)
 
