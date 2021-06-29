@@ -9,4 +9,4 @@
 * [Spring Data JPA](https://github.com/smpark1020/tech-interview/tree/master/Spring%20Data%20JPA)
 * [Database](https://github.com/smpark1020/tech-interview/tree/master/Database)
 * [Network](https://github.com/smpark1020/tech-interview/tree/master/Network)
-* [Etc]()
+* [Etc](https://github.com/smpark1020/tech-interview/tree/master/Etc)
