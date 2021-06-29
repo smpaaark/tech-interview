@@ -10,6 +10,17 @@
 * [HTTP 응답이란 무엇입니까?](#http-응답이란-무엇입니까)
 * [HTTP Security란 무엇입니까?](#http-security란-무엇입니까)
 * [HTTP에서 200 OK 응답 코드는 무엇입니까?](#http에서-200-ok-응답-코드는-무엇입니까)
+* [HTTP에서 201 Created 응답 코드는 무엇입니까?]()
+* [HTTP에서 300 Multiple Choices 응답 코드는 무엇입니까?]()
+* [HTTP에서 400 Bad Request 응답 코드는 무엇입니까?]()
+* [HTTP에서 401 Unauthorized 응답 코드는 무엇입니까?]()
+* [HTTP에서 405 Method Not Allowed 응답 코드는 무엇입니까?]()
+* [HTTP에서 408 Request Timeout 응답 코드는 무엇입니까?]()
+* [IP는 어떤 OSI 계층에 속합니까?]()
+* [HTTP의 다른 역할은 무엇입니까?]()
+* [HTTPS란 무엇입니까?]()
+* [HTTP의 컨텐츠 협상(Content Negotiation)이란 무엇입니까?]()
+* [HTTP 컨텐츠 협상(Content Negotiation)의 다른 유형은 무엇이 있습니까?]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -126,6 +137,83 @@ HTTP는 인터넷을 통해 통신하는데 사용되므로 사용자, 정보 �
 
 ## HTTP에서 200 OK 응답 코드는 무엇입니까?
 요청이 성공했음을 표시하는 데 사용됩니다.
+
+[맨위로](#network)
+
+## HTTP에서 201 Created 응답 코드는 무엇입니까?
+요청이 수행되어 새 리소스가 생성되었음을 나타냅니다.  
+
+[맨위로](#network)
+
+## HTTP에서 300 Multiple Choices 응답 코드는 무엇입니까?
+클라이언트가 선택할 수 있는 리소스에 대한 여러가지 옵션을 나타내는 데 사용됩니다.
+
+[맨위로](#network)
+
+## HTTP에서 400 Bad Request 응답 코드는 무엇입니까?
+요청이 잘못되어 서버가 요청을 이해하지 못했음을 나타내는 데 사용됩니다.
+
+[맨위로](#network)
+
+## HTTP에서 401 Unauthorized 응답 코드는 무엇입니까?
+리소스에 접근하기 전에 인증을 수행해야 함을 표시하는 데 사용됩니다.
+
+[맨위로](#network)
+
+## HTTP에서 405 Method Not Allowed 응답 코드는 무엇입니까?
+요청 메서드가 요청된 리소스에서 지원되지 않음을 나타냅니다.
+
+[맨위로](#network)
+
+## HTTP에서 408 Request Timeout 응답 코드는 무엇입니까?
+요청이 서버가 대기하도록 설정된 시간보다 오래 걸렸다는 것을 나타내는 데 사용됩니다.
+
+[맨위로](#network)
+
+## ## HTTP에서 500 Internal Server Error 응답 코드는 무엇입니까?
+서버에 에러가 발생했고 서버에서 처리 방법을 알 수 없음을 나타내는 데 사용됩니다.
+
+[맨위로](#network)
+
+## IP는 어떤 OSI 계층에 속합니까?
+OSI 계층의 세 번째 계층인 네트워크 계층에 속합니다.
+
+[맨위로](#network)
+
+## HTTP의 다른 역할은 무엇입니까?
+HTTP는 주로 html 문서를 가져와서 클라이언트로 전송하도록 설계되었습니다.   
+HTTP는 지속적으로 발전하고 기능이 추가되면서 웹에서 데이터를 빠르고 안정적으로 이동시킬 수 있는 가장 편리한 방법이 되었습니다.
+
+[맨위로](#network)
+
+## HTTPS란 무엇입니까?
+Hypertext Transfer Protocol Secure를 나타냅니다.   
+HTTPS에는 보안 전송 기능이 있습니다.   
+HTTPS는 웹 서버에서 반환되는 사용자 HTTP 페이지 또는 HTTP 페이지 요청을 암호화/복호화 하는 데 사용됩니다.   
+
+[맨위로](#network)
+
+## HTTP의 컨텐츠 협상(Content Negotiation)이란 무엇입니까?
+대부분의 HTTP 응답에는 사용자가 해석할 수 있는 정보가 포함된 엔티티가 포함됩니다.   
+이것은 요청에 따른 최상의 사용 가능한 엔티티를 사용자에게 제공하기 위해 사용됩니다.   
+그러나 캐시와 서버의 경우 모든 사용자가 최선에 대해 동일한 선호도를 가지는 것은 아닙니다.   
+그렇기 때문에 HTTP에는 여러 가지 표현을 사용할 수 있을 때 주어진 응답에 가장 적합한 표현을 선택하는 프로세스인 컨텐츠 협상(Content Negotiation)을 위한 여러 메커니즘이 마련되어 있습니다.
+
+[맨위로](#network)
+
+## HTTP 컨텐츠 협상(Content Negotiation)의 다른 유형은 무엇이 있습니까?
+* 서버 중심 협상(Server-driven Negotiation)
+  * 서버에 있는 알고리즘을 통해 응답에 가장 적합한 표현을 선택합니다.
+* 에이전트 중심 협상(Agent-driven Negotiation)
+  * 사용자 에이전트는 원래 서버로부터 초기 응답을 받은 후 응답에 가장 적합한 표현을 선택합니다.
+* 투명한 협상(Transparent Negotiation)
+  * 서버 중심 협상과 에이전트 중심 협상의 조합입니다.
+
+[맨위로](#network)
+
+## HTTP에서 100 Continue 응답 코드는 무엇입니까?
+클라이언트가 요청을 계속해야 함을 표시하는데 사용됩니다.    
+중간 응답은 요청의 초기 부분이 수신되었음을 클라이언트에게 알립니다.   
 
 [맨위로](#network)
 
