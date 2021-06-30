@@ -1,4 +1,14 @@
 # Java
+* [JVM, JRE, JDK의 차이점]()
+* [Java가 플랫폼에 독립적인 이유]()
+* [바이트코드(bytecode)]()
+* [JVM이 Java 프로그램을 실행하는 방법]()
+* [클래스 로더(Class Loader)]()
+* [클래스 로더 종류]()
+* [클래스 로드 단계]()
+* [Runtime Data Area(런타임 데이터 영역)]()
+* [JVM의 Java 프로그램 실행 단계]()
+
 * [primitive variable와 reference variable의 차이점](#primitive-variable와-reference-variable의-차이점)
 * [Java 변수의 종류](#java-변수의-종류)
 * [static variable이란?](#static-variable이란)
@@ -774,11 +784,150 @@ atomic, volatile, synchronization 모두 독립적인 속성이지만 변수 접
 
 [맨위로](#java)
 
+## JVM, JRE, JDK의 차이점
+JVM
+* Java Virtual Machine
+* java 바이트코드를 해석하고 실행하는 가상 머신입니다.
+* java 프로그램을 컴파일하면 바이트코드로 이루어진 .class 파일이 생성됩니다.
+* JVM은 바이트코드를 해석하고 .class 파일을 실행할 수 있습니다.
+* 윈도우, 리눅스 등 OS 별로 JVM이 구현되어 있습니다.
+  * 각 JVM은 모두 동일한 .class 파일을 실행할 수 있습니다.
+  * 이러한 이유로 Java는 플랫폼에 독립적입니다.   
+    * [Java가 플랫폼에 독립적인 이유 상세 설명]()
+
+JRE
+* Java Runtime Environment
+* JVM을 구현합니다.
+  * Java 프로그램을 실행하기 위해 필요한 라이브러리 및 기타 구성 요소를 지원합니다.
+* Java 프로그램의 두 가지 배포 방법을 가능하게 하는 구성요소를 제공합니다.
+
+JDK
+* Java Development Kit
+* JRE + (개발자가 Java 프로그램을 개발하는데 필요한 컴파일러, 디버거 등의 툴)
+
+[맨위로](#java)
+
+## Java가 플랫폼에 독립적인 이유
+Java 프로그램을 컴파일하면 바이트코드로 이루어진 .class 파일이 생성됩니다.   
+JVM은 바이트코드를 해석하고 Java 프로그램을 실행시켜줍니다.   
+JVM은 특정 플랫폼(윈도우, 리눅스 등) 별로 구현됩니다.   
+각 플랫폼 별 JVM은 동일한 .class 파일을 실행시킬 수 있습니다.   
+따라서 Java는 한번 작성 및 컴파일하면 모든 플랫폼에서 실행시킬 수 있기 때문에 플랫폼에 독립적인 것입니다.   
+
+[맨위로](#java)
+
+## 바이트코드(bytecode)
+개발자가 프로그램을 개발할 때 사용하는 언어인 Java와 프로그램을 실행하는 기계어의 중간 언어입니다.   
+Java 프로그램을 컴파일하면 바이트코드로 이루어진 .class 파일이 생성됩니다.   
+JVM은 클래스 로더를 통해 Java 클래스를 로드하고 실행시킵니다.   
+
+[맨위로](#java)
+
+## JVM이 Java 프로그램을 실행하는 방법
+Java 프로그램(.java 파일)은 컴파일러(javac)를 통해 바이트코드(.class 파일)로 컴파일됩니다.   
+클래스 로더는 컴파일된 Java 바이트코드를 런타임 데이터 영역으로 로드합니다.   
+Java 실행 엔진은 Java 바이트 코드를 실행합니다.   
+
+[맨위로](#java)
+
+## 클래스 로더(Class Loader)
+런타임 시 클래스 파일을 로드하는 JVM의 구성 요소입니다.   
+
+클래스 로더의 특징
+* Hierarchy(계층)
+  * 부모-자식 관계가 있는 계층 구조입니다.
+  * Bootstrap class loader(부트스트랩 클래스 로더)가 모든 클래스 로더의 최상위 부모입니다.
+* Delegation model(위임 모델)
+  * 클래스를 로드하기 전에 부모 클래스 로더가 해당 클래스를 이미 로드했는지 확인합니다.
+  * 부모 클래스 로더가 해당 클래스를 이미 로드한 경우 해당 클래스가 사용됩니다.
+  * 부모 클래스 로더가 클래스를 로드하지 않은 경우 자식 클래스 로더가 클래스를 로드하여 사용합니다.
+* Visibility(가시성)
+  * 자식 클래스 로더는 부모 클래스 로더의 클래스를 찾을 수 있지만 부모 클래스 로더는 하위 클래스 로더의 클래스를 찾을 수 없습니다.
+* Deletion(삭제)
+  * 클래스 로더가 클래스를 로드한 후에는 그 클래스를 다시 언로드 할 수 없습니다.
+  * 그래서 클래스 로더를 삭제하고 새로운 클래스 로더를 생성하는 옵션이 있습니다.
+
+[맨위로](#java)
+
+## 클래스 로더 종류
+4개의 주요 클래스 로더가 있습니다.   
+* Bootstrap class loader(부트스트랩 클래스 로더)
+  * 클래스 로더 계층 중 최상위 클래스 로더입니다.
+  * Java API 클래스를 로드합니다.
+* Extension class loader(확장 클래스 로더)
+  * Java API 확장 클래스를 로드합니다.
+* System class loader(시스템 클래스 로더)
+  * 사용자 또는 애플리케이션이 정의한 클래스 경로(class-path)에서 모든 애플리케이션 관련 클래스 파일을 로드합니다.
+* User defined class loader(사용자 정의 클래스 로더)
+  * 프레임워크 또는 애플리케이션 서버에 의해 정의된 클래스 로더입니다.
+
+[맨위로](#java)
+
+## 클래스 로드 단계
+클래스가 로드되고 초기화되는 단계는 다음과 같습니다.
+* Load(로드)
+  * 클래스 파일이 JVM 메모리에 로드됩니다.
+* Verify(검증)
+  * 클래스가 Java 언어 및 JVM 스펙에 준수하는지 확인합니다.
+* Prepare(준비)
+* Resolve(분석)
+  * 심볼릭 레퍼런스를 실제 레퍼런스로 변경합니다.
+* Initialize(초기화)
+  * 클래스 변수 및 static 변수를 초기화합니다.
+
+[맨위로](#java)
+
+## Runtime Data Area(런타임 데이터 영역)
+JVM을 실행할 때 OS로부터 할당된 메모리 영역입니다.   
+런타임 데이터 영역은 두 종류가 있습니다.
+* 각 스레드마다 생성되는 영역
+* 모든 스레드가 공유하는 영역
+
+각 스레드마다 생성되는 영역은 PC Register, JVM Stack, Navive Method Stack이 있습니다.
+* PC Register
+  * Program Counter Register
+  * PC Register에는 현재 실행 중인 JVM 명령의 주소가 있습니다.
+  * 각 JVM 스레드가 시작될 때 해당 스레드에 PC Register가 생성됩니다.
+* JVM Stack
+  * 각 JVM 스레드에 생성되며 Stack Frame을 저장합니다.
+  * 메서드가 실행되면 Stack Frame이 생성되어 JVM Stack에 추가되고, 메서드가 종료되면 JVM Stack에서 제거됩니다.
+* Native Method Stack
+  * Java 이외의 언어로 작성된 Native Data의 Stack이며, JNI를 통해 호출됩니다.
+    * JNI: Java Native Interface
+  * 각 스레드에는 고유한 Native Method Stack이 있습니다.
+
+모든 스레드가 공유하는 영역은 Heap, Method area, Runtime Constant Pool(런타임 상수 풀)이 있습니다.
+* Heap
+  * Java 객체 인스턴스가 저장되고 Java Garbage Collector에 의해 제거되는 메모리 영역입니다.
+  * JVM 성능 향상을 위해 튜닝되는 메모리 영역 중 하나입니다.
+* Method area
+  * Runtime Constant Pool(런타임 상수 풀), 필드 및 메서드 정보, 모든 클래스의 static 변수 및 메서드 바이트코드, JVM에 로드된 인터페이스가 저장됩니다.
+* Runtime constant pool(런타임 상수 풀)
+  * 각 클래스 및 인터페이스의 상수와 메서드 및 필드에 대한 모든 참조가 포함됩니다.
+  * 메서드 또는 필드가 참조되면 JVM은 Runtime constant pool(런타임 상수 풀)에서 메서드 또는 필드의 실제 주소를 가져옵니다.
+
+[맨위로](#java)
+
+## JVM의 Java 프로그램 실행 단계
+런타임 데이터 영역에 로드된 class 파일(또는 바이트코드)는 JVM의 Execution engine(실행 엔진)에 의해 실행됩니다.   
+Execution engine(실행 엔진)은 실행하기 전에 바이트코드를 읽고 해당 OS가 이해할 수 있는 네이티브 코드로 변환시킵니다.   
+
+Execution engine(실행 엔진)은 바이트코드를 네이티브 코드로 변환하는 데 두 가지를 사용합니다.
+* Interpreter
+  * Execution engine(실행 엔진)은 바이트코드를 한줄씩 읽고 해석하여 실행합니다.   
+  * 바이트코드를 해석한 다음 실행해야 하므로 실행 속도가 느립니다.
+* JIT (Just In Time) Compiler
+  * JIT (Just In Time) Compiler가 전체 바이트코드를 네이티브 코드로 컴파일하는 동안 Execution engine(실행 엔진)은 먼저 Interpreter를 실행합니다.
+  * 네이티브 코드가 생성되면 Execution engine(실행 엔진)은 더이상 바이트코드를 해석하지 않고 네이티브 코드를 직접 실행합니다.
+
+[맨위로](#java)
+
 ## 참고
 * [Java - Variables Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_variables)
 * [Java Synchronization Interview Questions](http://www.javainterview.in/p/java-synchronization-interview-questions.html)
 * [Immutable class interview questions](https://java2blog.com/immutable-class-interview-questions/)
 * [Top 10 Java ConcurrentHashMap Interview](https://javarevisited.blogspot.com/2017/08/top-10-java-concurrenthashmap-interview.html)
 * [Java Atomic Datatype: Interview Reference | by Anish Antony ...](https://medium.com/javarevisited/java-atomic-datatype-interview-reference-a463632d0d1a)
+* [Java - JVM Internals Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_jvm_internals)
 
 [맨위로](#java)
