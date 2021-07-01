@@ -1,19 +1,18 @@
 # Java
-* [JVM]()
-  * [JVM, JRE, JDK의 차이점]()
-  * [Java가 플랫폼에 독립적인 이유]()
-  * [바이트코드(bytecode)]()
-  * [클래스 로더(Class Loader)]()
-  * [클래스 로더 종류]()
-  * [클래스 로드 단계]()
-  * [Runtime Data Area(런타임 데이터 영역)]()
-  * [JVM의 Java 프로그램 실행 단계]()
-* [Variable(변수)]()
-  * [Privimitive Variable(변수)와 Reference variable(변수)의 차이점]()
-  * [Java 변수 종류]()
-  * [Final variable]()
-  * [Transient variable]()
-  * [Volatile variable]()
+* [JVM](#jvm)
+  * [JVM, JRE, JDK의 차이점](#jvm-jre-jdk의-차이점)
+  * [Java가 플랫폼에 독립적인 이유](#java가-플랫폼에-독립적인-이유)
+  * [바이트코드(bytecode)](#바이트코드bytecode)
+  * [클래스 로더(Class Loader)](#클래스-로더class-loader)
+  * [클래스 로더 종류](#클래스-로더-종류)
+  * [클래스 로드 단계](#클래스-로드-단계)
+  * [Runtime Data Area(런타임 데이터 영역)](#runtime-data-area런타임-데이터-영역)
+  * [JVM의 Java 프로그램 실행 단계](#jvm의-java-프로그램-실행-단계)
+* [Variable(변수)](#variable변수)
+  * [Java 변수 종류](#java-변수-종류)
+  * [Final variable](#final-variable)
+  * [Transient variable](#transient-variable)
+  * [Volatile variable](#volatile-variable)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -28,7 +27,7 @@ JVM
 * 윈도우, 리눅스 등 OS 별로 JVM이 구현되어 있습니다.
   * 각 JVM은 모두 동일한 .class 파일을 실행할 수 있습니다.
   * 이러한 이유로 Java는 플랫폼에 독립적입니다.   
-    * [Java가 플랫폼에 독립적인 이유 상세 설명]()
+    * [Java가 플랫폼에 독립적인 이유 상세 설명](#java가-플랫폼에-독립적인-이유)
 
 JRE
 * Java Runtime Environment
@@ -154,7 +153,8 @@ Execution engine(실행 엔진)은 바이트코드를 네이티브 코드로 변
 [맨위로](#java)
 
 ## Variable(변수)
-### Privimitive Variable와 Reference variable의 차이점 
+### Java 변수 종류
+Java에는 기본적으로 Privimitive Variable와 Reference variable라는 두 가지 변수가 있습니다.  
 Privimitive Variable은 기본 리터럴 값이고, Reference variable는 객체에 대한 참조 값입니다.   
 ```
 class MyClass {
@@ -169,13 +169,6 @@ class MyClass {
 
 }
 ```
-
-[맨위로](#java)
-
-### Java 변수 종류
-Java에는 기본적으로 Privimitive Variable와 Reference variable라는 두 가지 변수가 있습니다.  
-Privimitive Variable은 기본 리터럴 값이고, Reference variable는 객체에 대한 참조 값입니다.   
-* 참고: [Privimitive Variable와 Reference variable의 차이점]()
 
 scope에 따라 변수는 Class variable, Instance variable, Local variable, Block variable 4가지 유형으로 나뉩니다.   
 변수의 scope은 Java 클래스 내에 선언된 위치에 따라 결정됩니다.   
