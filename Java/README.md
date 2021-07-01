@@ -13,12 +13,12 @@
   * [Final variable](#final-variable)
   * [Transient variable](#transient-variable)
   * [Volatile variable](#volatile-variable)
-* [Synchronization(동기화)]()
-  * [스레드 동기화]()
-  * [static 메서드 동기화]()
-  * [Thread 클래스의 메서드 종류]()
-  * [Deadlock(교착 상태)]()
-  * [스레드 간 통신할 때 주요한 메서드]()
+* [Synchronization(동기화)](#synchronization동기화)
+  * [스레드 동기화](#스레드-동기화)
+  * [static 메서드 동기화](#static-메서드-동기화)
+  * [Thread 클래스의 메서드 종류](#thread-클래스의-메서드-종류)
+  * [Deadlock(교착 상태)](#deadlock교착-상태)
+  * [스레드 간 통신할 때 주요한 메서드](#스레드-간-통신할-때-주요한-메서드)
   
 * [참고](#참고)
 
