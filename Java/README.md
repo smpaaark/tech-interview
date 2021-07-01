@@ -13,6 +13,13 @@
   * [Final variable](#final-variable)
   * [Transient variable](#transient-variable)
   * [Volatile variable](#volatile-variable)
+* [Synchronization(동기화)]()
+  * [스레드 동기화]()
+  * [static 메서드 동기화]()
+  * [Thread 클래스의 메서드 종류]()
+  * [Deadlock(교착 상태)]()
+  * [스레드 간 통신할 때 주요한 메서드]()
+  
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -290,8 +297,122 @@ class MyClass {
 
 [맨위로](#java)
 
+## Synchronization(동기화)
+### 스레드 동기화
+스레드는 병렬로 실행되기 때문에 하나의 스레드는 데이터를 읽고 다른 하나의 스레드는 해당 데이터를 수정하는 하는 것과 같은 동기화 문제가 발생합니다.   
+
+
+메서드에 'synchronized' 키워드를 붙이면 여러 스레드가 동일한 메서드를 동시에 실행하지 못하도록 막을 수 있습니다.   
+```
+synchronized int setandGetSum(int a1, int a2, int a3) {
+    cell1 = a1;
+    sleepForSomeTime();
+    cell2 = a2;
+    sleepForSomeTime();
+    cell3 = a3;
+    sleepForSomeTime();
+    return cell1 + cell2 + cell3;
+}
+```
+
+블럭에 'synchronized' 키워드를 붙이면 여러 스레드가 동일한 블럭을 동시에 실행하지 못하도록 막을 수 있습니다. 
+```
+void synchronizedExample2() {
+    synchronized (this){
+        //All code goes here..
+    }
+}
+```
+
+[맨위로](#java)
+
+### static 메서드 동기화
+static 메서드와 static 블록은 클래스 기준으로 동기화됩니다.   
+instance 메서드와 블록은 생성된 객체 인스턴스 기준으로 동기화됩니다.   
+따라서 static 동기화 메서드와 instance 동기화 메서드는 서로 전혀 영향을 주지 않습니다.   
+```
+synchronized static int getCount(){
+    return count;
+}
+
+static int getCount2(){
+    synchronized (SynchronizedSyntaxExample.class) {
+        return count;
+    }
+}
+```
+여기서 서로 다른 스레드에서 getCount()와 getCount2()를 각각 호출해도 count에 접근하는 것은 서로 영향을 주지 않습니다.   
+
+[맨위로](#java)
+
+### Thread 클래스의 메서드 종류
+join 메서드
+* Thread 클래스의 instance 메서드입니다.   
+* join() 메서드를 호출한 스레드가 완료될 때까지 메인 메서드의 실행을 강제로 중지합니다.   
+```
+thread3.start();
+thread2.start();
+thread3.join();// 스레드3이 완료될 때까지 메인 메서드는 중지됩니다.
+System.out.println("Thread3 is completed.");
+thread4.start();
+```
+* 오버로드된 join 메서드
+  * 시간(milliseconds)을 매개 변수로 받는 오버로드 된 join 메서드도 있습니다.
+  * 아래 예시에서 메인 메서드는 2000ms 또는 스레드4 실행 종료 중 최소값까지 중지됩니다.
+  ```
+  thread4.join(2000);
+  ```
+
+yield 메서드
+* Thread 클래스의 static 메서드입니다.
+* 스레드의 상태를 RUNNING에서 RUNNABLE로 변경합니다.
+* 하지만 해당 스레드의 우선 순위가 가장 높을 경우 스케줄러는 다시 해당 스레드를 선택하여 실행할 수 있습니다.
+
+sleep 메서드
+* Thread 클래스의 static 메서드입니다.
+* InterruptedException이 발생할 수 있습니다.
+* 스레드가 지정된 시간(milliseconds) 동안 일시정지가 됩니다.
+
+[맨위로](#java)
+
+### Deadlock(교착 상태)
+스레드1이 스레드2를 기다리고 스레드2가 스레드1을 기다리는 상태를 교착 상태라고 합니다.   
+교착 상태에서는 이러한 두 스레드가 서로를 영원히 기다립니다.   
+
+[맨위로](#java)
+
+### 스레드 간 통신할 때 주요한 메서드
+wait 메서드
+* Object 클래스에 정의되어 있습니다.
+* notify 될 때까지 스레드가 대기하게 됩니다.
+```
+synchronized(thread){
+    thread.start();
+    thread.wait();
+}
+```
+
+notify 메서드
+* Object 클래스에 정의되어 있습니다.
+* wait 중인 스레드에게 notify 요청 보냅니다.
+```
+synchronized (this) {
+    calculateSumUptoMillion();
+    notify();
+}
+```
+
+notifyAll 메서드
+* wait 상태인 스레드가 둘 이상인 경우 해당 스레드들에게 notify 요청을 보냅니다.
+```
+thread.notifyAll();
+```
+
+[맨위로](#java)
+
 ## 참고
 * [Java - JVM Internals Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_jvm_internals)
 * [Java - Variables Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_variables)
+* [Java Synchronization Interview Questions](http://www.javainterview.in/p/java-synchronization-interview-questions.html)
 
 [맨위로](#java)
