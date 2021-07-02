@@ -1,5 +1,5 @@
 # Mybatis
-* [Mybatis](#mybatis)
+* [Mybatis](#mybatis-1)
 * [mybatis의 장점](#mybatis의-장점)
 * [mybatis의 단점](#mybatis의-단점)
 * [Mybatis와 Hibernate의 차이점](#mybatis와-hibernate의-차이점)
