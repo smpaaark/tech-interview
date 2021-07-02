@@ -1,5 +1,5 @@
 # Mybatis
-* [mybatis란?](#mybatis란)
+* [Mybatis](#mybatis)
 * [mybatis의 장점](#mybatis의-장점)
 * [mybatis의 단점](#mybatis의-단점)
 * [Mybatis와 Hibernate의 차이점](#mybatis와-hibernate의-차이점)
@@ -37,12 +37,12 @@
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
 
-## mybatis란?
+## Mybatis
 * Java 기반 영속성 계층 프레임워크입니다.
 * 내부적으로 jdbc를 캡슐화하므로 개발자가 Driver 로드, Connection 생성, Statement 생성 등의 복잡한 프로세스를 처리할 필요 없이 SQL문 자체에만 신경쓰면 됩니다.   
 * xml 또는 annotation으로 실행할 다양한 statement을 구성하고, java 객체에 있는 sql의 동적 파라미터와 statement를 매핑하여 최종 실행된 SQL문을 생성합니다.   
-  * mybatis 프레임워크는 sql을 실행하고 결과를 Java 객체에 매핑한 후 반환합니다.   
-* Custom SQL, Stored Procedure, 고급 매핑을 지원합니다.   
+* sql을 실행하고 결과를 Java 객체에 매핑한 후 반환합니다.   
+* 사용자 정의 SQL, 저장 프로시저, 고급 매핑을 지원합니다.   
 * 거의 모든 JDBC 코드를 사용하지 않고 수동으로 매개 변수를 설정하고 결과를 가져옵니다.   
 * xml 또는 annotation을 사용하여 매핑 인터페이스 및 Java POJO를 데이터베이스의 레코드에 구성하고 매핑할 수 있습니다.   
 
