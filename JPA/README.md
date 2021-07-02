@@ -1,23 +1,17 @@
 # JPA
-* [JPA(Java Persistence API)란?](#jpajava-persistence-api란)
-* [JPA는 데이터 접근, 유지, 관리와 같은 실제 작업을 수행합니까?](#jpa는-데이터-접근-유지-관리와-같은-실제-작업을-수행합니까)
-* [ORM(Object-Relational Mapping)이란?](#ormobject-relational-mapping이란)
+* [JPA(Java Persistence API)]()
+* [ORM(Object-Relational Mapping)]()
 * [JPA의 장점](#jpa의-장점)
-* [임베디드(@Embeddable) 클래스는 무엇입니까?](#임베디드embeddable-클래스는-무엇입니까)
-* [ORM 프레임워크의 종류](#orm-프레임워크의-종류)
-* [JPQL이란?](#jpql이란)
+* [임베디드(@Embeddable) 클래스]()
+* [JPQL]()
 * [엔티티 객체의 영속화 과정](#엔티티-객체의-영속화-과정)
-* [엔티티를 저장하는 과정](#엔티티를-저장하는-과정)
-* [엔티티를 조회하는 과정](#엔티티를-조회하는-과정)
-* [엔티티를 수정하는 과정](#엔티티를-수정하는-과정)
-* [엔티티를 삭제하는 과정](#엔티티를-삭제하는-과정)
-* [엔티티 매핑의 방향 종류](#엔티티-매핑의-방향-종류)
+* [엔티티 매핑의 방향]()
 * [엔티티 매핑의 종류](#엔티티-매핑의-종류)
-* [orphanRemoval란?](#orphanremoval란)
+* [orphanRemoval]()
 * [객체의 영속성 생명 주기](#객체의-영속성-생명-주기)
 * [식별자 생성 유형](#식별자-생성-유형)
-* [엔티티란 무엇입니까?](#엔티티란-무엇입니까)
-* [JPA에서 EntityManager의 역할](#jpa에서-entitymanager의-역할)
+* [엔티티]()
+* [EntityManager의 역할]()
 * [엔티티 클래스의 제약조건](#엔티티-클래스의-제약조건)
 * [JPA에서 Java 컬렉션의 목적은 무엇입니까?](#jpa에서-java-컬렉션의-목적은-무엇입니까)
 * [JPA 컬렉션 매핑에 저장할 수 있는 객체 타입은 무엇입니까?](#jpa-컬렉션-매핑에-저장할-수-있는-객체-타입은-무엇입니까)
@@ -31,23 +25,17 @@
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
 
-## JPA(Java Persistence API)란?
+## JPA(Java Persistence API)
 JPA는 Java 객체와 관계형 데이터베이스 간에 데이터를 유지하는데 사용하는 Java의 스펙입니다.   
 JPA는 객체 지향 도메인 모델과 관계형 데이터베이스 간의 연결 다리 역할을 합니다.   
 JPA는 스펙에 불과하기 때문에 자체적으로 어떠한 작업도 수행하지 않습니다.   
 * 구현이 필요합니다.
-* Hibernate, TopLink 및 iBatis와 같은 ORM 도구는 데이터 영속성을 위해 JPA 스펙을 구현합니다.
+* Hibernate 같은 ORM 도구가 JPA 스펙을 구현합니다.
+* 즉 JPA는 데이터 접근, 유지, 관리와 같은 실제 작업을 직접 수행하지 않습니다.
 
 [맨위로](#JPA)
 
-## JPA는 데이터 접근, 유지, 관리와 같은 실제 작업을 수행합니까?
-수행하지 않습니다.   
-JPA는 스펙에 불과합니다.   
-Hibernate, iBatis 및 TopLink와 같은 ORM 도구는 JPA 스펙을 구현하고 이러한 유형의 작업을 수행합니다.   
-
-[맨위로](#JPA)
-
-## ORM(Object-Relational Mapping)이란?
+## ORM(Object-Relational Mapping)
 ORM은 객체 상태를 데이터베이스 컬럼에 매핑하여 객체와 관계형 데이터베이스 간의 관계를 개발하고 유지하는데 사용되는 메커니즘입니다.   
 프로그래밍 코드의 속성을 테이블의 컬럼으로 변환합니다.   
 select, insert, update, delete 등과 같은 다양한 데이터베이스 작업을 쉽게 처리할 수 있습니다.
@@ -65,23 +53,14 @@ select, insert, update, delete 등과 같은 다양한 데이터베이스 작업
 
 [맨위로](#JPA)
 
-## 임베디드(@Embeddable) 클래스는 무엇입니까?
+## 임베디드(@Embeddable) 클래스
 임베디드 클래스는 엔티티의 상태를 나타내지만 고유한 ID가 없습니다.   
 이러한 클래스의 객체는 해당 객체를 소유한 엔티티 클래스의 ID를 공유합니다.   
 엔티티는 단일 값 또는 다중 값 임베디드 클래스 속성을 가질 수 있습니다.
 
 [맨위로](#JPA)
 
-## ORM 프레임워크의 종류
-* Hibernate
-* TopLink
-* ORMLite
-* iBATIS
-* JPOX
-
-[맨위로](#JPA)
-
-## JPQL이란?
+## JPQL
 JPQL은 JPA 스펙에 정의된 Java 영속성 쿼리 언어입니다.   
 쿼리를 구성하는데 사용됩니다.   
 
@@ -122,7 +101,7 @@ em.close();
 
 [맨위로](#JPA)
 
-## 엔티티를 저장하는 과정
+### 엔티티를 저장하는 과정
 EntityManager는 레코드를 추가하는 persist() 메서드를 제공합니다.   
 * 엔티티 클래스를 생성합니다.
 * persistence.xml 파일에서 엔티티 클래스 및 기타 데이터베이스 구성을 매핑합니다.
@@ -155,7 +134,7 @@ public class PersistStudent {
 
 [맨위로](#JPA)
 
-## 엔티티를 조회하는 과정
+### 엔티티를 조회하는 과정
 엔티티를 조회하기 위해 EntityManager 인터페이스는 기본 키를 기준으로 조회하는 find() 메서드를 제공합니다.   
 * 엔티티 클래스를 생성합니다.
 * persistence.xml 파일에서 엔티티 클래스 및 기타 데이터베이스 구성을 매핑합니다.
@@ -184,7 +163,7 @@ public class FindStudent {
 
 [맨위로](#JPA)
 
-## 엔티티를 수정하는 과정
+### 엔티티를 수정하는 과정
 JPA를 사용하면 엔티티를 업데이트하여 데이터베이스의 레코드를 변경할 수 있습니다.
 * 엔티티 클래스를 생성합니다.
 * persistence.xml 파일에서 엔티티 클래스 및 기타 데이터베이스 구성을 매핑합니다.
@@ -214,7 +193,7 @@ public class UpdateStudent {
 
 [맨위로](#JPA)
 
-## 엔티티를 삭제하는 과정
+### 엔티티를 삭제하는 과정
 데이터베이스에서 레코드를 삭제하기 위해 EntityManager 인터페이스는 remove() 메서드를 제공합니다.   
 remove() 메서드는 기본 키를 사용하여 특정 레코드를 삭제합니다.   
 * 엔티티 클래스를 생성합니다.
@@ -244,7 +223,7 @@ public class DeleteStudent {
 
 [맨위로](#JPA)
 
-## 엔티티 매핑의 방향 종류
+## 엔티티 매핑의 방향
 매핑의 방향은 단방향 또는 양방향일 수 있습니다.   
 단방향 매핑에서는 한 엔티티에만 다른 엔티티를 매핑하고,   
 양방향 매핑에서는 각 엔티티를 다른 엔티티에 매핑합니다.   
@@ -267,7 +246,7 @@ public class DeleteStudent {
 
 [맨위로](#JPA)
 
-## orphanRemoval란?
+## orphanRemoval
 일대일 또는 일대다 연결의 대상 엔티티가 매핑에서 제거되면 삭제 작업이 엔티티에 수행될 수 있습니다.   
 이러한 대상 엔티티를 고아(orpahns)라고 하며 orphanRemoval 속성을 사용하여 매핑이 끊어진 엔티티를 삭제해야 함을 지정할 수 있습니다.   
 
@@ -302,7 +281,7 @@ public class DeleteStudent {
 
 [맨위로](#JPA)
 
-## 엔티티란 무엇입니까?
+## 엔티티
 엔티티는 단일 단위로 함께 연결된 상태 그룹입니다.   
 엔티티는 객체로서 동작하며 객체 지향 패러다임의 주요 구성 요소가 됩니다.   
 즉, 엔티티는 Java Persistence Library의 애플리케이션 정의 객체라고 할 수 있습니다.   
@@ -310,7 +289,7 @@ public class DeleteStudent {
 
 [맨위로](#JPA)
 
-## JPA에서 EntityManager의 역할
+## EntityManager의 역할
 * API를 구현하고 모든 API를 단일 인터페이스 내에 캡슐화합니다.   
 * 엔티티를 읽고 삭제하고 쓰는데 사용됩니다.
 * 엔티티가 참조하는 객체를 관리합니다.
@@ -327,6 +306,8 @@ public class DeleteStudent {
 
 ## JPA에서 Java 컬렉션의 목적은 무엇입니까?
 래퍼 클래스 및 문자열 객체의 영속성을 유지하기 위해 사용합니다.   
+
+[맨위로](#JPA)
 
 ## JPA 컬렉션 매핑에 저장할 수 있는 객체 타입은 무엇입니까?
 * 기본 타입
