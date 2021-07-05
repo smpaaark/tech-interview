@@ -24,7 +24,7 @@
 * [String Pool](#string-pool)
 * [static 메서드와 non-static 메서드의 차이점](#static-메서드와-non-static-메서드의-차이점)
 * [Constructor Chaining(생성자 체이닝)](#constructor-chaining생성자-체이닝)
-* [String, StringBuilder, StringBuffer의 차이점](#string-stringbuilder-stringbuffer-차이점)
+* [String, StringBuilder, StringBuffer의 차이점](#string-stringbuilder-stringbuffer의-차이점)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
