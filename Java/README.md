@@ -1,418 +1,430 @@
 # Java
-* [JVM](#jvm)
-  * [JVM, JRE, JDK의 차이점](#jvm-jre-jdk의-차이점)
-  * [Java가 플랫폼에 독립적인 이유](#java가-플랫폼에-독립적인-이유)
-  * [바이트코드(bytecode)](#바이트코드bytecode)
-  * [클래스 로더(Class Loader)](#클래스-로더class-loader)
-  * [클래스 로더 종류](#클래스-로더-종류)
-  * [클래스 로드 단계](#클래스-로드-단계)
-  * [Runtime Data Area(런타임 데이터 영역)](#runtime-data-area런타임-데이터-영역)
-  * [JVM의 Java 프로그램 실행 단계](#jvm의-java-프로그램-실행-단계)
-* [Variable(변수)](#variable변수)
-  * [Java 변수 종류](#java-변수-종류)
-  * [Final variable](#final-variable)
-  * [Transient variable](#transient-variable)
-  * [Volatile variable](#volatile-variable)
-* [Synchronization(동기화)](#synchronization동기화)
-  * [스레드 동기화](#스레드-동기화)
-  * [static 메서드 동기화](#static-메서드-동기화)
-  * [Thread 클래스의 메서드 종류](#thread-클래스의-메서드-종류)
-  * [Deadlock(교착 상태)](#deadlock교착-상태)
-  * [스레드 간 통신할 때 주요한 메서드](#스레드-간-통신할-때-주요한-메서드)
-  
+* [JDK, JRE, JVM]()
+* [public static void main(String args[])]()
+* [Java가 플랫폼에 독립적인 이유]()
+* [Java가 100% 객체 지향적이지 않은 이유]()
+* [Wrapper 클래스]()
+* [Constructor(생성자)]()
+* [Singleton(싱글톤) 클래스]()
+* [ArrayList와 Vector의 차이점]()
+* [JVM의 Heap과 Stack의 차이점]()
+* [Package(패키지)]()
+* [Java에 포인터가 없는 이유]()
+* [JIT 컴파일러]()
+* [접근 제어자(access modifier)]()
+* [클래스 구조]()
+* [Object(객체)]()
+* [객체 지향 프로그래밍(OOP, Object Oriented Programming)]()
+* [로컬 변수(local variable)과 인스턴스 변수(instance variable)의 차이점]()
+* [final 키워드]()
+* [break와 continue의 차이점]()
+* [무한 루프(infinite loop)]()
+* [this()와 super()의 차이점]()
+* [String Pool]()
+* [static 메서드와 non-static 메서드의 차이점]()
+* [Constructor Chaining(생성자 체이닝)]()
+* [String, StringBuilder, StringBuffer 차이점]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
 
-## JVM
-### JVM, JRE, JDK의 차이점
-JVM
-* Java Virtual Machine
-* java 바이트코드를 해석하고 실행하는 가상 머신입니다.
-* java 프로그램을 컴파일하면 바이트코드로 이루어진 .class 파일이 생성됩니다.
-* JVM은 바이트코드를 해석하고 .class 파일을 실행할 수 있습니다.
-* 윈도우, 리눅스 등 OS 별로 JVM이 구현되어 있습니다.
-  * 각 JVM은 모두 동일한 .class 파일을 실행할 수 있습니다.
-  * 이러한 이유로 Java는 플랫폼에 독립적입니다.   
-    * [Java가 플랫폼에 독립적인 이유 상세 설명](#java가-플랫폼에-독립적인-이유)
+## JDK, JRE, JVM
+JDK
+* Java Development Kit의 약자입니다.
+* Java 프로그램을 컴파일, 문서화, 패키징하기 위해 필요한 도구입니다.
+* JRE + 개발 도구가 포함되어 있습니다.
 
 JRE
-* Java Runtime Environment
-* JVM을 구현합니다.
-  * Java 프로그램을 실행하기 위해 필요한 라이브러리 및 기타 구성 요소를 지원합니다.
-* Java 프로그램의 두 가지 배포 방법을 가능하게 하는 구성요소를 제공합니다.
+* Java Runtime Environment의 약자입니다.
+* Java bytecode(바이트코드)를 실행할 수 있는 런타임 환경을 말합니다.
+* JVM을 구현하는 것입니다.
 
-JDK
-* Java Development Kit
-* JRE + (개발자가 Java 프로그램을 개발하는데 필요한 컴파일러, 디버거 등의 툴)
-
-[맨위로](#java)
-
-### Java가 플랫폼에 독립적인 이유
-Java 프로그램을 컴파일하면 바이트코드로 이루어진 .class 파일이 생성됩니다.   
-JVM은 바이트코드를 해석하고 Java 프로그램을 실행시켜줍니다.   
-JVM은 특정 플랫폼(윈도우, 리눅스 등) 별로 구현됩니다.   
-각 플랫폼 별 JVM은 동일한 .class 파일을 실행시킬 수 있습니다.   
-따라서 Java는 한번 작성 및 컴파일하면 모든 플랫폼에서 실행시킬 수 있기 때문에 플랫폼에 독립적인 것입니다.   
+JVM
+* Java Virtual Machine의 약자입니다.
+* Java bytecode(바이트코드)를 실행할 수 있는 런타임 환경을 제공하는 스펙입니다.
 
 [맨위로](#java)
 
-### 바이트코드(bytecode)
-개발자가 프로그램을 개발할 때 사용하는 언어인 Java와 프로그램을 실행하는 기계어의 중간 언어입니다.   
-Java 프로그램을 컴파일하면 바이트코드로 이루어진 .class 파일이 생성됩니다.   
-JVM은 클래스 로더를 통해 Java 클래스를 로드하고 실행시킵니다.   
+## public static void main(String args[])
+main()은 Java 프로그램의 시작점입니다.   
+항상 public static void main(String[] args)로 작성됩니다.   
+
+* public
+  * 접근 제어자입니다.
+  * 모든 클래스에서 이 메서드에 접근할 수 있습니다.
+* static
+  * 클래스 인스턴스를 생성하지 않고도 접근할 수 있습니다.
+  * main() 메서드가 static이 아니라면 JVM이 main()을 검색할 때 에러가 발생합니다.
+* void
+  * 리턴 타입입니다.
+  * 값을 반환하지 않습니다.
+* main
+  * JVM이 애플리케이션을 시작할 때 검색하는 메서드 이름입니다.
 
 [맨위로](#java)
 
-### 클래스 로더(Class Loader)
-런타임 시 클래스 파일을 로드하는 JVM의 구성 요소입니다.   
-
-클래스 로더의 특징
-* Hierarchy(계층)
-  * 부모-자식 관계가 있는 계층 구조입니다.
-  * Bootstrap class loader(부트스트랩 클래스 로더)가 모든 클래스 로더의 최상위 부모입니다.
-* Delegation model(위임 모델)
-  * 클래스를 로드하기 전에 부모 클래스 로더가 해당 클래스를 이미 로드했는지 확인합니다.
-  * 부모 클래스 로더가 해당 클래스를 이미 로드한 경우 해당 클래스가 사용됩니다.
-  * 부모 클래스 로더가 클래스를 로드하지 않은 경우 자식 클래스 로더가 클래스를 로드하여 사용합니다.
-* Visibility(가시성)
-  * 자식 클래스 로더는 부모 클래스 로더의 클래스를 찾을 수 있지만 부모 클래스 로더는 하위 클래스 로더의 클래스를 찾을 수 없습니다.
-* Deletion(삭제)
-  * 클래스 로더가 클래스를 로드한 후에는 그 클래스를 다시 언로드 할 수 없습니다.
-  * 그래서 클래스 로더를 삭제하고 새로운 클래스 로더를 생성하는 옵션이 있습니다.
+## Java가 플랫폼에 독립적인 이유
+Java는 운영 체제에 관계없이 모든 시스템에서 실행될 수 있는 바이트코드이기 때문에 플랫폼에 독립적이라고 합니다.   
 
 [맨위로](#java)
 
-### 클래스 로더 종류
-4개의 주요 클래스 로더가 있습니다.   
-* Bootstrap class loader(부트스트랩 클래스 로더)
-  * 클래스 로더 계층 중 최상위 클래스 로더입니다.
-  * Java API 클래스를 로드합니다.
-* Extension class loader(확장 클래스 로더)
-  * Java API 확장 클래스를 로드합니다.
-* System class loader(시스템 클래스 로더)
-  * 사용자 또는 애플리케이션이 정의한 클래스 경로(class-path)에서 모든 애플리케이션 관련 클래스 파일을 로드합니다.
-* User defined class loader(사용자 정의 클래스 로더)
-  * 프레임워크 또는 애플리케이션 서버에 의해 정의된 클래스 로더입니다.
+## Java가 100% 객체 지향적이지 않은 이유
+Java는 객체가 아닌 8가지 primitive 데이터 타입(boolean, byte, char, int, float, double, long, short)을 사용하기 때문에 100% 객체 지향적이지 않습니다.
 
 [맨위로](#java)
 
-### 클래스 로드 단계
-클래스가 로드되고 초기화되는 단계는 다음과 같습니다.
-* Load(로드)
-  * 클래스 파일이 JVM 메모리에 로드됩니다.
-* Verify(검증)
-  * 클래스가 Java 언어 및 JVM 스펙에 준수하는지 확인합니다.
-* Prepare(준비)
-* Resolve(분석)
-  * 심볼릭 레퍼런스를 실제 레퍼런스로 변경합니다.
-* Initialize(초기화)
-  * 클래스 변수 및 static 변수를 초기화합니다.
+## Wrapper 클래스
+Wrapper 클래스는 primitive 타입을 reference 타입으로 변환합니다.   
+primitive 타입을 reference 타입으로 "Wrap(랩핑)"하기 때문에 Wrapper 클래스라고 합니다.   
 
 [맨위로](#java)
 
-### Runtime Data Area(런타임 데이터 영역)
-JVM을 실행할 때 OS로부터 할당된 메모리 영역입니다.   
-런타임 데이터 영역은 두 종류가 있습니다.
-* 각 스레드마다 생성되는 영역
-* 모든 스레드가 공유하는 영역
+## Constructor(생성자)
+객체를 초기화하는 데 사용되는 코드 블럭입니다.   
+생성자는 클래스 이름과 동일해야 합니다.   
+또한, 리턴 타입이 없으며 객체가 생성될 때 자동으로 호출됩니다.   
 
-각 스레드마다 생성되는 영역은 PC Register, JVM Stack, Navive Method Stack이 있습니다.
-* PC Register
-  * Program Counter Register
-  * PC Register에는 현재 실행 중인 JVM 명령의 주소가 있습니다.
-  * 각 JVM 스레드가 시작될 때 해당 스레드에 PC Register가 생성됩니다.
-* JVM Stack
-  * 각 JVM 스레드에 생성되며 Stack Frame을 저장합니다.
-  * 메서드가 실행되면 Stack Frame이 생성되어 JVM Stack에 추가되고, 메서드가 종료되면 JVM Stack에서 제거됩니다.
-* Native Method Stack
-  * Java 이외의 언어로 작성된 Native Data의 Stack이며, JNI를 통해 호출됩니다.
-    * JNI: Java Native Interface
-  * 각 스레드에는 고유한 Native Method Stack이 있습니다.
+### 생성자 유형
+Default Constructor(디폴트 생성자)
+* 파라미터 입력값을 받지 않는 생성자입니다.
+* 사용자가 정의한 다른 생성자가 없는 경우 기본적으로 생성되는 생성자입니다.   
+* 주요 목적은 인스턴스 변수를 기본값으로 초기화하는 것입니다.
 
-모든 스레드가 공유하는 영역은 Heap, Method area, Runtime Constant Pool(런타임 상수 풀)이 있습니다.
-* Heap
-  * Java 객체 인스턴스가 저장되고 Java Garbage Collector에 의해 제거되는 메모리 영역입니다.
-  * JVM 성능 향상을 위해 튜닝되는 메모리 영역 중 하나입니다.
-* Method area
-  * Runtime Constant Pool(런타임 상수 풀), 필드 및 메서드 정보, 모든 클래스의 static 변수 및 메서드 바이트코드, JVM에 로드된 인터페이스가 저장됩니다.
-* Runtime constant pool(런타임 상수 풀)
-  * 각 클래스 및 인터페이스의 상수와 메서드 및 필드에 대한 모든 참조가 포함됩니다.
-  * 메서드 또는 필드가 참조되면 JVM은 Runtime constant pool(런타임 상수 풀)에서 메서드 또는 필드의 실제 주소를 가져옵니다.
+Parameterized Constructor(파라미터 입력값을 받는 생성자)
+* 파라미터로 입력된 값으로 인스턴스 변수를 초기화할 수 있는 생성자입니다.
 
-[맨위로](#java)
+### 생성자와 메서드 구분하는 방법
+생성자
+* 객체의 상태를 초기화하는 데 사용됩니다.
+* 리턴 타입이 없습니다.
+* 암시적으로 호출됩니다.
+* 클래스에 생성자가 없는 경우 컴파일러가 디폴트 생성자를 제공합니다.
+* 생성자 이름은 항상 클래스 이름과 동일해야 합니다.
 
-### JVM의 Java 프로그램 실행 단계
-Java 프로그램(.java 파일)은 컴파일러(javac)를 통해 바이트코드(.class 파일)로 컴파일됩니다.   
-클래스 로더는 컴파일된 Java 바이트코드를 런타임 데이터 영역으로 로드합니다.   
-
-런타임 데이터 영역에 로드된 class 파일(또는 바이트코드)는 JVM의 Execution engine(실행 엔진)에 의해 실행됩니다.   
-Execution engine(실행 엔진)은 실행하기 전에 바이트코드를 읽고 해당 OS가 이해할 수 있는 네이티브 코드로 변환시킵니다.   
-
-Execution engine(실행 엔진)은 바이트코드를 네이티브 코드로 변환하는 데 두 가지를 사용합니다.
-* Interpreter
-  * Execution engine(실행 엔진)은 바이트코드를 한줄씩 읽고 해석하여 실행합니다.   
-  * 바이트코드를 해석한 다음 실행해야 하므로 실행 속도가 느립니다.
-* JIT (Just In Time) Compiler
-  * JIT (Just In Time) Compiler가 전체 바이트코드를 네이티브 코드로 컴파일하는 동안 Execution engine(실행 엔진)은 먼저 Interpreter를 실행합니다.
-  * 네이티브 코드가 생성되면 Execution engine(실행 엔진)은 더이상 바이트코드를 해석하지 않고 네이티브 코드를 직접 실행합니다.
+메서드
+* 객체의 동작을 나타내는 데 사용됩니다.
+* 리턴 타입이 있어야 합니다.
+* 명시적으로 호출해야 합니다.
+* 컴파일러가 디폴트 메서드를 제공하지 않습니다.
+* 메서드 이름은 클래스 이름과 같을 수도 있고 같지 않을 수도 있습니다.
 
 [맨위로](#java)
 
-## Variable(변수)
-### Java 변수 종류
-Java에는 기본적으로 Privimitive Variable와 Reference variable라는 두 가지 변수가 있습니다.  
-Privimitive Variable은 기본 리터럴 값이고, Reference variable는 객체에 대한 참조 값입니다.   
+## Singleton(싱글톤) 클래스
+하나의 JVM에서 하나의 인스턴스만 생성할 수 있는 클래스입니다.   
+생성자를 private로 설정하여 만들 수 있습니다.   
+
+[맨위로](#java)
+
+## ArrayList와 Vector의 차이점
+ArrayList
+* synchronized되지 않습니다.
+* synchronized되지 않으므로 속도가 빠릅니다.
+* 최대 인덱스를 초과했을때 array의 크기가 50% 증가합니다.
+* 생성할 때 size를 정의하지 않습니다.
+
+Vector
+* synchronized 됩니다.
+* Thread-safe 하지만 속도가 느립니다.
+* 최대 인덱스를 초과했을때 array의 크기가 100%(2배) 증가합니다.
+* 생성할 때 size를 정의합니다.
+
+[맨위로](#java)
+
+## equals()와 ==의 차이점
+equals()
+* Object 클래스에 정의되어 있으며 정의된 비즈니스 로직을 통해 두 객체의 동일성을 확인하는데 사용됩니다.   
+
+==
+* Java의 기본 연산자입니다.   
+* primitive 변수와 객체를 비교할 때 사용됩니다.
+* 객체를 비교할 경우 객체의 주소값을 비교합니다.
+
+[맨위로](#java)
+
+## JVM의 Stack과 Heap의 차이점
+Stack
+* 하나의 스레드 내에서 사용됩니다.
+* 다른 스레드에서 접근할 수 없습니다.
+* LIFO(Last In First Out) 구조입니다.
+* 스레드가 종료될 때까지 메모리가 유지됩니다.
+* Local 변수가 할당됩니다.
+  * Reference 타입일 경우 인스턴스 메모리는 Heap에 할당되고, 참조 변수만 Stack에 할당됩니다.
+
+Heap
+* 애플리케이션의 모든 부분에서 사용됩니다.
+* 모든 스레드에서 접근할 수 있습니다.
+* 메모리는 객체와 연관됩니다.
+* 애플리케이션 실행 시작부터 끝까지 메모리가 유지됩니다.
+* 객체를 생성할 때마다 항상 힙공간에 저장됩니다.
+
+[맨위로](#java)
+
+## Package(패키지)
+관련있는 클래스 및 인터페이스의 모음입니다.   
+개발자는 패키지를 사용하여 코드를 쉽게 모듈화하고 재사용성을 최적화할 수 있습니다.   
+또한, 패키지 내의 코드를 다른 클래스에서 가져와서 재사용할 수 있습니다.   
+
+### 장점
+* 이름 충돌을 방지할 수 있습니다.
+* 코드에 대한 접근 제어가 쉬워집니다.
+* 외부 클래스에 노출되지 않고 패키지 내에서만 사용되게 할 수 있습니다.
+* 관련된 클래스를 더 쉽게 찾을 수 있는 적절한 계층 구조를 만들 수 있습니다.
+
+[맨위로](#java)
+
+## Java에 포인터가 없는 이유
+Java는 JVM이 메모리 할당을 담당하므로 사용자가 메모리에 직접 접근하는 것을 방지하기 위해 포인터를 사용하지 않습니다.   
+
+[맨위로](#java)
+
+## JIT 컴파일러
+Just-In-Time 컴파일러를 의미합니다.   
+Java 바이트코드를 프로세서(CPU)로 직접 전송되는 명령으로 변환해주는 프로그램입니다.  
+Java 메서드가 호출될 때마다 활성화됩니다.   
+그런 다음 호출된 메서드의 바이트코드를 네이티브 기계 코드로 컴파일하여 실행할 적시(just in time)에 실행되도록 합니다.      
+메서드가 컴파일되면 JVM은 해당 메서드를 인터프리터를 통해 해석하지 않고 컴파일된 코드를 직접 호출합니다. 
+따라서 런타임에 Java 애플리케이션의 성능 최적화를 담당합니다.
+
+[맨위로](#java)
+
+## 접근 제어자(access modifier)
+다른 클래스와 다른 클래스의 생성자, 멤버 변수, 메서드에 대한 접근을 제어하는 키워드입니다.   
+
+### 접근 제어자 유형
+* Default
+  * 같은 클래스에서 접근 가능
+  * 같은 패키지의 자식 클래스에서 접근 가능
+  * 같은 패키지의 다른 클래스에서 접근 가능
+  * 다른 패키지의 자식 클래스에서 접근 불가능
+  * 다른 패키지의 다른 클래스에서 접근 불가능
+* Private
+  * 같은 클래스에서 접근 가능
+  * 같은 패키지의 자식 클래스에서 접근 불가능
+  * 같은 패키지의 다른 클래스에서 접근 불가능
+  * 다른 패키지의 자식 클래스에서 접근 불가능
+  * 다른 패키지의 다른 클래스에서 접근 불가능
+* Protected
+  * 같은 클래스에서 접근 가능
+  * 같은 패키지의 자식 클래스에서 접근 가능
+  * 같은 패키지의 다른 클래스에서 접근 가능
+  * 다른 패키지의 자식 클래스에서 접근 가능
+  * 다른 패키지의 다른 클래스에서 접근 불가능
+* Public
+  * 같은 클래스에서 접근 가능
+  * 같은 패키지의 자식 클래스에서 접근 가능
+  * 같은 패키지의 다른 클래스에서 접근 가능
+  * 다른 패키지의 자식 클래스에서 접근 가능
+  * 다른 패키지의 다른 클래스에서 접근 가능
+
+[맨위로](#java)
+
+## 클래스 구조
+필드(변수)와 객체의 동작을 설명하는 메서드로 구성됩니다.   
 ```
-class MyClass {
+class Abc {
 
-	//Primitive variable - var1,
-	//var1은 리터럴 값 123.
-	int var1 = 123; 
+  member variables
 
-	//Reference variable - var2,
-	//var2는 객체에 대한 참조 값 'Box'.
-	Box var2 = new Box(); 
+  methods 
 
 }
 ```
 
-scope에 따라 변수는 Class variable, Instance variable, Local variable, Block variable 4가지 유형으로 나뉩니다.   
-변수의 scope은 Java 클래스 내에 선언된 위치에 따라 결정됩니다.   
-* Class variable (Static fields)
-  * 클래스 본문 내에서 메서드 또는 블록 외부에 선언되며 'static' 키워드가 붙습니다.   
-  * scope이 가장 깁니다.
-  * 클래스가 로드될 때 생성되며 클래스가 JVM에서 로드된 상태로 유지되는 한 메모리에 유지됩니다.
-  * global variable(전역 변수) 입니다.
-  * 클래스 레벨의 모든 객체 간에 공유됩니다.
-  * 클래스의 모든 인스턴스는 동일한 static variable을 공유합니다.
-  * 객체 인스턴스를 생성하지 않고 클래스를 사용하여 접근할 수 있습니다.
-  * JVM의 Method Area에 저장되며 변수 Type이 Reference Type일 경우 인스턴스는 Heap에 저장됩니다.
-* Instance variables (Non-static fields)
-  * 클래스 본문 내에서 메서드 또는 블록 외부에 선언되며 'static' 키워드가 붙지 않습니다.
-  * scope이 Class variable 다음으로 두 번째로 깁니다.
-  * 새 클래스 인스턴스가 생성될 때 생성되며 인스턴스가 메모리에서 제거될 때까지 메모리에 유지됩니다.
-  * JVM의 Heap에 저장됩니다.
-* Local Variables
-  * 메서드 본문 내에 선언된 변수입니다.
-  * 선언된 메서드가 Stack에 남아 있는 동안만 메모리가 유지됩니다.
-  * JVM의 Stack에 저장되며 변수 Type이 Reference Type일 경우 인스턴스는 Heap에 저장됩니다.
-* Block variable
-  * init(초기화) 블록이나 for 루프와 같은 블록 내에서 선언된 변수입니다.
-  * scope이 가장 짧은 변수입니다.
-  * 블록 실행 동안에만 메모리가 유지됩니다.
-  * JVM의 Stack에 저장되며 변수 Type이 Reference Type일 경우 인스턴스는 Heap에 저장됩니다.
+[맨위로](#java)
 
+## Object(객체)
+객체는 상태와 동작을 가진 실제 존재하는 엔티티입니다.   
+
+### 객체의 특성
+* State(상태)
+* Behavior(동작)
+* Identity(식별자)
+
+### 객체 생성 방법
 ```
-class MyClass {
+ClassName obj = new ClassName();
+```
 
-	//Static variable
-	static String string1 = 'test string 1';
+[맨위로](#java)
 
-	//Instance variable
-	String string2 = 'test string 2';
+## 객체 지향 프로그래밍(OOP, Object Oriented Programming)
+프로그램을 로직과 기능이 아닌 객체를 중심으로 구성하는 프로그래밍 모델 또는 접근 방식입니다.   
+즉, OOP는 로직보다는 조작해야 하는 객체에 초점을 맞춥니다.   
 
-	//Block variable in init block
-	{
-        String string3 = 'test string 3'
+### OOP의 주요 개념
+* 상속(Inheritance)
+  * 한 클래스가 다른 클래스의 속성을 얻는 프로세스입니다.
+* 캡슐화(Encapsulation)
+  * 데이터와 코드를 단일 단위로 함께 감싸는 메커니즘입니다.
+* 추상화(Abstraction)
+  * 사용자에게 구현 세부 정보를 숨기고 기능만을 제공하는 방법론입니다.   
+* 다형성(Polymorphism)
+  * 변수, 함수, 객체가 여러 형태를 취할 수 있는 특성입니다.   
+
+[맨위로](#java)
+
+## 로컬 변수(local variable)과 인스턴스 변수(instance variable)의 차이점
+로컬 변수(local variable)
+* 메서드, 생성자, 블럭 내에서 사용됩니다.
+* 따라서 로컬 변수는 블럭 범위 내에서만 사용할 수 있습니다.
+* 장점은 클래스의 다른 메서드가 해당 변수를 인식하지 못한다는 점입니다.
+```
+if(x > 100) {
+  String test = "Edureka";
+}
+```
+
+인스턴스 변수(instance variable)
+* 객체 자체에 바인딩된 변수입니다.   
+* 클래스 내에서 메서드 외부에 선언됩니다.
+* 해당 클래스의 모든 객체는 객체를 사용하는 동안 변수의 복사본을 생성합니다.
+* 따라서 변수의 변경 사항은 해당 클래스의 다른 인스턴스에 반영되지 않으며 해당 인스턴스에만 반영됩니다.   
+```
+class Test{
+
+  public String EmpName;
+  public int empAge; 
+  
+}
+```
+
+[맨위로](#java)
+
+## final 키워드
+final 키워드는 다음과 같이 사용됩니다.
+* final variable
+  * 할당된 값을 변경할 수 없습니다.
+  * 값이 할당되지 않은 경우 클래스 생성자를 통해서만 값을 할당할 수 있습니다.
+* final method
+  * 상속 클래스에서 메서드를 재정의할 수 없습니다.
+* final class
+  * 자식 클래스에 의해 상속될 수 없지만 다른 클래스를 상속 받을 수는 있습니다.
+
+[맨위로](#java)
+
+## break와 continue의 차이점
+break
+* switch문 또는 loop 문(for, while, do while)에서 사용될 수 있습니다.
+* 실행되는 순간 switch문 또는 loop문이 종료됩니다.
+* 실행된 가장 안쪽의 switch문 또는 loop문이 종료되는 것입니다.   
+```
+for (int i = 0; i < 5; i++) {
+  if (i == 3) {
+    break;
+  }
+  
+  System.out.println(i); 
+}
+```
+
+continue
+* loop 문(for, while, do while)에서만 사용될 수 있습니다.
+* loop를 종료하지는 않고 다음 반복으로 건너뛰게 합니다.
+* loop문 내의 switch문에서 실행되어도 loop문의 다음 반복이 실행됩니다.
+```
+for (int i = 0; i < 5; i++) {
+  
+  if(i == 2) {
+    continue;
+  }
+
+  System.out.println(i);
+}
+```
+
+[맨위로](#java)
+
+## 무한 루프(infinite loop)
+루프의 종료 조건이 충족되지 않을 때 끝없이 반복하는 것입니다.   
+애플리케이션이 종료되면 종료됩니다.   
+```
+public class InfiniteForLoopDemo {
+
+  public static void main(String[] arg) {
+    for(;;) {
+      System.out.println("Welcome to Edureka!");
     }
-
-	void perform() {
-		//Local variable 
-		String string4 = 'test string 4' 
-
-		//Block variable in for loop
-		for (int i=0; i < 4; i++) {
-            ...
-        }
-	}
-
-}
-```
-
-![1](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/1.PNG)
-
-[맨위로](#java)
-
-### Final variable
-'final' 키워드로 선언된 변수입니다.   
-final variable로 선언되면 값을 변경할 수 없습니다.   
-
-Final variable가 primitive type인 경우 리터럴 값을 변경할 수 없습니다.
-
-Final variable가 reference type이면서 객체가 할당된 경우 다른 객체를 참조하도록 변경할 수 없습니다.   
-하지만 참조하고 있는 객체의 속성 값은 변경할 수 있습니다.   
-
-```
-class MyClass {
-
-	//final primitive variable - var1,
-	//123에서 다른 리터럴 값으로 변경할 수 없습니다.
-	final int var1 = 123;
-
-	//final reference variable - var2
-	//var2를 다른 Box 객체로 변경할 수 없습니다,
-	//현재 Box 객체의 속성 값은 변경할 수 있습니다.
-	final Box var2 = new Box();
+  }
 
 }
 ```
 
 [맨위로](#java)
 
-### Transient variable
-객체의 serialization(직렬화) 중에 값이 serialization(직렬화)되지 않는 변수입니다.   
-객체가 역직렬화될 때 transient primitive variable은 default 값으로 초기화됩니다.   
-객체가 역직렬화될 때 Transient reference variable은 null로 초기화됩니다.
-
-```
-class MyClass {
-
-	// Transient variable
-	transient int var1 = 123;
-
-}
-```
-
-[맨위로](#java)
-
-### Volatile variable
-여러 스레드가 객체의 변수에 접근하는 멀티 스레드 프로그래밍과 관련이 있습니다.   
-'volatile' 키워드로 선언됩니다.   
-
-일반(non-volatile) variable의 경우 스레드는 변수 값을 메모리에 캐싱하고 필요한 경우 이 캐싱된 값을 참조합니다.   
-다른 스레드에 의해 이 변수가 업데이트되더라도 이 스레드에는 반영되지 않습니다.   
-
-Volatile variable의 경우 JVM의 메인 메모리에서 이 변수가 여러 스레드에 의해 업데이트되며 각 스레드는 항상 메인 메모리에서 값을 가져옵니다.   
-따라서 모든 스레드는 메모리에 변수 값을 캐싱하여 사용하지 않고 메인 메모리에서 volatile variable의 값에 접근하게 됩니다.   
-
-```
-class MyClass {
-
-	// Volatile variable
-	volatile int var1 = 123;
-
-}
-```
+## this()와 super()의 차이점
+둘 다 생성자를 호출하는 데 사용되는 키워드입니다.   
+* this()
+  * 클래스의 현재 인스턴스를 나타냅니다.
+  * 동일한 클래스의 디폴트 생성자를 호출하는 데 사용됩니다.
+  * 현재 클래스의 메서드에 접근하는 데 사용됩니다.
+  * 현재 클래스 인스턴스를 가리키는 데 사용됩니다.
+  * 블럭의 첫 번째 라인이어야 합니다.
+* super()
+  * 상위 클래스의 현재 인스턴스를 나타냅니다.
+  * 상위 클래스의 디폴트 생성자를 호출하는 데 사용됩니다.
+  * 상위 클래스의 메서드에 접근하는 데 사용됩니다.
+  * 상위 클래스 인스턴스를 가리키는 데 사용됩니다.
+  * 블럭의 첫 번째 라인이어야 합니다.
 
 [맨위로](#java)
 
-## Synchronization(동기화)
-### 스레드 동기화
-스레드는 병렬로 실행되기 때문에 하나의 스레드는 데이터를 읽고 다른 하나의 스레드는 해당 데이터를 수정하는 하는 것과 같은 동기화 문제가 발생합니다.   
-
-
-메서드에 'synchronized' 키워드를 붙이면 여러 스레드가 동일한 메서드를 동시에 실행하지 못하도록 막을 수 있습니다.   
-```
-synchronized int setandGetSum(int a1, int a2, int a3) {
-    cell1 = a1;
-    sleepForSomeTime();
-    cell2 = a2;
-    sleepForSomeTime();
-    cell3 = a3;
-    sleepForSomeTime();
-    return cell1 + cell2 + cell3;
-}
-```
-
-블럭에 'synchronized' 키워드를 붙이면 여러 스레드가 동일한 블럭을 동시에 실행하지 못하도록 막을 수 있습니다. 
-```
-void synchronizedExample2() {
-    synchronized (this){
-        //All code goes here..
-    }
-}
-```
+## String Pool
+리터럴을 이용한 String 생성 방식과 관련이 있습니다.   
+Heap 메모리에 저장된 문자열들을 참조합니다.   
+새 객체를 생성할 때마다 먼저 객체가 pool에 이미 있는지 여부를 확인합니다.   
+객체가 이미 있으면 동일한 참조가 반환되고   
+객체가 없으면 String pool에 새 객체가 생성되고 각각의 참조가 반환됩니다.
 
 [맨위로](#java)
 
-### static 메서드 동기화
-static 메서드와 static 블록은 클래스 기준으로 동기화됩니다.   
-instance 메서드와 블록은 생성된 객체 인스턴스 기준으로 동기화됩니다.   
-따라서 static 동기화 메서드와 instance 동기화 메서드는 서로 전혀 영향을 주지 않습니다.   
-```
-synchronized static int getCount(){
-    return count;
-}
+## static 메서드와 non-static 메서드의 차이점
+static 메서드
+* 메서드 이름 앞에 사용해야 합니다.
+* 클래스를 사용하여 호출합니다.
+  * ex) ClassName.methodName
+* non-static 인스턴스 변수나 메서드에 접근할 수 없습니다.
 
-static int getCount2(){
-    synchronized (SynchronizedSyntaxExample.class) {
-        return count;
-    }
-}
-```
-여기서 서로 다른 스레드에서 getCount()와 getCount2()를 각각 호출해도 count에 접근하는 것은 서로 영향을 주지 않습니다.   
+non-static 메서드
+* 메서드 이름 앞에 static 키워드를 사용하지 않습니다.
+* 일반적인 메서드 호출 방식입니다.
+* 클래스의 인스턴스를 생성하지 않고 static 메서드와 static 변수에 접근할 수 있습니다.
 
 [맨위로](#java)
 
-### Thread 클래스의 메서드 종류
-join 메서드
-* Thread 클래스의 instance 메서드입니다.   
-* join() 메서드를 호출한 스레드가 완료될 때까지 메인 메서드의 실행을 강제로 중지합니다.   
-```
-thread3.start();
-thread2.start();
-thread3.join();// 스레드3이 완료될 때까지 메인 메서드는 중지됩니다.
-System.out.println("Thread3 is completed.");
-thread4.start();
-```
-* 오버로드된 join 메서드
-  * 시간(milliseconds)을 매개 변수로 받는 오버로드 된 join 메서드도 있습니다.
-  * 아래 예시에서 메인 메서드는 2000ms 또는 스레드4 실행 종료 중 최소값까지 중지됩니다.
-  ```
-  thread4.join(2000);
-  ```
+## Constructor Chaining(생성자 체이닝)
+현재 객체에 대해서 한 생성자를 다른 생성자에서 호출하는 프로세스입니다.   
+우선 하위 클래스 생성자가 super클래스의 생성자를 먼저 호출해야만 가능합니다.   
+생성자 체이닝에는 얼마든지 많은 수의 클래스가 있을 수 있습니다.   
 
-yield 메서드
-* Thread 클래스의 static 메서드입니다.
-* 스레드의 상태를 RUNNING에서 RUNNABLE로 변경합니다.
-* 하지만 해당 스레드의 우선 순위가 가장 높을 경우 스케줄러는 다시 해당 스레드를 선택하여 실행할 수 있습니다.
-
-sleep 메서드
-* Thread 클래스의 static 메서드입니다.
-* InterruptedException이 발생할 수 있습니다.
-* 스레드가 지정된 시간(milliseconds) 동안 일시정지가 됩니다.
+### 생성자 체이닝 방법
+* 같은 클래스에서 this()를 사용합니다.
+* super()를 사용하여 상위 클래스 생성자를 가져옵니다.
 
 [맨위로](#java)
 
-### Deadlock(교착 상태)
-스레드1이 스레드2를 기다리고 스레드2가 스레드1을 기다리는 상태를 교착 상태라고 합니다.   
-교착 상태에서는 이러한 두 스레드가 서로를 영원히 기다립니다.   
+### String, StringBuilder, StringBuffer 차이점
+String
+* Constant String Pool에 저장됩니다.
+* Immutable 입니다.
+* Thread-safe 합니다.
+* 속도가 빠릅니다.
 
-[맨위로](#java)
+StringBuilder
+* Heap 영역에 저장됩니다.
+* Mutable 입니다.
+* Thread-safe 하지 않습니다.
+* 더 효율적입니다.
 
-### 스레드 간 통신할 때 주요한 메서드
-wait 메서드
-* Object 클래스에 정의되어 있습니다.
-* notify 될 때까지 스레드가 대기하게 됩니다.
-```
-synchronized(thread){
-    thread.start();
-    thread.wait();
-}
-```
-
-notify 메서드
-* Object 클래스에 정의되어 있습니다.
-* wait 중인 스레드에게 notify 요청 보냅니다.
-```
-synchronized (this) {
-    calculateSumUptoMillion();
-    notify();
-}
-```
-
-notifyAll 메서드
-* wait 상태인 스레드가 둘 이상인 경우 해당 스레드들에게 notify 요청을 보냅니다.
-```
-thread.notifyAll();
-```
+StringBuffer
+* Heap 영역에 저장됩니다.
+* Mutable 입니다.
+* Thread-safe 합니다.
+* 덜 효율적입니다.
 
 [맨위로](#java)
 
 ## 참고
-* [Java - JVM Internals Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_jvm_internals)
-* [Java - Variables Interview Questions and Answers](https://www.interviewgrid.com/interview_questions/java/java_variables)
-* [Java Synchronization Interview Questions](http://www.javainterview.in/p/java-synchronization-interview-questions.html)
+* [100+ Java Interview Questions And Answers For 2021 | Edureka](https://www.edureka.co/blog/interview-questions/java-interview-questions/)
 
 [맨위로](#java)
