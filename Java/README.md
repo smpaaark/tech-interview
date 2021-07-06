@@ -7,6 +7,7 @@
 * [Constructor(생성자)](#constructor생성자)
 * [Singleton(싱글톤) 클래스](#singleton싱글톤-클래스)
 * [ArrayList와 Vector의 차이점](#arraylist와-vector의-차이점)
+* [Array와 ArrayList의 차이점]()
 * [equals()와 ==의 차이점](#equals와-의-차이점)
 * [JVM의 Heap과 Stack의 차이점](#jvm의-stack과-heap의-차이점)
 * [Package(패키지)](#package패키지)
@@ -25,6 +26,11 @@
 * [static 메서드와 non-static 메서드의 차이점](#static-메서드와-non-static-메서드의-차이점)
 * [Constructor Chaining(생성자 체이닝)](#constructor-chaining생성자-체이닝)
 * [String, StringBuilder, StringBuffer의 차이점](#string-stringbuilder-stringbuffer의-차이점)
+* [Class Loader(클래스 로더)]()
+* [Map]()
+* [Collection(컬렉션)]()
+* [Interface(인터페이스)]()
+* [Overloading(오버로딩)과 Overriding(오버라이딩)의 차이점]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -129,6 +135,19 @@ Vector
 * Thread-safe 하지만 속도가 느립니다.
 * 최대 인덱스를 초과했을때 array의 크기가 100%(2배) 증가합니다.
 * 생성할 때 size를 정의합니다.
+
+[맨위로](#java)
+
+## Array와 ArrayList의 차이점
+Array
+* size는 선언 시점에 정의해야 합니다.
+* 데이터를 추가하려면 index를 지정해야 합니다.
+* primitive 타입뿐만 아니라 객체도 포함될 수 있습니다.
+
+ArrayList
+* size를 동적으로 변경할 수 있습니다.
+* 데이터를 추가할 때 index를 지정할 필요가 없습니다.
+* 객체만 포함될 수 있으며 primitive 타입은 허용되지 않습니다.
 
 [맨위로](#java)
 
@@ -256,12 +275,67 @@ ClassName obj = new ClassName();
 ### OOP의 주요 개념
 * 상속(Inheritance)
   * 한 클래스가 다른 클래스의 속성을 얻는 프로세스입니다.
+  * 코드를 재사용하고 클래스 간의 관계를 설정하는 데 도움이 됩니다.
+  * 두 가지 클래스 유형 간에 수행됩니다.
+    * 상위 클래스(Parent or Super or Base 클래스)
+    * 하위 클래스(Child or Subclass or Derived 클래스)
+  * 상속 유형 4가지
+    * Single Inheritance(단일 상속)
+      * 한 클래스는 다른 클래스의 속성을 상속받습니다.   
+        * 한 부모 - 한 자녀 관계입니다.
+    * Multilevel Inheritance(다계층 상속)
+      * 한 클래스를 상속받은 클래스를 또 다른 클래스가 상속받는 것입니다.   
+      * 즉 상위 클래스가 2개 이상 있는 경우입니다.   
+    * Hierarchical Inheritance(계층 상속)
+      * 한 클래스를 여러개의 클래스가 상속받은 경우입니다.
+      * 즉, 둘 이상의 클래스가 동일한 상위 클래스를 갖는 경우입니다.   
+    * Hybrid Inheritance(하이브리드 상속)
+      * 위 상속 유형 중 2가지 이상의 상속 유형을 조합한 것입니다.
 * 캡슐화(Encapsulation)
   * 데이터와 코드를 단일 단위로 함께 감싸는 메커니즘입니다.
 * 추상화(Abstraction)
   * 사용자에게 구현 세부 정보를 숨기고 기능만을 제공하는 방법론입니다.   
+  * 세부 정보를 숨기고 사용자에게는 필요한 정보만 보여주는 것입니다.   
+  * 즉, 사용자에게 구현 세부 정보는 숨기고 기능만 공개하는 프로세스입니다.   
+  * 추상화를 구현하는 2가지 방법
+    * Abstract Class(추상 클래스)
+      * 0 ~ 100% 추상화
+    * Interface(인터페이스)
+      * 100% 추상화
 * 다형성(Polymorphism)
-  * 변수, 함수, 객체가 여러 형태를 취할 수 있는 특성입니다.   
+  * 변수, 함수, 객체가 여러 형태를 취할 수 있는 특성입니다.  
+  * 간단하게 "하나의 인터페이스, 많은 구현"으로 묘사됩니다.
+  * 다른 무언가에 다른 의미나 용법을 부여할 수 있는 특성입니다.
+    * 특히 변수, 함수, 객체와 같은 엔티티가 둘 이상의 형식을 가질 수 있도록 허용합니다.
+  * 두 가지 유형이 있습니다.
+    * 컴파일타임 다형성
+      * 메서드 오버로딩
+    * 런타임 다형성
+      * 상속과 인터페이스를 사용하여 수행됩니다. (메서드 오버라이딩)
+      * 재정의(오버라이딩)된 메서드에 대한 호출이 컴파일 시간이 아닌 런타임에 해결되는 프로세스입니다.   
+      * 이 과정에서 재정의된 메서드는 상위클래스의 참조 변수를 통해 호출됩니다.
+      * 예시
+      ```
+      class Car {
+
+        void run() {
+          System.out.println(&ldquo;car is running&rdquo;);
+        }
+
+      } 
+
+      class Audi extends Car {
+
+        void run() {
+          System.out.prinltn(&ldquo;Audi is running safely with 100km&rdquo;);
+        }
+        
+        public static void main(String args[]) {
+          Car b= new Audi(); //upcasting b.run();
+        }
+
+      }
+      ```
 
 [맨위로](#java)
 
@@ -375,7 +449,13 @@ public class InfiniteForLoopDemo {
 Heap 메모리에 저장된 문자열들을 참조합니다.   
 새 객체를 생성할 때마다 먼저 객체가 pool에 이미 있는지 여부를 확인합니다.   
 객체가 이미 있으면 동일한 참조가 반환되고   
-객체가 없으면 String pool에 새 객체가 생성되고 각각의 참조가 반환됩니다.
+객체가 없으면 String pool에 새 객체가 생성되고 각각의 참조가 반환됩니다.   
+![3]()
+
+### String이 immutable 클래스인 이유
+String 객체는 일반적으로 String pool에서 캐시되므로 immutable입니다.   
+따라서 String은 객체의 값을 수정하는 대신 새 문자열 객체를 생성하게 됩니다.   
+String은 immutable이기 때문에 애플리케이션의 동기화 관련 성능을 향상시킵니다.   
 
 [맨위로](#java)
 
@@ -415,13 +495,181 @@ StringBuilder
 * Heap 영역에 저장됩니다.
 * Mutable 입니다.
 * Thread-safe 하지 않습니다.
-* 더 효율적입니다.
+* StringBuffer보다 더 효율적입니다.
 
 StringBuffer
 * Heap 영역에 저장됩니다.
 * Mutable 입니다.
 * Thread-safe 합니다.
-* 덜 효율적입니다.
+* StringBuilder에 비해 덜 효율적입니다.
+
+[맨위로](#java)
+
+## Class Loader(클래스 로더)
+클래스 파일 로드를 담당하는 JVM의 구성 요소입니다.   
+Java 프로그램이 실행될 때마다 먼저 클래스 로더에 의해 로드됩니다.   
+Java는 세 가지 클래스 로더를 제공합니다.
+* Bootstrap ClassLoader
+* Extension ClassLoader
+* System/Application ClassLoader
+
+[맨위로](#java)
+
+## Map
+Util 패키지의 인터페이스로 고유한 key와 value를 매핑합니다.   
+Map 인터페이스는 컬렉션 인터페이스가 아니므로 다른 컬렉션 타입과 다르게 동작합니다.  
+
+Map 인터페이스의 특징
+* key값은 중복을 허용하지 않습니다.
+* 각 key는 1개의 value만 매핑할 수 있습니다.
+
+[맨위로](#java)
+
+## Collection(컬렉션)
+컬렉션은 객체 그룹을 저장하고 조작하는 아키텍처 역할을 하는 프레임워크입니다.   
+컬렉션을 사용하여 검색, 정렬, 삽입, 조작, 삭제 등과 같은 다양한 작업을 수행할 수 있습니다.   
+
+컬렉션의 계층 구조   
+![2]()
+
+[맨위로](#java)
+
+## Interface(인터페이스)
+추상 메서드와 static 상수의 모음입니다.   
+인터페이스의 각 메서드는 public이고 abstract이며, 생성자를 포함하지 않습니다.   
+따라서 인터페이스의 메서드는 body가 없습니다.
+
+예시
+```
+public interface Animal {
+
+  public void eat();
+  public void sleep();
+  public void run();
+
+}
+```
+
+### Abstract class(추상 클래스)와 Interface(인터페이스)의 차이점
+Abstract class(추상 클래스)
+* 1개의 추상 클래스만 확장할 수 있습니다.
+* abstract가 아닌 메서드를 가질 수 있습니다.
+* 인스턴스 변수를 가질 수 있습니다.
+* 모든 접근 제어자를 가질 수 있습니다.
+  * public, private, protected
+* 새 메서드를 추가되어도 이를 상속받은 클래스의 모든 코드가 정상 작동합니다.   
+* 생성자를 포함할 수 있습니다.
+* 속도가 빠릅니다.
+
+Interface(인터페이스)
+* 하나의 클래스는 여러 인터페이스를 구현할 수 있습니다.
+* 모든 메서드가 추상 메서드입니다.   
+* 인스턴스 변수를 사용할 수 없습니다.
+* 접근 제어자는 public 이거나 없어야 합니다.   
+* 새 메서드를 추가하는 경우 이 인터페이스를 구현한 클래스는 새 메서드를 재정의해야 합니다.
+* 생성자를 포함할 수 없습니다.
+* 해당 메서드를 실제 구현한 메서드를 찾아야 하므로 속도가 느립니다.
+
+[맨위로](#java)
+
+## Overloading(오버로딩)과 Overriding(오버라이딩)의 차이점
+Overloading(오버로딩)
+* 동일한 클래스에서 메서드 이름은 같지만 파라미터 갯수 또는 파라미터의 유형과 순서가 달라야 합니다.
+* 메서드의 동작을 "추가" 또는 "확장"하는 것입니다.
+* 컴파일타임 다형성과 관련 있습니다.
+* 메서드 시그니처가 달라야 합니다.
+  * 메서드 이름 + 파라미터 리스트
+* 상속이 필요할 수도 있고 필요하지 않을 수도 있습니다.
+* 예시
+```
+class Adder {
+
+  Static int add(int a, int b) {
+    return a+b;
+  }
+  
+  Static double add( double a, double b) {
+    return a+b;
+  }
+  
+  public static void main(String args[]) {
+    System.out.println(Adder.add(11,11));
+    System.out.println(Adder.add(12.3,12.6));
+  }
+  
+}
+```
+
+Overriding(오버라이딩)
+* 하위 클래스가 상위 클래스의 동일한 메서드 이름, 동일한 파라미터 갯수, 동일한 파라미터 유형, 동일한 리턴 타입을 갖는 메서드를 정의하는 것입니다.   
+* 메서드의 기존 동작을 "변경"하는 것입니다.
+* 런타임 다형성과 관련 있습니다.
+* 메서드 시그니처가 동일해야 합니다.
+* 항상 상속이 필요합니다.
+* 예시
+```
+class Car {
+
+  void run() {
+    System.out.println(&ldquo;car is running&rdquo;);
+  }
+
+}
+  
+Class Audi extends Car {
+
+  void run() {
+    System.out.prinltn("Audi is running safely with 100km");
+  }
+  
+  public static void main( String args[]) {
+    Car b=new Audi();
+    b.run();
+  }
+  
+}
+```
+* private 또는 static 메서드는 재정의할 수 없습니다.
+* 하위 클래스에 동일한 리턴 타입과 파라미터를 사용하여 유사한 메서드를 생성하면 상위 클래스 메서드가 숨겨집니다.
+  * 이를 메서드 숨기기라고 합니다.
+* 하위 클래스에서 상위 클래스의 private 메서드에 접근이 불가능하기 때문에 재정의 할 수 없습니다.
+* 하위 클래스에 동일한 이름을 가진 private 메서드를 생성할수는 있습니다.
+* 예시
+```
+class Base {
+
+  private static void display() {
+    System.out.println("Static or class method from Base");
+  }
+  
+  public void print() {
+    System.out.println("Non-static or instance method from Base");
+  }
+  
+}
+
+class Derived extends Base {
+
+  private static void display() {
+    System.out.println("Static or class method from Derived");
+  }
+  
+  public void print() {
+    System.out.println("Non-static or instance method from Derived");
+  }
+
+}
+  
+public class test {
+  
+  public static void main(String args[]) {
+    Base obj= new Derived();
+    obj1.display();
+    obj1.print();
+  }
+  
+}
+```
 
 [맨위로](#java)
 
