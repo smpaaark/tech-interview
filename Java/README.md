@@ -450,7 +450,7 @@ Heap 메모리에 저장된 문자열들을 참조합니다.
 새 객체를 생성할 때마다 먼저 객체가 pool에 이미 있는지 여부를 확인합니다.   
 객체가 이미 있으면 동일한 참조가 반환되고   
 객체가 없으면 String pool에 새 객체가 생성되고 각각의 참조가 반환됩니다.   
-![3]()
+![3](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/3.PNG)
 
 ### String이 immutable 클래스인 이유
 String 객체는 일반적으로 String pool에서 캐시되므로 immutable입니다.   
@@ -530,7 +530,7 @@ Map 인터페이스의 특징
 컬렉션을 사용하여 검색, 정렬, 삽입, 조작, 삭제 등과 같은 다양한 작업을 수행할 수 있습니다.   
 
 컬렉션의 계층 구조   
-![2]()
+![2](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/2.PNG)
 
 [맨위로](#java)
 
@@ -661,7 +661,7 @@ class Derived extends Base {
 }
   
 public class test {
-  
+
   public static void main(String args[]) {
     Base obj= new Derived();
     obj1.display();
