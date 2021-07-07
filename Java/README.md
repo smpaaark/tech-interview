@@ -7,7 +7,7 @@
 * [Constructor(생성자)](#constructor생성자)
 * [Singleton(싱글톤) 클래스](#singleton싱글톤-클래스)
 * [ArrayList와 Vector의 차이점](#arraylist와-vector의-차이점)
-* [Array와 ArrayList의 차이점]()
+* [Array와 ArrayList의 차이점](#array와-arraylist의-차이점)
 * [equals()와 ==의 차이점](#equals와-의-차이점)
 * [JVM의 Heap과 Stack의 차이점](#jvm의-stack과-heap의-차이점)
 * [Package(패키지)](#package패키지)
@@ -31,17 +31,17 @@
 * [Collection(컬렉션)](#collection컬렉션)
 * [Interface(인터페이스)](#interface인터페이스)
 * [Overloading(오버로딩)과 Overriding(오버라이딩)의 차이점](#overloading오버로딩과-overriding오버라이딩의-차이점)
-* [Servlet(서블릿)]()
-* [Get 메서드와 Post 메서드의 차이점]()
-* [RequestDispatcher]()
-* [ServletContext와 ServletConfig의 차이점]()
-* [JDBC Driver]()
-* [Java에서 데이터베이스와 연결하는 과정]()
-* [JDBC API 구성요소]()
-* [JDBC Batch 처리(일괄 처리)]()
-* [JDBC Statement]()
-* [finalize]()
-* [Exception과 Error]()
+* [Servlet(서블릿)](#servlet서블릿)
+* [Get 메서드와 Post 메서드의 차이점](#get-메서드와-post-메서드의-차이점)
+* [RequestDispatcher](#requestdispatcher)
+* [ServletContext와 ServletConfig의 차이점](#servletconfig와-servletcontext의-차이점)
+* [JDBC Driver](#jdbc-driver)
+* [Java에서 데이터베이스와 연결하는 과정](#java에서-데이터베이스와-연결하는-과정)
+* [JDBC API 구성요소](#jdbc-api-구성요소)
+* [JDBC Batch 처리(일괄 처리)](#jdbc-batch-처리일괄-처리)
+* [JDBC Statement](#jdbc-statement)
+* [finalize](#finalize)
+* [Exception과 Error](#exception과-error)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -876,7 +876,7 @@ java.sql 패키지에는 JDBC API에 대한 인터페이스와 클래스들이 �
   * 트랜잭션 관리에 사용됩니다.
   * Statement, PreparedStatement, CallableStatement, DatabaseMetaData 인스턴스를 반환하는 팩토리 메서드를 제공합니다.   
 
-![12]()
+![12](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/12.PNG)
 * Statement
 * PreparedStatement
 * ResultSet
@@ -969,7 +969,7 @@ Exception에는 2가지 유형이 있습니다.
 2가지 Exception 유형 모두 Exception 클래스를 상속받으며   
 Error는 VirtualMachineError와 AssertionError로 분류됩니다.
 
-![13]()
+![13](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/13.PNG)
 
 ### Error와 Exception의 차이점
 Error는 런타임에 발생하는 복구할 수 없는 상태입니다.   
