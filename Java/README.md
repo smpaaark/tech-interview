@@ -31,6 +31,17 @@
 * [Collection(컬렉션)](#collection컬렉션)
 * [Interface(인터페이스)](#interface인터페이스)
 * [Overloading(오버로딩)과 Overriding(오버라이딩)의 차이점](#overloading오버로딩과-overriding오버라이딩의-차이점)
+* [Servlet(서블릿)]()
+* [Get 메서드와 Post 메서드의 차이점]()
+* [RequestDispatcher]()
+* [ServletContext와 ServletConfig의 차이점]()
+* [JDBC Driver]()
+* [Java에서 데이터베이스와 연결하는 과정]()
+* [JDBC API 구성요소]()
+* [JDBC Batch 처리(일괄 처리)]()
+* [JDBC Statement]()
+* [finalize]()
+* [Exception과 Error]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -114,6 +125,29 @@ Parameterized Constructor(파라미터 입력값을 받는 생성자)
 * 명시적으로 호출해야 합니다.
 * 컴파일러가 디폴트 메서드를 제공하지 않습니다.
 * 메서드 이름은 클래스 이름과 같을 수도 있고 같지 않을 수도 있습니다.
+
+### Copy Costructor(복사 생성자)
+복사 생성자는 같은 클래스인 다른 객체를 사용하여 객체를 초기화하는 생성자입니다.   
+Java에서는 모든 객체가 참조로 전달되기 때문에 복사 생성자가 필요하지 않습니다.   
+
+### 생성자 오버로딩
+클래스에 각각 다른 파라미터 목록을 갖는 생성자를 갯수와 관계없이 추가하는 기술입니다.   
+컴파일러는 파라미터 갯수와 타입을 통해 오버로드된 생성자를 구분합니다.   
+```
+class Demo {
+
+  int i;
+  
+  public Demo(int a) {
+    i=k;
+  }
+  
+  public Demo(int a, int b) {
+    //body
+  }
+
+}
+```
 
 [맨위로](#java)
 
@@ -266,6 +300,13 @@ class Abc {
 ClassName obj = new ClassName();
 ```
 
+### Object Cloning(객체 복제)
+객체의 복사본을 생성하는 프로세스입니다.   
+객체 복제를 위해 Java는 clone() 메서드를 제공합니다.   
+이 메서드는 현재 객체 클래스에 대한 새 인스턴스를 생성한 다음 해당 필드의 내용과 정확히 동일한 모든 필드를 초기화합니다.   
+런타임 Exception을 방지하기 위해서는 Cloneable 마커 인터페이스를 구현해야합니다.   
+clone() 메서드는 protected 메서드이므로 재정의해서 사용해야 합니다.
+
 [맨위로](#java)
 
 ## 객체 지향 프로그래밍(OOP, Object Oriented Programming)
@@ -291,8 +332,20 @@ ClassName obj = new ClassName();
       * 즉, 둘 이상의 클래스가 동일한 상위 클래스를 갖는 경우입니다.   
     * Hybrid Inheritance(하이브리드 상속)
       * 위 상속 유형 중 2가지 이상의 상속 유형을 조합한 것입니다.
+    * Multiple Inheritance(다중 상속)   
+      * 하위 클래스가 여러 클래스를 상속받는 것을 다중 상속이라고 합니다.
+      * Java에서는 다중 상속이 불가능합니다.
+      * 다중 상속의 문제점은 여러 상위 클래스가 동일한 메서드 이름을 가진 경우 런타임에 컴파일러가 하위 클래스에서 실행할 메서드를 결정하기 어렵다는 것입니다.      
+
+![6](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/6.PNG)
+
 * 캡슐화(Encapsulation)
   * 데이터와 코드를 단일 단위로 함께 감싸는 메커니즘입니다.
+  * 데이터는 외부에 숨겨지며 현재 클래스의 메서드를 통해서만 접근할 수 있습니다.
+  * 불필요한 수정으로부터 데이터를 보호할 수 있습니다.
+  * 캡슐화 하는 방법
+    * 클래스의 변수를 private으로 선언합니다.
+    * 변수의 값을 수정하고 확인할 수 있는 public getter/setter를 제공합니다.
 * 추상화(Abstraction)
   * 사용자에게 구현 세부 정보를 숨기고 기능만을 제공하는 방법론입니다.   
   * 세부 정보를 숨기고 사용자에게는 필요한 정보만 보여주는 것입니다.   
@@ -306,7 +359,9 @@ ClassName obj = new ClassName();
   * 변수, 함수, 객체가 여러 형태를 취할 수 있는 특성입니다.  
   * 간단하게 "하나의 인터페이스, 많은 구현"으로 묘사됩니다.
   * 다른 무언가에 다른 의미나 용법을 부여할 수 있는 특성입니다.
-    * 특히 변수, 함수, 객체와 같은 엔티티가 둘 이상의 형식을 가질 수 있도록 허용합니다.
+    * 특히 변수, 함수, 객체와 같은 엔티티가 둘 이상의 형식을 가질 수 있도록 허용합니다.  
+
+  ![5](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/5.PNG)   
   * 두 가지 유형이 있습니다.
     * 컴파일타임 다형성
       * 메서드 오버로딩
@@ -367,6 +422,7 @@ class Test{
 [맨위로](#java)
 
 ## final 키워드
+클래스, 메서드, 변수에 대한 제한을 적용하는 데 사용됩니다.   
 final 키워드는 다음과 같이 사용됩니다.
 * final variable
   * 할당된 값을 변경할 수 없습니다.
@@ -375,6 +431,16 @@ final 키워드는 다음과 같이 사용됩니다.
   * 상속 클래스에서 메서드를 재정의할 수 없습니다.
 * final class
   * 자식 클래스에 의해 상속될 수 없지만 다른 클래스를 상속 받을 수는 있습니다.
+```
+class FinalVarExample {
+  
+  public static void main( String args[]) {
+    final int a=10; // Final 변수
+    a=50; // 변경할 수 없으므로 에러
+  }
+
+}
+```
 
 [맨위로](#java)
 
@@ -570,6 +636,16 @@ Interface(인터페이스)
 * 생성자를 포함할 수 없습니다.
 * 해당 메서드를 실제 구현한 메서드를 찾아야 하므로 속도가 느립니다.
 
+### Marker Interface(마커 인터페이스)
+멤버 변수 및 메서드가 없는 인터페이스입니다.   
+간단히 말해서 빈 인터페이스를 마커 인터페이스라고 합니다.   
+가장 일반적인 예로는 Serializable, Cloneable 등이 있습니다.   
+
+마커 인터페이스는 다음과 같이 선언할 수 있습니다.
+```
+public interface Serializable{ }
+```
+
 [맨위로](#java)
 
 ## Overloading(오버로딩)과 Overriding(오버라이딩)의 차이점
@@ -670,6 +746,288 @@ public class test {
   
 }
 ```
+
+[맨위로](#java)
+
+## Servlet(서블릿)
+* 동적인 Response와 데이터 영속성을 지원하여 웹 서버의 기능을 확장시켜주는 server-side 기술입니다.   
+* javax.servlet과 javax.servlet.http 패키지는 서블릿 작성을 위한 인터페이스와 클래스를 제공합니다.
+* 모든 서블릿은 서블릿의 라이프사이클 메서드를 정의하는 javax.servlet.Servlet을 구현해야합니다.
+* 서비스를 구현할 때 Java Servlet API과 함께 제공되는 GenericServlet 클래스를 확장할 수 있습니다.
+* HttpServlet 클래스는 HTTP 서비스를 처리하기 위한 doGet(), doPost()와 같은 메서드를 제공합니다.
+  * 대부분의 웹 애플리케이션은 HTTP 프로토콜을 사용하므로 HttpServlet 클래스를 확장합니다.
+* Servlet API 계층   
+![4](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/4.PNG)
+
+### Life-cycle(생명 주기)
+서블릿의 생명 주기는 5가지 단계가 있습니다.   
+![9](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/9.PNG)
+* loaded(로드)
+* instantiated(인스턴스화)
+* initialized(초기화)
+* request(요청)
+* destroyed(파괴)
+
+### 서블릿에서의 Cookie(쿠키)
+* 쿠키는 서버에서 클라이언트로 보내는 텍스트 데이터이며 클라이언트의 로컬에 저장됩니다.
+* 서블릿 API는 Serializable과 Cloneable 인터페이스를 구현한 javax.servlet.http.Cookie 클래스를 통해 쿠키를 지원합니다.
+* 요청으로부터 쿠키 리스트를 가져오는 HttpServletRequest의 getCookies() 메서드가 제공되며, request에 쿠키를 추가하는 것은 의미가 없기 때문에 set, add와 같은 메서드는 없습니다.
+* 마찬가지로 HttpServletResponse에는 응답 헤더에 쿠키를 추가하기 위한 addCookie(Cookie c) 메서드가 제공되지만 getter 메서드는 제공되지 않습니다.
+
+### 서블릿에서의 Session(세션)
+세션은 클라이언트와 서버 간의 대화 상태이며 클라이언트와 서버 간의 여러 요청 및 응답으로 구성됩니다.   
+HTTP와 웹 서버는 모두 stateless(무상태)이기 때문에 세션을 유지하기 위한 유일한 방법은 모든 요청과 응답에서 세션(세션 ID)에 대한 고유한 정보가 서버와 클라이언트 간에 전달되는 것입니다.   
+
+서블릿의 세션 관리 방법
+* User Authentication(사용자 인증)
+* HTML Hidden Field(HTML Hidden 필드)
+* Cookies
+* URL Rewriting
+  * URL 의 뒷 부분에 정보를 가지고 다니는 것을 말합니다.
+* Session Management API    
+
+![10](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/10.PNG)
+
+[맨위로](#java)
+
+## Get 메서드와 Post 메서드의 차이점
+Get
+* 데이터가 body로 전송되지 않기 때문에 데이터 전송량이 제한됩니다.   
+* 데이터가 URL에 노출되어 보안되지 않습니다.
+* Idempotent(멱등) 입니다.
+  * 멱등의 사전적 정의는 연산을 여러 번 적용하더라도 결과가 달라지지 않는 성질을 의미합니다.
+  * GET은 리소스를 조회한다는 점에서 여러 번 요청하더라도 응답이 똑같을 것입니다. 
+  * 반대로 POST는 리소스를 새로 생성하거나 업데이트할 때 사용되기 때문에 멱등이 아니라고 볼 수 있습니다.
+
+Post
+* 데이터가 body로 전송되기 때문에 대량의 데이터가 전송될 수 있습니다.
+* 데이터가 URL에 노출되지 않기 때문에 보안이 됩니다.
+* Non-Idempotent 입니다.
+
+[맨위로](#java)
+
+## RequestDispatcher
+RequestDispatcher 인터페이스는 Request를 동일한 애플리케이션 내의 다른 HTML, JSP, Servlet 리소스에 전달하는 데 사용됩니다.   
+또한 Response에 다른 리소스의 내용을 포함시키기 위해 이 기능을 사용할 수 있습니다.   
+
+2가지 메서드가 정의되어 있습니다.
+* void forward()   
+![7](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/7.PNG)
+* void include()   
+![8](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/8.PNG)
+
+### forward() 메서드와 sendRedirect() 메서드의 차이점
+forward() 메서드
+* 동일한 request를 다른 리소스로 전송합니다.
+* server-side에서 작동합니다.
+* 서버 내에서만 작동합니다.
+
+sendRedirect() 메서드
+* 브라우저의 URL을 사용하기 때문에 항상 새로운 요청을 보냅니다.
+* client-side에서 작동합니다.
+* 서버 내외부에서 모두 작동합니다.
+
+[맨위로](#java)
+
+## ServletConfig와 ServletContext의 차이점
+ServletConfig
+* 단일 서블릿을 나타냅니다.
+* 특정 서블릿과 관련된 로컬 파라미터와 유사합니다.
+* web.xml 파일의 servlet 섹션에 정의된 name-value 쌍이므로 servlet scope입니다.
+* getServletConfig() 메서드를 사용하여 Config 객체를 가져옵니다.
+
+
+ServletContext
+* 특정 JVM에서 실행되는 전체 웹 애플리케이션을 나타내며 모든 서블릿에 공통적입니다.
+* 전체 애플리케이션과 관련된 전역 파라미터와 유사합니다.
+* web.xml 파일의 servlet 섹션 외부에 정의되기 때문에 애플리케이션 전체 scope입니다.
+* getServletContext() 메서드를 사용하여 Context 객체를 가져옵니다.
+
+[맨위로](#java)
+
+## JDBC Driver
+Java 애플리케이션이 데이터베이스와 상호 작용할 수 있도록 해주는 소프트웨어입니다.   
+
+JDBC Driver 4가지 유형
+* JDBC-ODBC bridge driver
+* Native-API driver (일부 java driver)
+* Network Protocol driver (완전 java driver)
+* Thin driver (완전 java driver)
+
+![11](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/11.PNG)
+
+[맨위로](#java)
+
+## Java에서 데이터베이스와 연결하는 과정
+* Driver 클래스를 등록합니다.
+* Connection을 생성합니다.
+* Statement를 생성합니다.
+* 쿼리를 실행합니다.
+* Connection을 종료합니다.
+
+[맨위로](#java)
+
+## JDBC API 구성요소
+java.sql 패키지에는 JDBC API에 대한 인터페이스와 클래스들이 있습니다.
+
+인터페이스
+* Connection
+  * 데이터베이스와의 세션을 유지 관리합니다.
+  * 트랜잭션 관리에 사용됩니다.
+  * Statement, PreparedStatement, CallableStatement, DatabaseMetaData 인스턴스를 반환하는 팩토리 메서드를 제공합니다.   
+
+![12]()
+* Statement
+* PreparedStatement
+* ResultSet
+  * 테이블의 행을 나타냅니다.
+  * 커서 포인터를 변경하고 데이터베이스에서 정보를 가져오는데 사용됩니다.
+* ResultSetMetaData
+  * 총 열의 수, 열 이름, 열 타입 등의 테이블 정보를 반환합니다.
+* DatabaseMetaData
+  * 사용자 이름, 드라이버 이름, 드라이버 버전, 테이블 수, View의 수와 같은 정보를 반환합니다.
+* CallableStatement 등
+
+클래스
+* DriverManager
+  * 등록된 Driver들을 관리합니다.
+  * Driver를 등록 및 등록 취소하는데 사용됩니다.
+  * Connection 인스턴스를 반환해주는 팩토리 메서드를 제공합니다.
+* Blob
+* Clob
+* Types
+* SQLException 등
+
+[맨위로](#java)
+
+## JDBC Batch 처리(일괄 처리)
+관련된 SQL 문을 배치로 그룹화하고 단일 쿼리 대신에 실행할 수 있습니다.
+여러 쿼리를 실행하는데 더 높은 성능을 낼 수 있습니다.
+
+[맨위로](#java)
+
+## JDBC Statement
+SQL 명령을 데이터베이스에 전송하고 데이터베이스에서 데이터를 검색하는 데 사용되는 것입니다.
+execute(), executeUpdate(), executeQuery() 등과 같은 다양한 메서드들이 데이터베이스와 상호작용 할 수 있도록 JDBC에 의해 제공됩니다.
+
+JDBC가 제공하는 3가지 Statement 유형
+* Statement
+  * 데이터베이스에 대한 일반적인 접근에 사용되며 런타임에 정적인 SQL 쿼리를 실행합니다.   
+* PreparedStatement
+  * 실행 중에 쿼리에 대한 파라미터를 제공하는데 사용됩니다.
+* CallableStatement
+  * 데이터베이스의 Stored Procedure(저장 프로시저)에 접근하는데 사용되며 런타임 파라미터를 제공하는데 사용됩니다.
+
+### execute, executeQuery, executeUpdate의 차이점
+execute
+* SQL 쿼리를 실행하는데 사용되며 결과가 ResultSet이면 TRUE를 리턴합니다.   
+* insert 또는 update 쿼리의 결과는 FALSE를 리턴합니다.
+* getResultSet() 메서드를 통해 ResultSet을 가져오고 getUpdateCount() 메서드를 통해 update 수를 가져올 수 있습니다.
+* Statement의 유형이 불확실할때만 사용해야 합니다.
+
+executeQuery
+* select 쿼리를 실행하는데 사용되며 ResultSet을 리턴합니다.
+* 쿼리와 일치하는 레코드가 없는 경우에도 ResultSet은 null이 아닙니다.
+* select 쿼리를 실행할 때 executeQuery 메서드를 사용해야 하며 insert/update 문을 실행할 때 사용하면  SQLException이 발생합니다.
+
+executeUpdate
+* insert/update/delete(DML) 또는 DDL문을 실행하는 데 사용됩니다.
+* 리턴 타입은 int형이며 DML문 row의 수가 리턴됩니다.   
+* DDL문의 경우 0이 리턴됩니다.
+
+[맨위로](#java)
+
+## finalize
+객체가 GC 처리 되기 전에 작업을 수행하는데 사용됩니다.   
+```
+class FinalizeExample {
+
+  public void finalize() {
+    System.out.println("Finalize is called");
+  } 
+  
+  public static void main(String args[]) {
+    FinalizeExample f1=new FinalizeExample();
+    FinalizeExample f2=new FinalizeExample();
+    f1= NULL;
+    f2= NULL;
+    System.gc();
+  }
+
+}
+```
+
+[맨위로](#java)
+
+## Exception과 Error
+Throwable은 모든 Exception 클래스들의 상위 클래스입니다.   
+
+Exception에는 2가지 유형이 있습니다.
+* CheckedExceptions
+* UncheckedException(또는 RunTimeException)
+
+2가지 Exception 유형 모두 Exception 클래스를 상속받으며   
+Error는 VirtualMachineError와 AssertionError로 분류됩니다.
+
+![13]()
+
+### Error와 Exception의 차이점
+Error는 런타임에 발생하는 복구할 수 없는 상태입니다.   
+OutOfMemory와 같은 에러입니다.   
+이러한 JVM 에러는 런타임에 복구할 수 없습니다.   
+catch 블럭에서 에러가 발생할 수 있지만 애플리케이션 실행이 중지되어 복구할 수 없습니다.   
+
+Exception은 입력 오류 또는 휴먼 에러 등으로 인해 발생합니다.   
+예를 들어 지정된 파일이 존재하지 않으면 FileNotFoundException이 발생합니다.   
+다른 예로 null 참조를 사용하려고 하면 NullPointerException이 발생합니다.   
+대부분의 경우 Exception으로부터 복구할 수 있습니다.   
+(적절한 값 입력 등에 대한 사용자 피드백을 제공하는 방법 등)
+
+### Exception 처리 방법
+Java에서 Exception 처리를 하기 위한 5가지 키워드입니다.
+* try
+* catch
+* finally
+  * 중요한 코드를 배치하는 데 사용되며 Exception이 처리되었는지 여부와 관계없이 실행됩니다.
+```
+class FinallyExample {
+  
+  public static void main(String args[]){
+    try {
+      int x=100;
+    } catch(Exception e) {
+      System.out.println(e);
+    } finally {
+      System.out.println("finally block is executing");
+    }
+  }
+  
+}
+```
+* throw
+  * 명시적으로 Excpetion을 발생시키는 데 사용됩니다.
+  * CheckedException은 throw만으로 전파될 수 없습니다.
+  * 인스턴스에 의해 사용됩니다.
+  * 메서드 내에서 사용됩니다.
+  * 다중 Exception을 발생시킬 수 없습니다.
+* throws
+  * Exception을 선언하는 데 사용됩니다.
+  * CheckedException은 throws를 통해 전파될 수 있습니다.
+  * 클래스에 의해 사용됩니다.
+  * 메서드 시그니처와 함께 사용됩니다.
+  * 다중 Exception을 선언할 수 있습니다.
+    * 예) public void method() throws IOException,SQLException
+
+### Checked Exception과 Unchecked Exception의 차이점
+Checked Exception
+* RuntimeException과 Error을 제외한 Throwable 클래스를 상속받은 클래스입니다.
+* 컴파일 시 확인됩니다.   
+* 예) IOException, SQLException 등
+
+Unchecked Exception
+* RuntimeException을 상속받은 클래스입니다.
+* 컴파일 시 확인되지 않습니다.
+* 예) ArithmeticException, NullPointerException 등
 
 [맨위로](#java)
 
