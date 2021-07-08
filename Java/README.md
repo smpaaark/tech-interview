@@ -42,6 +42,8 @@
 * [JDBC Statement](#jdbc-statement)
 * [finalize](#finalize)
 * [Exception과 Error](#exception과-error)
+* [Thread(스레드)]()
+* [Garbage Collector(GC, 가비지 컬렉터)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -974,6 +976,8 @@ Error는 VirtualMachineError와 AssertionError로 분류됩니다.
 ### Error와 Exception의 차이점
 Error는 런타임에 발생하는 복구할 수 없는 상태입니다.   
 OutOfMemory와 같은 에러입니다.   
+* OutOfMemoryError는 java.lang.Error의 하위 클래스이며 JVM의 메모리가 부족할 때 발생하는 에러입니다.   
+
 이러한 JVM 에러는 런타임에 복구할 수 없습니다.   
 catch 블럭에서 에러가 발생할 수 있지만 애플리케이션 실행이 중지되어 복구할 수 없습니다.   
 
@@ -987,8 +991,29 @@ Exception은 입력 오류 또는 휴먼 에러 등으로 인해 발생합니다
 Java에서 Exception 처리를 하기 위한 5가지 키워드입니다.
 * try
 * catch
+  * 하나의 try 블럭에 여러개의 catch 블럭을 사용할 수 있습니다.
+  * 단 Exception의 범위가 낮은 것부터 작성되어야 합니다.
+```
+public class Example {
+
+  public static void main(String args[]) {
+    try {
+      int a[]= new int[10];
+      a[10]= 10/0;
+    } catch(ArithmeticException e) {
+      System.out.println("Arithmetic exception in first catch block");
+    } catch(ArrayIndexOutOfBoundsException e) {
+      System.out.println("Array index out of bounds in second catch block");
+    } catch(Exception e) {
+      System.out.println("Any exception in third catch block");
+    }
+  }
+  
+}
+```
 * finally
   * 중요한 코드를 배치하는 데 사용되며 Exception이 처리되었는지 여부와 관계없이 실행됩니다.
+  * System.exit()를 호출하거나 프로세스를 중단시키는 치명적인 오류가 발생하여 프로그램이 종료되는 경우에는 실행되지 않습니다.
 ```
 class FinallyExample {
   
@@ -1028,6 +1053,85 @@ Unchecked Exception
 * RuntimeException을 상속받은 클래스입니다.
 * 컴파일 시 확인되지 않습니다.
 * 예) ArithmeticException, NullPointerException 등
+
+### 사용자 정의 Exception
+사용자 정의 Exception을 생성하려면 Exception 클래스 또는 Exception 클래스의 하위 클래스를 상속 받아야 합니다.   
+```
+class New1Exception extends Exception { }               // Checked Exception
+class NewException extends IOException { }             // Checked exception
+class NewException extends NullPonterExcpetion { }  // UnChecked exception
+```
+
+### Exception 클래스의 메서드
+Exception 또는 Exception 하위 클래스들은 특정 메서드를 제공하지 않으며 모든 메서드는 Throwable 클래스에 정의되어 있습니다.   
+* String getMessage()
+  * Throwable의 String 메시지를 반환하며 그 메시지는 생성자를 통해 메시지를 제공될 수 있습니다.
+* String getLocalizedMessage()
+  * 하위 클래스가 재정의하여 메시지를 제공할 수 있도록 합니다.   
+  * getMessage() 메서드를 사용하여 예외 메시지를 반환합니다.
+* Synchronized Throwable getCause()
+  * Exception의 원인을 반환하거나 원인을 알 수 없는 경우 null을 반환합니다.
+* String toString()
+  * Throwable에 대한 정보를 String 형식으로 반환하며 반환된 String에는 Throwable 클래스 이름과 메시지가 포함됩니다.
+* void printStackTrace()
+  * 스택 추적 정보를 표준 에러 스트림에 출력합니다.
+  * 오버로드 된 메서드들이 있는데 이 메서드들은 스택 추적 정보를 파일이나 스트림에 write하기 위해 PrintStream 또는 PrintWriter를 파라미터로 전달할 수 있습니다.
+* public StackTraceElement[] getStackTrace()
+  * 스택 추적의 각 요소를 포함하는 배열을 반환합니다.
+  * 0번 index는 호출 스택의 맨 위를 나타내고, 마지막 요소는 호출 스택의 맨 아래의 메서드를 나타냅니다.
+
+[맨위로](#java)
+
+## Thread(스레드)
+스케쥴러에 의해 독립적으로 실행될 수 있는 프로그램의 작은 부분입니다.   
+Java에는 모든 프로그램에 메인 스레드라고 알려진 스레드가 하나 이상 있습니다.   
+이 메인 스레드는 프로그램이 실행될 때 JVM에 의해 생성됩니다.   
+메인 스레드는 프로그램의 main()을 호출하는 데 사용됩니다.
+
+### Proccess(프로세스)와 Thread(스레드)의 차이점
+Proccess(프로세스)
+* 프로그램의 실행 인스턴스입니다.
+* 다른 프로세스와 통신하기 위해서는 Inter-Process Communication(IPC, 프로세스 간 통신)을 사용해야 합니다.
+* 하위 프로세스에 대한 제어만 수행할 수 있습니다.
+* 상위 프로세스의 변경 사항은 하위 프로세스에 영향을 주지 않습니다.
+* 별도의 메모리 공간에서 실행됩니다.
+* 운영 체제에 의해 제어됩니다.
+* 독립적입니다.
+
+Thread(스레드)
+* 프로세스의 subset(하위 집합) 입니다.
+* 프로세스의 다른 스레드와 직접 통신할 수 있습니다.
+* 동일한 프로세스의 다른 스레드들을 제어할 수 있습니다.
+* 메인 스레드의 변경 사항이 프로세스의 다른 스레드들의 동작에 영향을 줄 수 있습니다.
+* 공유 메모리 공간에서 실행됩니다.
+* 프로그램 개발자에 의해 제어됩니다.
+* 종속적입니다.
+
+### Synchronization(동기화)
+멀티 스레드 환경에서 동기화된 코드 블럭은 한 번에 하나의 스레드만 실행될 수 있습니다.   
+멀티 스레드 환경에서는 둘 이상의 스레드가 동일한 필드 또는 객체에 접근할 수 있습니다.   
+동기화는 실행 중인 모든 스레드가 동기화되도록 유지하는 프로세스입니다.   
+동기화는 공유 메모리의 불일치로 인한 메모리 일관성 에러를 방지합니다.
+메서드가 synchronized로 선언되면 스레드가 해당 메서드의 객체에 대한 동기화를 유지합니다.   
+스레드가 synchronized된 메서드를 실행하는 경우 해당 스레드의 작업이 완료될 때까지 다른 스레드의 접근이 차단됩니다.   
+![14](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Java/14.PNG)
+
+### 스레드 생성 방법
+* Runnable 인터페이스를 구현합니다.
+* Thread를 상속받습니다.
+
+[맨위로](#java)
+
+## Garbage Collector(GC, 가비지 컬렉터)
+암시적 메모리 관리에 도움이 되는 프로그램입니다.   
+Java에서는 new 키워드를 사용하여 동적으로 객체를 생성할 수 있으며, 생성되면 메모리가 사용됩니다.   
+작업이 완료되고 객체에 대한 참조가 더이상 남지 않게 되면 Java는 가비지 컬렉터를 사용하여 객체를 제거하고 해당 객체에 사용된 메모리를 제거합니다.   
+
+Java는 4가지 유형의 가비지 컬렉터를 제공합니다.
+* Serial Garbage Collector
+* Parallel Garbage Collector
+* CMS Garbage Collector
+* G1 Garbage Collector
 
 [맨위로](#java)
 
