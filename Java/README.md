@@ -42,8 +42,8 @@
 * [JDBC Statement](#jdbc-statement)
 * [finalize](#finalize)
 * [Exception과 Error](#exception과-error)
-* [Thread(스레드)]()
-* [Garbage Collector(GC, 가비지 컬렉터)]()
+* [Thread(스레드)](#thread스레드)
+* [Garbage Collector(GC, 가비지 컬렉터)](#garbage-collectorgc-가비지-컬렉터)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
