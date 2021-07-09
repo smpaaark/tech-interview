@@ -1,6 +1,8 @@
 # Spring
 * [Spring]]()
 * [Spring Framework 모듈]()
+* [주요 스프링 설정 애노테이션]()
+* [Spring Bean(빈)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -28,7 +30,45 @@ Spring은 Java EE 애플리케이션 개발을 위해 사용되는 경량 통합
 * Spring MVC
   * 웹 애플리케이션, 웹 서비스 등을 생성하기 위한 Model-View-Controller 구현
 
+![5]()
+
 [맨위로](#spring)
+
+## 주요 스프링 설정 애노테이션
+* @Required
+* @Autowired
+* @Qualifier
+* @Resource
+* @PostConstruct
+* @PreDestroy
+
+[맨위로](#spring)
+
+## Spring Bean(빈)
+스프링 애플리케이션에서 가장 중요한 역할을 하는 객체입니다.   
+스프링 빈은 스프링 IoC 컨테이너에 의해 관리됩니다.   
+즉, 스프링 빈은 IoC 컨테이너에 의해 인스턴스화, 조립, 관리되는 객체입니다.   
+
+스프링 빈에는 5가지 scoper이 정의되어 있습니다.      
+![6]()
+* Singleton
+  * 각 컨테이너에 단 한개의 인스턴스만 생성됩니다.
+  * 스프링 빈의 default scope입니다.   
+  * 스프링 빈의 인스턴스 변수는 사용할 때 주의가 필요합니다.
+    * Thread-safe 하지 않기 때문에 데이터 불일치 문제가 발생할 수 있습니다.
+* Prototype
+  * 빈이 요청될 때마다 새 인스턴스가 생성됩니다.
+* Request
+  * Prototype과 scope이 동일하지만 웹 애플리케이션용으로 사용해야 합니다.
+  * 각 HTTP 요청마다 새 인스턴스가 생성됩니다.
+* Session
+  * 컨테이너에 의해 각 HTTP 세션마다 새 인스턴스가 생성됩니다.
+* Global-session
+  * Portlet(포틀릿) 애플리케이션을 위한 Global Session 빈을 생성하는데 사용됩니다.
+
+[맨위로](#spring)
+
+
 
 ## 참고
 * [100+ Java Interview Questions And Answers For 2021 | Edureka](https://www.edureka.co/blog/interview-questions/java-interview-questions/)
