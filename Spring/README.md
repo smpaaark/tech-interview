@@ -1,13 +1,6 @@
 # Spring
-<<<<<<< HEAD
-* [Spring]]()
-* [Spring Framework 모듈]()
-* [주요 스프링 설정 애노테이션]()
-* [Spring Bean(빈)]()
-=======
 * [Spring](#spring-1)
 * [Spring Framework 모듈](#spring-framework-모듈)
->>>>>>> 38d1d69c8c218adde43f07edb47c12e83d8b211b
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -34,8 +27,6 @@ Spring은 Java EE 애플리케이션 개발을 위해 사용되는 경량 통합
   * 웹 애플리케이션 생성
 * Spring MVC
   * 웹 애플리케이션, 웹 서비스 등을 생성하기 위한 Model-View-Controller 구현
-
-![5]()
 
 [맨위로](#spring)
 
@@ -72,8 +63,6 @@ Spring은 Java EE 애플리케이션 개발을 위해 사용되는 경량 통합
   * Portlet(포틀릿) 애플리케이션을 위한 Global Session 빈을 생성하는데 사용됩니다.
 
 [맨위로](#spring)
-
-
 
 ## 참고
 * [100+ Java Interview Questions And Answers For 2021 | Edureka](https://www.edureka.co/blog/interview-questions/java-interview-questions/)
