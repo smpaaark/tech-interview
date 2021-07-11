@@ -1,8 +1,8 @@
 # Coding Interview
-* [Array]()
-  * [Two Sum(두 수의 합)]()
-  * [Remove Duplicates from Sorted Array(정렬된 배열에서 중복 값 제거하기)]()
-* [참고]()
+* [Array](#array)
+  * [Two Sum(두 수의 합)](#two-sum두-수의-합)
+  * [Remove Duplicates from Sorted Array(정렬된 배열에서 중복 값 제거하기)](#remove-duplicates-from-sorted-array정렬된-배열에서-중복-값-제거하기)
+* [참고](#참고)
 
 ## Array
 ### Two Sum(두 수의 합)
@@ -35,7 +35,7 @@ public int[] twoSum(int[] nums, int target) {
 }
 ```
 
-[맨위로]()
+[맨위로](#array)
 
 ### Remove Duplicates from Sorted Array(정렬된 배열에서 중복 값 제거하기)
 오름차순으로 정렬된 정수 배열이 주어지면 중복된 요소를 제거합니다.   
@@ -84,9 +84,9 @@ public int removeDuplicates(int[] nums) {
 }
 ```
 
-[맨위로]()
+[맨위로](#array)
 
 ## 참고
 * [LeetCode](https://leetcode.com/problemset/algorithms/)
 
-[맨위로]()
+[맨위로](#array)
