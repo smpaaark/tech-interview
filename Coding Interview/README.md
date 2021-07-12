@@ -2,6 +2,7 @@
 * [Array](#array)
   * [Two Sum(두 수의 합)](#two-sum두-수의-합)
   * [Remove Duplicates from Sorted Array(정렬된 배열에서 중복 값 제거하기)](#remove-duplicates-from-sorted-array정렬된-배열에서-중복-값-제거하기)
+* [LinkedList]()
 * [참고](#참고)
 
 ## Array
@@ -35,7 +36,7 @@ public int[] twoSum(int[] nums, int target) {
 }
 ```
 
-[맨위로](#array)
+[맨위로](#coding-interview)
 
 ### Remove Duplicates from Sorted Array(정렬된 배열에서 중복 값 제거하기)
 오름차순으로 정렬된 정수 배열이 주어지면 중복된 요소를 제거합니다.   
@@ -84,9 +85,44 @@ public int removeDuplicates(int[] nums) {
 }
 ```
 
-[맨위로](#array)
+[맨위로](#coding-interview)
+
+## LinkedList
+### Merge Two Sorted Lists(정렬된 두 리스트 병합하기)
+정렬된 두 링크드 리스트를 병합한 후 정렬된 리스트를 반환합니다.   
+리스트는 처음 두 리스트의 노드들을 합쳐서 만들어야 합니다.   
+
+**input**
+* 두 리스트의 노드 갯수는 [0, 50] 범위입니다.
+* -100 <= Node.val <= 100
+* l1과 l2 모두 오름차순 정렬되어 있습니다.
+
+**풀이**
+```
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    if (l1 == null) { // l1 == null이면 l2 리턴
+        return l2;
+    }
+
+    if (l2 == null) { // l2 == null이면 l1 리턴
+        return l1;
+    }
+
+    if(l1.val < l2.val){ // l1보다 l2가 크면 l1.next와 l2 비교
+        l1.next = mergeTwoLists(l1.next, l2);
+        return l1;
+    } else{ // l1이 l2보다 크거나 같으면 l2.next와 l1 비교
+        l2.next = mergeTwoLists(l1, l2.next);
+        return l2;
+    }
+}
+```
+
+[맨위로](#coding-interview)
+
+
 
 ## 참고
 * [LeetCode](https://leetcode.com/problemset/algorithms/)
 
-[맨위로](#array)
+[맨위로](#coding-interview)
