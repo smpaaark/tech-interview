@@ -7,6 +7,8 @@
   * [Linked List Cycle(링크드리스트 싸이클)](#linked-list-cycle링크드리스트-싸이클)
 * [참고](#참고)
 
+[목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
+
 ## Array
 ### Two Sum(두 수의 합)
 정수 배열 nums와 정수 target이 주어지면 두 수의 합이 target이 되는 값들의 index를 반환합니다.   
