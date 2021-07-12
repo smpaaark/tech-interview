@@ -3,6 +3,8 @@
   * [Two Sum(두 수의 합)](#two-sum두-수의-합)
   * [Remove Duplicates from Sorted Array(정렬된 배열에서 중복 값 제거하기)](#remove-duplicates-from-sorted-array정렬된-배열에서-중복-값-제거하기)
 * [LinkedList]()
+  * [Merge Two Sorted Lists(정렬된 두 리스트 병합하기)]()
+  * [Linked List Cycle(링크드리스트 싸이클)]()
 * [참고](#참고)
 
 ## Array
@@ -120,7 +122,42 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 
 [맨위로](#coding-interview)
 
+### Linked List Cycle(링크드리스트 싸이클)
+head가 주어지면 링크드리스트에 cycle이 있는지 확인합니다.   
 
+노드를 계속 따라가다가 이미 순회한 노드가 있을 경우가 cycle이 존재하는 경우입니다.   
+내부적으로 pos는 꼬리 노드의 next 노드의 index입니다.   
+post는 파라미터로 전달되지 않습니다.   
+
+링크드리스트에 cycle이 있으면 true를 반환합니다.   
+없으면 false를 반환합니다.
+
+**input**
+* 리스트의 노드 수의 범위는 [0, 104] 입니다.
+* -10^5 <= Node.val <= 10^5
+* pos는 -1이거나 유요한 index입니다.
+* 공간 복잡도 O(1)로 풀어야 합니다.
+
+**풀이**
+```
+public boolean hasCycle(ListNode head) {
+    ListNode slow = head; // 1개씩 이동하는 노드
+    ListNode fast = head; // 2개씩 이동하는 노드
+
+    while (fast != null && fast.next != null) { // fast와 fast의 다음노드까지 null이 아닐 경우 순회
+        slow = slow.next; // slow 1개 이동
+        fast = fast.next.next; // fast 2개 이동
+
+        if (slow == fast) { // slow와 fast가 같은 경우 true 리턴
+            return true;
+        }
+    }
+
+    return false; // while문을 빠져나오면 꼬리가 존재하는 것이므로 false 리턴
+}
+```
+
+[맨위로](#coding-interview)
 
 ## 참고
 * [LeetCode](https://leetcode.com/problemset/algorithms/)
