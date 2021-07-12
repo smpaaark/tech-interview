@@ -2,9 +2,9 @@
 * [Array](#array)
   * [Two Sum(두 수의 합)](#two-sum두-수의-합)
   * [Remove Duplicates from Sorted Array(정렬된 배열에서 중복 값 제거하기)](#remove-duplicates-from-sorted-array정렬된-배열에서-중복-값-제거하기)
-* [LinkedList]()
-  * [Merge Two Sorted Lists(정렬된 두 리스트 병합하기)]()
-  * [Linked List Cycle(링크드리스트 싸이클)]()
+* [LinkedList](#linkedlist)
+  * [Merge Two Sorted Lists(정렬된 두 리스트 병합하기)](#merge-two-sorted-lists정렬된-두-리스트-병합하기)
+  * [Linked List Cycle(링크드리스트 싸이클)](#linked-list-cycle링크드리스트-싸이클)
 * [참고](#참고)
 
 ## Array
