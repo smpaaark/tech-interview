@@ -4,7 +4,7 @@
 * [스프링 빈(Bean)](#스프링-빈bean)
 * [참고](#참고)
 
-[Spring 목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
+[Spring 목차로](https://github.com/smpark1020/tech-interview/tree/master/Spring)
 
 ## 강한 결합(Tight Coupling)
 클래스(클래스A)가 다른 클래스의 객체(클래스B)에 종속된 경우 클래스 A가 클래스 B와 강하게 결합된다고 말합니다.   
