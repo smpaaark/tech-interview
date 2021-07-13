@@ -5,6 +5,9 @@
 * [LinkedList](#linkedlist)
   * [Merge Two Sorted Lists(정렬된 두 리스트 병합하기)](#merge-two-sorted-lists정렬된-두-리스트-병합하기)
   * [Linked List Cycle(링크드리스트 싸이클)](#linked-list-cycle링크드리스트-싸이클)
+* [Stack]()
+  * [Valid Parentheses(유효한 괄호)]()
+  * [Binary Tree Inorder Traversal(이진 트리 중위 순회)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -156,6 +159,73 @@ public boolean hasCycle(ListNode head) {
     }
 
     return false; // while문을 빠져나오면 꼬리가 존재하는 것이므로 false 리턴
+}
+```
+
+[맨위로](#coding-interview)
+
+## Stack
+### Valid Parentheses(유효한 괄호)
+'(', ')', '{', '}', '[', ']'로 이루어진 문자열이 주어지면 유효한지 확인합니다.   
+
+유효 조건
+1. 여는 괄호는 동일한 유형의 괄호로 닫혀야 합니다.
+2. 여는 괄호는 올바른 순서로 닫혀야 합니다.
+
+**input**
+* 1 <= s.length <= 104
+* s는 괄호 '()[]{}'로만 이루어져 있습니다.
+
+**풀이**
+```
+public boolean isValid(String s) {
+    Stack<Character> stack = new Stack<>(); // 스택 생성
+    for (char c : s.toCharArray()) {
+        // 여는 괄호일 경우 동일 유형의 닫는 괄호를 stack에 push 한다.
+        if (c == '(') {
+            stack.push(')');
+        } else if (c == '{') {
+            stack.push('}');
+        } else if (c == '[') {
+            stack.push(']');
+        } else if (stack.isEmpty() || stack.pop() != c) { // 닫는 괄호일 경우 stack이 비어있거나, 동일한 닫는 괄호가 아닐 경우 false
+            return false;
+        }
+    }
+
+    return stack.isEmpty(); // 여는 괄호만 존재할 경우도 있으므로 stack이 비어있으면 true, 아니면 false이다.
+}
+```
+
+[맨위로](#coding-interview)
+
+### Binary Tree Inorder Traversal(이진 트리 중위 순회)
+이진 트리의 루트가 주어지면 노드의 값을 중위 순회로 반환합니다.   
+
+**input**
+* 트리의 노드 수 범위는 [0, 100] 입니다..
+* -100 <= Node.val <= 100
+* 재귀 말고 반복문으로 해결해야 합니다.
+
+**풀이**
+```
+public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> list = new ArrayList<>();
+
+    Stack<TreeNode> stack = new Stack<>();
+    TreeNode currentNode = root; // 현재 노드
+    while (currentNode != null || !stack.isEmpty()) { // !stack.isEmpty는 오른쪽 노드가 null일 경우 stack에 남아있는 노드로 계속 진행해야 되기 때문에 조건이 있어야 한다.
+        while (currentNode != null) { // 왼쪽 노드를 stack에 push 한다.
+            stack.push(currentNode);
+            currentNode = currentNode.left;
+        }
+
+        currentNode = stack.pop();
+        list.add(currentNode.val); // stack에서 꺼내서 list에 add
+        currentNode = currentNode.right; // 오른쪽 노드로 위 과정 반복
+    }
+
+    return list;
 }
 ```
 
