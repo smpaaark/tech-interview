@@ -5,9 +5,9 @@
 * [LinkedList](#linkedlist)
   * [Merge Two Sorted Lists(정렬된 두 리스트 병합하기)](#merge-two-sorted-lists정렬된-두-리스트-병합하기)
   * [Linked List Cycle(링크드리스트 싸이클)](#linked-list-cycle링크드리스트-싸이클)
-* [Stack]()
-  * [Valid Parentheses(유효한 괄호)]()
-  * [Binary Tree Inorder Traversal(이진 트리 중위 순회)]()
+* [Stack](#stack)
+  * [Valid Parentheses(유효한 괄호)](#valid-parentheses유효한-괄호)
+  * [Binary Tree Inorder Traversal(이진 트리 중위 순회)](#binary-tree-inorder-traversal이진-트리-중위-순회)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
