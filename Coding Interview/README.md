@@ -8,9 +8,9 @@
 * [Stack](#stack)
   * [Valid Parentheses(유효한 괄호)](#valid-parentheses유효한-괄호)
   * [Binary Tree Inorder Traversal(이진 트리 중위 순회)](#binary-tree-inorder-traversal이진-트리-중위-순회)
-* [Queue]()
-  * [First Unique Character in a String(문자열의 첫 고유한 문자)]()
-  * [Flatten Nested List Iterator(중첩된 리스트 Flatten(평탄화))]()
+* [Queue](#queue)
+  * [First Unique Character in a String(문자열의 첫 고유한 문자)](#first-unique-character-in-a-string문자열의-첫-고유한-문자)
+  * [Flatten Nested List Iterator(중첩된 리스트 Flatten(평탄화))](#flatten-nested-list-iterator중첩된-리스트-flatten평탄화)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
