@@ -1,7 +1,7 @@
 ## 목차
 * [Java](https://github.com/smpark1020/tech-interview/tree/master/Java)
 * [Spring](https://github.com/smpark1020/tech-interview/tree/master/Spring)
-* [Spring Boot]()
+* [Spring Boot](https://github.com/smpark1020/tech-interview/tree/master/Spring%20Boot)
 * [Spring MVC]()
 * [Spring Data JPA]()
 * [JPA]()
