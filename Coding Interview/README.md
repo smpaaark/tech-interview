@@ -8,6 +8,9 @@
 * [Stack](#stack)
   * [Valid Parentheses(유효한 괄호)](#valid-parentheses유효한-괄호)
   * [Binary Tree Inorder Traversal(이진 트리 중위 순회)](#binary-tree-inorder-traversal이진-트리-중위-순회)
+* [Queue]()
+  * [First Unique Character in a String(문자열의 첫 고유한 문자)]()
+  * [Flatten Nested List Iterator(중첩된 리스트 Flatten(평탄화))]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -226,6 +229,170 @@ public List<Integer> inorderTraversal(TreeNode root) {
     }
 
     return list;
+}
+```
+
+[맨위로](#coding-interview)
+
+## Queue
+### First Unique Character in a String(문자열의 첫 고유한 문자)
+문자열이 주어지면 반복되지 않는 첫번째 문자를 찾고 index를 반환합니다.   
+없으면 -1을 반환합니다.   
+
+**input**
+* 1 <= s.length <= 105
+* s는 영어 소문자로만 구성됩니다.   
+
+**풀이**
+```
+public int firstUniqChar(String s) {
+    Map<Character,Integer> map = new HashMap<>();
+    Queue<Integer> queue = new LinkedList<>();
+    
+    for(int i = 0; i < s.length(); i++){
+        char c = s.charAt(i);
+        if(!map.containsKey(c)){ // map에 없으면 queue에 해당 index를 넣고 map에도 추가한다.
+            queue.offer(i);
+            map.put(c, 1);
+        } else{ // map에 있으면 map의 값을 +1 증가시킨다.
+            map.put(c, map.get(c) + 1);
+        }
+
+        while(!queue.isEmpty() && map.get(s.charAt(queue.peek())) > 1) { // queue의 맨 앞 값으로 map을 조회해서 1보다 크면 해당 인덱스를 queue에서 제거한다.
+            queue.poll();
+        }
+    }
+
+    if(queue.isEmpty()) { // queue가 비어있으면 -1 리턴
+        return -1;
+    }
+
+    return queue.peek(); // queue의 맨 앞 index 리턴
+}
+```
+
+배열로도 풀 수 있습니다.
+```
+public int firstUniqChar(String s) {
+    int[] alphabet = new int[26];
+    for (char c : s.toCharArray()) {
+        alphabet[c - 'a']++;
+    }
+
+    for (int i = 0; i <s.length(); i++) {
+        if (alphabet[s.charAt(i) - 'a'] == 1) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Flatten Nested List Iterator(중첩된 리스트 Flatten(평탄화))
+중첩된 정수 리스트가 주어집니다.   
+각 요소는 정수 또는 리스트이며 리스트의 요소도 정수 또는 리스트일 수 있습니다.   
+반복문을 사용하여 flatten(평탄화) 합니다.
+
+NestedIterator 클래스를 구현합니다.
+* NestedIterator(List\<NestedInteger> nestedList)
+  * 초기화 합니다.
+* int next()
+  * 중첩 리스트의 다음 정수를 반환합니다.   
+* boolean hasNext()
+  * 중첩 리스트에 정수가 남아 있으면 true를 반환하고 그렇지 않으면 false를 반환합니다.
+
+다음 의사코드를 사용하여 코드를 테스트합니다.
+```
+initialize iterator with nestedList
+res = []
+while iterator.hasNext()
+    append iterator.next() to the end of res
+return res
+```
+
+res가 예상된 결과와 일치하면 코드가 올바른 것으로 판단됩니다.   
+
+**input**
+* 1 <= nestedList.length <= 500
+* 중첩 리스트의 정수 값은 [-106, 106] 범위에 있습니다.
+
+**Excample**
+```
+Input: nestedList = [[1,1],2,[1,1]]
+Output: [1,1,2,1,1]
+Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].
+```
+
+**풀이**   
+Deque를 사용한 풀이
+```
+class NestedIterator implements Iterator<Integer> {
+
+    Deque<NestedInteger> deque = new ArrayDeque<>();
+
+    public NestedIterator2(List<NestedInteger> nestedList) {
+        prepareStack(nestedList);
+    }
+
+    @Override
+    public Integer next() {
+        if (!hasNext()) { // deque가 비어있으면 null
+            return null;
+        }
+        return deque.pop().getInteger(); // 이때 deque의 맨 앞 값은 항상 정수이다.
+    }
+
+    @Override
+    public boolean hasNext() { // deque의 맨 앞 요소를 정수로 만들어주는 작업을 한다.
+        while (!deque.isEmpty() && !deque.peek().isInteger()) { // deque의 맨 앞 요소가 정수가 아니면 반복
+            List<NestedInteger> list = deque.pop().getList(); // deque의 맨 앞 리스트를 꺼냅니다.
+            prepareStack(list); // prepareStack 호출하여 리스트의 요소들을 하나하나 deque의 앞쪽에 쌓는다.
+        }
+        return !deque.isEmpty();
+    }
+
+    private void prepareStack(List<NestedInteger> nestedList) {
+        for (int i = nestedList.size() - 1; i >= 0; i--) { // 마지막 요소부터 push하여 첫 요소가 deque의 맨 앞에 오게 합니다.
+            deque.push(nestedList.get(i));
+        }
+    }
+
+}
+```
+
+Queue를 사용하는 풀이
+```
+class NestedIterator implements Iterator<Integer> {
+
+    private Queue<Integer> queue = new LinkedList<>();
+
+    public NestedIterator(List<NestedInteger> nestedList) {
+        initQueue(nestedList);
+    }
+
+    private void initQueue(List<NestedInteger> nestedList) {
+        for (NestedInteger nestedInteger : nestedList) {
+            if (nestedInteger.isInteger()) {
+                queue.offer(nestedInteger.getInteger());
+            } else {
+                initQueue(nestedInteger.getList());
+            }
+        }
+    }
+
+    @Override
+    public Integer next() {
+        return queue.poll();
+    }
+
+    @Override
+    public boolean hasNext() {
+        return !queue.isEmpty();
+    }
+
 }
 ```
 
