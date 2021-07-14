@@ -20,6 +20,25 @@
 * [스프링 프레임워크 4.0과 5.0의 새로운 기능](#스프링-프레임워크-40과-50의-새로운-기능)
 * [FrontController](#frontcontroller)
 * [ViewResolver](#viewresolver)
+* [MVC 아키텍처 흐름]()
+* [ModelAttribute]()
+* [SessionAttribute]()
+* [@InitBinder]()
+* [@ControllerAdvice]()
+* [스프링 부트를 사용하는 이유]()
+* [스프링 vs 스프링 MVC vs 스프링 부트]()
+* [@SpringBootApplication]()
+* [스프링 부트의 내장 서버(Embedded Server)]()
+* [application.properties]()
+* [Spring JDBC]()
+* [JDBC와 Spring JDBC의 차이점]()
+* [JPA]()
+* [Hibernate]()
+* [생성자 주입과 setter 주입]()
+* [pom.xml]()
+* [@RequestParam]()
+* [스프링 시큐리티(Spring Security)]()
+* [CSRF(Cross-site request forgery)]()
 * [참고](#참고)
 
 [Spring 목차로](https://github.com/smpark1020/tech-interview/tree/master/Spring)
@@ -169,6 +188,141 @@ FrontController에서 서블릿은 첫번째 요청을 받지 못합니다.
 ViewResolver는 웹 애플리케이션이 view를 동적으로 선택할 수 있게 해줍니다.   
 ViewResolver는 /WEB-INF/views/ + a.jsp에서 a 라는 이름을 가져옵니다.   
 내용은 모두 HTML 페이지에 표시됩니다.   
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+
+## MVC 아키텍처 흐름
+1. 브라우저가 DispatcherServlet으로 요청을 전송합니다.
+2. DispatcherServlet은 HanderMapping을 통해 적절한 컨트롤러를 찾습니다.   
+3. 컨트롤러는 요청을 실행하고 모델에 데이터를 입력한 후 뷰 이름을 DispatcherServlet에 반환합니다.
+4. DispatcherServlet은 뷰 이름과 ViewResolver를 사용하여 뷰에 매핑합니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## ModelAttribute
+@ModelAttribute는 일반적으로 컨트롤러 내부의 메서드에 붙습니다.   
+컨트롤러에서 사용할 수 있는 모든 다른 메서드에서 이 메서드를 사용할 수 있게 해줍니다.   
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## SessionAttribute
+@SessionAttributes("매개변수")는 클래스(컨트롤러)에 붙습니다.   
+모델에 있는 attribute(매개변수)를 세션에서 사용할 수 있습니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## @InitBinder
+날짜 형식을 선언하는 메서드로 사용되며, 클래스 전체에서 정의된 날짜 형식이 사용됩니다.   
+날짜 필드가 바인딩 될 때마다 @InitBinder가 발생합니다. 
+* CustomDateEditor을 사용하고 CustomDateEditor에는 @InitBinder에 설정한 날짜 형식이 사용됩니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## @ControllerAdvice
+로직을 여러 클래스(컨트롤러)에서 공통적으로 구현해야 할 때 사용됩니다.   
+예를 들어, 클래스에서 Exception(또는 하위 클래스 Exception)이 발생하면 @ExceptionHandler이 붙은 메서드에 의해 처리됩니다.   
+컨트롤러에서 Exception이 발생할 때마다 Exception은 @ExceptionHandler가 붙은 메서드에 의해 처리됩니다.      
+@ExceptionHandler가 하나의 클래스에 대한 것이라면 @ControllerAdvice는 모든 @Controller 즉, 전역에서 발생할 수 있는 예외를 잡아 처리해주는 애노테이션입니다.   
+@ExceptionHandler를 정의한 클래스를 만든 후 클래스에 @ControllerAdvice를 붙여주면 됩니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## 스프링 부트를 사용하는 이유
+스프링 기반 애플리케이션은 많은 설정 코드들이 있습니다.   
+스프링 MVC에서는 컴포넌트 스캔, DispatcherServlet, ViewResolver 등 많은 설정들이 필요합니다.
+반면, 스프링 부트에서는 이러한 설정 코드들이 필요하지 않습니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## 스프링 vs 스프링 MVC vs 스프링 부트
+스프링
+* 스프링의 가장 중요한 기능은 의존성 주입과 IoC(제어의 역전) 입니다.
+
+스프링 MVC
+* 스프링 MVC는 웹 애플리케이션 개발에 있어 계층에 따른 분리 방식을 제공합니다.
+* DispatcherServlet, ModelAndView, ViewResolver과 같은 것들을 통해 웹 애플리케이션을 쉽게 개발할 수 있습니다.
+
+스프링 부트
+* 스프링 부트는 자동 설정(Auto Configuration) 기능을 사용하여 많은 설정들을 매우 쉽게 자동으로 설정해주며, 이를 통해 DispatcherServlet이 스프링에 의해 내부적으로 수행됩니다.   
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## @SpringBootApplication
+전체 애플리케이션을 시작하는 데 사용됩니다.   
+내부적으로 @SpringBootApplication은 다음을 수행합니다.   
+* @SpringBootConfiguration
+  * 스프링 애플리케이션의 @Configuration과 동일합니다.
+* @EnableAutoConfiguration
+  * classpath에서 사용할 수 있는 클래스들을 자동 설정 해줍니다.      
+* @ComponentScan
+  * 패키지 내에서 사용할 수 있는 모든 클래스가 스캔됩니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## 스프링 부트의 내장 서버(Embedded Server)
+웹 애플리케이션을 배포하려면 톰캣(Tomcat)과 같은 서버가 필요합니다.   
+스프링 부트는 jar에서 톰캣과 같은 내장 서버를 사용할 수 있습니다.     
+내장 서버는 애플리케이션 배포를 매우 쉽고 독립적으로 할 수 있도록 해줍니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## application.properties
+application.properties 파일은 데이터베이스 상세 정보, 로그 생성, 보안(사용자이름/패스워드), 직렬화 등을 설정하는 데 사용됩니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## Spring JDBC
+Spring JDBC는 update, execute, query와 같은 메서드를 사용하여 데이터베이스와 통신합니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## JDBC와 Spring JDBC의 차이점
+JDBC에서는 CheckedException을 작성해야 합니다.   
+반면에 스프링 JDBC에서는 RuntimeException으로 발생합니다.   
+즉, 스프링 JDBC에서는 예외 처리를 수동으로 하지 않습니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## JPA
+Java Persistence API (JPA)는 Java 객체와 데이터베이스 테이블 간의 매핑을 정의합니다.   
+Java 객체를 데이터베이스 테이블의 행에 매핑하는 절차는 JPA에 정의되어 있습니다.   
+JPA는 클래스 와 테이블 간의 관계를 정의하는 유용한 애노테이션을 많이 제공합니다.   
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## Hibernate
+매핑이 완료되면 Hibernate(JPA 구현체)가 쿼리를 생성하고 데이터베이스와 통신할 수 있도록 해줍니다.   
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## 생성자 주입과 setter 주입
+의존성 주입이 필수인 경우 생성자 주입 방식을 사용합니다.   
+의존성 주입이 선택인 경우 setter 주입 방식을 사용합니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## pom.xml
+Project Object Model (POM)은 maven 프로젝트의 모든 설정이 정의되는 xml 형식의 파일입니다.   
+pom.xml에서 가장 일반적으로 사용되는 태그는 \<groupid>, \<artifactId>, \<version>, \<packaging> 입니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## @RequestParam
+서버 측에서 데이터를 읽고 메서드에 들어오는 매개 변수에 자동으로 바인딩 할 수 있습니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## 스프링 시큐리티(Spring Security)
+스프링 시큐리티는 J2EE 애플리케이션에 보안 서비스를 제공합니다.   
+스프링 시큐리티는 ServletFilter를 사용하여 구현됩니다.   
+ServletFilter는 웹 요청을 사전 또는 사후 처리하는 데 사용됩니다.
+
+[맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
+
+## CSRF(Cross-site request forgery)
+CSRF(Cross-site request forgery)는 부정 웹 사이트가 사용자가 로그인한 웹 애플리케이션에서 이벤트를 수행하도록 속이려는 보안 공격입니다.   
+예를 들어, 사용자가 온라인 은행 계좌에 로그인한 경우 사용자를 속여서 알 수 없는 사람에게 돈을 송금하도록 합니다.   
 
 [맨위로](#top-40-spring-interview-questions-and-answers-updated-for-2018)
 
