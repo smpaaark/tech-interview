@@ -11,6 +11,10 @@
 * [Queue](#queue)
   * [First Unique Character in a String(문자열의 첫 고유한 문자)](#first-unique-character-in-a-string문자열의-첫-고유한-문자)
   * [Flatten Nested List Iterator(중첩된 리스트 Flatten(평탄화))](#flatten-nested-list-iterator중첩된-리스트-flatten평탄화)
+* [Tree]()
+  * [Symmetric Tree(대칭 트리)]()
+  * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)]()
+
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -210,6 +214,12 @@ public boolean isValid(String s) {
 * -100 <= Node.val <= 100
 * 재귀 말고 반복문으로 해결해야 합니다.
 
+**example**
+```
+Input: root = [1,null,2,3]
+Output: [1,3,2]
+```
+
 **풀이**
 ```
 public List<Integer> inorderTraversal(TreeNode root) {
@@ -319,7 +329,7 @@ res가 예상된 결과와 일치하면 코드가 올바른 것으로 판단됩�
 * 1 <= nestedList.length <= 500
 * 중첩 리스트의 정수 값은 [-106, 106] 범위에 있습니다.
 
-**Excample**
+**Example**
 ```
 Input: nestedList = [[1,1],2,[1,1]]
 Output: [1,1,2,1,1]
@@ -393,6 +403,112 @@ class NestedIterator implements Iterator<Integer> {
         return !queue.isEmpty();
     }
 
+}
+```
+
+[맨위로](#coding-interview)
+
+## Tree
+### Symmetric Tree(대칭 트리)
+이진 트리의 루트가 주어지면 대칭 트리인지 확인합니다.   
+(즉, 중앙을 중심으로 대칭이 됩니다.)
+
+**input**
+* 트리의 노드 수는 [1, 1000] 범위에 있습니다.
+* -100 <= Node.val <= 100
+* 재귀와 반복 두 가지 방법으로 풀어야 합니다.
+
+**example**
+```
+Input: root = [1,2,2,3,4,4,3]
+Output: true
+```
+
+**풀이**   
+반복문 사용
+```
+public boolean isSymmetric(TreeNode root) {
+    if (root.left == null && root.right == null) { // 노드가 1개이면 true 리턴
+        return true;
+    }
+
+    Stack<TreeNode> stack = new Stack<>();
+    stack.push(root.left);
+    stack.push(root.right);
+
+    while (!stack.isEmpty()) {
+        TreeNode right = stack.pop();
+        TreeNode left = stack.pop();
+
+        if ((left == null && right != null) || (left != null && right == null)) { // 한쪽만 null이면 false
+            return false;
+        } else if (left != null && right != null) { // 둘다 null이면 바로 다음 stack 반복
+            if (left.val != right.val) { // 둘다 null이 아니면 값 비교
+                return false;
+            }
+
+            // left의 left, right의 right를 push (대칭)
+            stack.push(left.left);
+            stack.push(right.right);
+
+            // left의 right, right의 left를 push (대칭)
+            stack.push(left.right);
+            stack.push(right.left);
+        }
+    }
+
+    return true;
+}
+```
+
+재귀 사용
+```
+public boolean isSymmetric(TreeNode root) {
+    return recursion(root.left, root.right); // 재귀 호출
+}
+
+private boolean recursion(TreeNode left, TreeNode right) {
+    if ((left == null && right != null) || (left != null && right == null)) { // 둘 중 하나만 null이면 false
+        return false;
+    }
+
+    if (left == null && right == null) { // 둘다 null이면 true
+        return true;
+    }
+
+    if (left.val == right.val) { // 둘의 값이 같으면 left의 left와 right의 right 재귀호출 && left의 right와 right의 left 재귀 호출 (대칭)
+        return recursion(left.left, right.right) && recursion(left.right, right.left);
+    }
+
+    return false; // 둘의 값이 다르면 false
+}
+```
+
+[맨위로](#coding-interview)
+
+### Maximum Depth of Binary Tree(이진 트리의 최대 깊이)
+이진 트리의 루트가 주어지면 최대 깊이를 반환합니다.   
+
+이진 트리의 최대 깊이는 루트 노드에서 가장 먼 리프 노드까지 가장 긴 경로를 따라가는 노드 수입니다.   
+
+**input**
+* 트리 노드의 수는 [0, 104] 범위에 있습니다.
+* -100 <= Node.val <= 100
+
+**example**
+```
+Input: root = [3,9,20,null,null,15,7]
+Output: 3
+```
+
+**풀이**    
+```
+public int maxDepth(TreeNode root) {
+    if (root == null) { // root가 null이면 0 리턴
+        return 0;
+    }
+
+    return 1 + Math.max(maxDepth(root.left), maxDepth(root.right)); // left와 right 끝까지 갔다가 돌아오면서 max 값 + 1 리턴 
 }
 ```
 
