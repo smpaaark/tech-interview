@@ -14,7 +14,8 @@
 * [Tree](#tree)
   * [Symmetric Tree(대칭 트리)](#symmetric-tree대칭-트리)
   * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)](#maximum-depth-of-binary-tree이진-트리의-최대-깊이)
-
+* [Graph]()
+  * [Course Schedule(강의 일정)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -509,6 +510,134 @@ public int maxDepth(TreeNode root) {
     }
 
     return 1 + Math.max(maxDepth(root.left), maxDepth(root.right)); // left와 right 끝까지 갔다가 돌아오면서 max 값 + 1 리턴 
+}
+```
+
+[맨위로](#coding-interview)
+
+## Graph
+### Course Schedule(강의 일정)
+0부터 numCours - 1까지 총 numCours개의 강의를 수강해야 합니다.
+ai 강의를 수강하려면 bi 강의를 먼저 수강해야한다는 전제조건이 prerequisites[i] = [ai, bi]로 주어집니다.   
+* 예를 들어 pair[0, 1]는 0 강의를 수강하려면 1 강의를 먼저 수강해야한다는 전제조건입니다.
+모든 강의를 수강할 수 있는 경우 true를 반환합니다.   
+그렇지 않으면 false를 반환합니다.
+
+**input**
+* 1 <= numCourses <= 105
+* 0 <= prerequisites.length <= 5000
+* prerequisites[i].length == 2
+* 0 <= ai, bi < numCourses
+* 모든 prerequisites[i] 쌍은 고유합니다.
+
+**example**
+```
+Input: numCourses = 2, prerequisites = [[1,0]]
+Output: true
+Explanation: There are a total of 2 courses to take. 
+To take course 1 you should have finished course 0. So it is possible.
+```
+
+**풀이**
+```
+public boolean canFinish(int numCourses, int[][] prerequisites) {
+    int[][] matrix = new int[numCourses][numCourses]; // x: 강의 번호, y: x 강의를 사전에 들어야 들을 수 있는 강의의 번호
+    int[] preCountArray = new int[numCourses]; // 각 강의를 듣기 위해 들어야하는 사전 강의 수
+
+    for (int[] pair : prerequisites) {
+        int before = pair[1];
+        int after = pair[0];
+        matrix[before][after] = 1;
+        preCountArray[after]++;
+    }
+
+    Queue<Integer> queue = new LinkedList<>();
+    for (int i = 0; i < numCourses; i++) {  // 사전 강의가 필요 없는 강의들을 먼저 queue에 담는다.
+        if (preCountArray[i] == 0) {
+            queue.offer(i);
+        }
+    }
+
+    int count = 0;
+    while (!queue.isEmpty()) {
+        int course = queue.poll();
+        count++;
+        for (int i = 0; i < numCourses; i++) {
+            if (matrix[course][i] == 1) { // course를 들었으니 i 강의의 사전 강의 수를 1개 감소시킨다.
+                preCountArray[i]--;
+                if (preCountArray[i] == 0) { // i강의의 사전 강의 수가 0이 되면 이제 수강할 수 있으므로 queue에 넣어준다.
+                    queue.offer(i);
+                }
+            }
+        }
+    }
+
+    return count == numCourses; // 지금까지 수강한 강의 수 count와 numCourses의 값이 같은지 여부를 리턴한다.
+}
+```
+
+[맨위로](#coding-interview)
+
+### Course Schedule II(강의 일정 2)
+0부터 numCours - 1까지 총 numCours개의 강의를 수강해야 합니다.   
+ai 강의를 수강하려면 bi 강의를 먼저 수강해야한다는 전제조건이 prerequisites[i] = [ai, bi]로 주어집니다.   
+* 예를 들어 pair[0, 1]는 0 강의를 수강하려면 1 강의를 먼저 수강해야한다는 전제조건입니다.
+모든 강의를 수강하기 위한 강의 순서를 반환합니다.   
+유효한 답이 많으면 그 중 하나만 반환하면 됩니다.   
+모든 강의를 완료할 수 없는 경우 빈 배열을 반환합니다.   
+
+**input**
+* 1 <= numCourses <= 2000
+* 0 <= prerequisites.length <= numCourses * (numCourses - 1)
+* prerequisites[i].length == 2
+* 0 <= ai, bi < numCourses
+* ai != bi
+* 모든 [ai, bi]쌍은 구별됩니다.
+
+**example**
+```
+Input: numCourses = 2, prerequisites = [[1,0]]
+Output: [0,1]
+Explanation: There are a total of 2 courses to take. To take course 1 you should have finished course 0. So the correct course order is [0,1].
+```
+
+**풀이**
+```
+// 기본적인 로직은 Course Schedule 풀이와 같습니다.
+public int[] findOrder(int numCourses, int[][] prerequisites) {
+    int[][] matrix = new int[numCourses][numCourses];
+    int[] preCourseCount = new int[numCourses];
+
+    for (int[] pair : prerequisites) {
+        int prev = pair[1];
+        int ready = pair[0];
+        matrix[prev][ready] = 1;
+        preCourseCount[ready]++;
+    }
+
+    Queue<Integer> queue = new LinkedList<>();
+    for (int i = 0; i < numCourses; i++) {
+        if (preCourseCount[i] == 0) {
+            queue.offer(i);
+        }
+    }
+
+    int[] result = new int[numCourses]; // 결과 배열
+    int resultIndex = 0; // 결과를 담을 index
+    while (!queue.isEmpty()) {
+        int course = queue.poll();
+        result[resultIndex++] = course; // 결과에 하나씩 추가
+        for (int i = 0; i < numCourses; i++) {
+            if (matrix[course][i] == 1) {
+                preCourseCount[i]--;
+                if (preCourseCount[i] == 0) {
+                    queue.offer(i);
+                }
+            }
+        }
+    }
+
+    return resultIndex == numCourses ? result : new int[0]; // 결과 배열이 모두 채워졌으면 result를 리턴, 아니면 빈 배열을 리턴합니다.
 }
 ```
 
