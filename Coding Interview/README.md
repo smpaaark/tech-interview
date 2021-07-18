@@ -520,7 +520,7 @@ public int maxDepth(TreeNode root) {
 ### Course Schedule(강의 일정)
 0부터 numCours - 1까지 총 numCours개의 강의를 수강해야 합니다.
 ai 강의를 수강하려면 bi 강의를 먼저 수강해야한다는 전제조건이 prerequisites[i] = [ai, bi]로 주어집니다.   
-* 예를 들어 pair[0, 1]는 0 강의를 수강하려면 1 강의를 먼저 수강해야한다는 전제조건입니다.
+* 예를 들어 pair[0, 1]는 0 강의를 수강하려면 1 강의를 먼저 수강해야한다는 전제조건입니다.   
 모든 강의를 수강할 수 있는 경우 true를 반환합니다.   
 그렇지 않으면 false를 반환합니다.
 
@@ -582,7 +582,7 @@ public boolean canFinish(int numCourses, int[][] prerequisites) {
 ### Course Schedule II(강의 일정 2)
 0부터 numCours - 1까지 총 numCours개의 강의를 수강해야 합니다.   
 ai 강의를 수강하려면 bi 강의를 먼저 수강해야한다는 전제조건이 prerequisites[i] = [ai, bi]로 주어집니다.   
-* 예를 들어 pair[0, 1]는 0 강의를 수강하려면 1 강의를 먼저 수강해야한다는 전제조건입니다.
+* 예를 들어 pair[0, 1]는 0 강의를 수강하려면 1 강의를 먼저 수강해야한다는 전제조건입니다.   
 모든 강의를 수강하기 위한 강의 순서를 반환합니다.   
 유효한 답이 많으면 그 중 하나만 반환하면 됩니다.   
 모든 강의를 완료할 수 없는 경우 빈 배열을 반환합니다.   
