@@ -20,6 +20,9 @@
 * [Graph](#graph)
   * [Course Schedule(강의 일정)](#course-schedule강의-일정)
   * [Course Schedule II(강의 일정 2)](#course-schedule-ii강의-일정-2)
+* [HashTable]()
+  * [Roman to Integer(로마 숫자를 정수로 변환)]()
+  * [Linked List Cycle(링크드리스트 싸이클)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -154,6 +157,13 @@ post는 파라미터로 전달되지 않습니다.
 * -10^5 <= Node.val <= 10^5
 * pos는 -1이거나 유요한 index입니다.
 * 공간 복잡도 O(1)로 풀어야 합니다.
+
+**example**
+```
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+```
 
 **풀이**
 ```
@@ -722,6 +732,116 @@ public int[] findOrder(int numCourses, int[][] prerequisites) {
     }
 
     return resultIndex == numCourses ? result : new int[0]; // 결과 배열이 모두 채워졌으면 result를 리턴, 아니면 빈 배열을 리턴합니다.
+}
+```
+
+[맨위로](#coding-interview)
+
+## HashTable
+### Roman to Integer(로마 숫자를 정수로 변환)
+로마 숫자는 7가지 기호로 표시됩니다. : I, V, X, L, C, D, M.
+```
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+```
+예를 들어, 2는 로마 숫자에서 II로 쓰이고 I 2개가 합쳐진 것입니다.   
+12는 XII로 쓰이고 X + II 입니다.   
+27은 XXVII로 쓰이고 XX + V + II 입니다.   
+
+로마 숫자는 보통 왼쪽에서 오른쪽으로 큰 숫자부터 작은 숫자로 쓰입니다.   
+그러나 4는 IIII가 아닙니다.   
+대신에 4는 IV로 쓰입니다.   
+왜냐하면 4를 만들기 위해 5에서 1을 빼면되기 때문입니다.
+같은 원리가 IX로 쓰여지는 9에도 적용됩니다.   
+이와 같은 원리가 사용되는 6가지 예시 입니다.
+* I는 V(5)와 X(10) 앞에 배치되어 4와 9를 만들 수 있습니다.
+* X는 L(50)과 C(100) 앞에 배치되어 40과 90을 만들 수 있습니다.
+* C는 D(500)과 M(1000) 앞에 배치되어 400과 900을 만들 수 있습니다.
+
+로마 숫자가 주어지면 정수로 변환합니다.   
+
+**input**
+* 1 <= s.length <= 15
+* s에는 문자 ('I', 'V', 'X', 'L', 'C', 'D', 'M')만 포함됩니다.
+* s는 [1, 3999] 범위의 유효한 로마 숫자임이 보장됩니다.
+
+**example**
+```
+Input: s = "III"
+Output: 3
+```
+
+**풀이**
+```
+public int romanToInt(String s) {
+    Map<Character, Integer> map = new HashMap<>(); // 로마 숫자 map에 저장
+    map.put('I', 1);
+    map.put('V', 5);
+    map.put('X', 10);
+    map.put('L', 50);
+    map.put('C', 100);
+    map.put('D', 500);
+    map.put('M', 1000);
+
+    int length = s.length();
+    int result = map.get(s.charAt(length - 1)); // 가장 오른쪽 숫자를 결과에 저장
+    for (int i = length - 2; i >= 0; i--) {
+        if (map.get(s.charAt(i)) >= map.get(s.charAt(i + 1))) { // 오른쪽 숫자보다 크면 더한다.
+            result += map.get(s.charAt(i));
+        } else { // 오른쪽 숫자보다 작으면 뺀다.
+            result -= map.get(s.charAt(i));
+        }
+    }
+
+    return result;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Linked List Cycle(링크드리스트 싸이클)
+head가 주어지면 링크드리스트에 cycle이 있는지 확인합니다.   
+
+노드를 계속 따라가다가 이미 순회한 노드가 있을 경우가 cycle이 존재하는 경우입니다.   
+내부적으로 pos는 꼬리 노드의 next 노드의 index입니다.   
+post는 파라미터로 전달되지 않습니다.   
+
+링크드리스트에 cycle이 있으면 true를 반환합니다.   
+없으면 false를 반환합니다.
+
+**input**
+* 리스트의 노드 수의 범위는 [0, 104] 입니다.
+* -10^5 <= Node.val <= 10^5
+* pos는 -1이거나 유요한 index입니다.
+
+**example**
+```
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+```
+
+**풀이**
+```
+public boolean hasCycle(ListNode head) {
+    Set<ListNode> set = new HashSet<>();
+    ListNode current = head;
+    while (current != null) {
+        if (set.contains(current)) { // set에 있으면 cycle이므로 true 리턴
+            return true;
+        }
+
+        set.add(current); // 없으면 set에 추가
+        current = current.next;
+    }
+
+    return false; // 다 돌때 까지 true가 아니기 때문에 false 리턴
 }
 ```
 
