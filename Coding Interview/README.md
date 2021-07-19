@@ -20,9 +20,9 @@
 * [Graph](#graph)
   * [Course Schedule(강의 일정)](#course-schedule강의-일정)
   * [Course Schedule II(강의 일정 2)](#course-schedule-ii강의-일정-2)
-* [HashTable]()
-  * [Roman to Integer(로마 숫자를 정수로 변환)]()
-  * [Linked List Cycle(링크드리스트 싸이클)]()
+* [HashTable](#hashtable)
+  * [Roman to Integer(로마 숫자를 정수로 변환)](#roman-to-integer로마-숫자를-정수로-변환)
+  * [Linked List Cycle(링크드리스트 싸이클)](#linked-list-cycle링크드리스트-싸이클-1)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
