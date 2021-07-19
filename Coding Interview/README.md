@@ -14,7 +14,9 @@
 * [Tree](#tree)
   * [Symmetric Tree(대칭 트리)](#symmetric-tree대칭-트리)
   * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)](#maximum-depth-of-binary-tree이진-트리의-최대-깊이)
-
+* [Heap]()
+  * [Kth Largest Element in an Array(배열에서 k번째로 큰 요소)]()
+  * [Top K Frequent Elements(빈도 높은 요소 Top K)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -509,6 +511,82 @@ public int maxDepth(TreeNode root) {
     }
 
     return 1 + Math.max(maxDepth(root.left), maxDepth(root.right)); // left와 right 끝까지 갔다가 돌아오면서 max 값 + 1 리턴 
+}
+```
+
+[맨위로](#coding-interview)
+
+## Heap
+### Kth Largest Element in an Array(배열에서 k번째로 큰 요소)
+정수 배열 nums와 정수 k가 주어지면 배열에서 k번째로 큰 요소를 반환합니다.
+
+이 요소는 k번째 요소가 아니라 정렬된 순서에서의 k번째로 큰 요소입니다.
+
+**input**
+* 1 <= k <= nums.length <= 104
+* -104 <= nums[i] <= 104
+
+**example**
+```
+Input: nums = [3,2,1,5,6,4], k = 2
+Output: 5
+```
+
+**풀이**
+```
+public int findKthLargest(int[] nums, int k) {
+    PriorityQueue<Integer> priorityQueue= new PriorityQueue<>(); // Min Heap 생성
+
+    for (int i = 0; i < nums.length; i++){
+        priorityQueue.add(nums[i]);
+        if (priorityQueue.size() > k) { // heap의 사이즈가 k보다 크면 최소값을 제거한다.
+            priorityQueue.remove();
+        }
+    }
+
+    return priorityQueue.remove(); // 마지막엔 가장 큰 k개의 수만 heap에 남아있게 되므로 남은 값 중 최소값을 반환한다.
+}
+```
+
+[맨위로](#coding-interview)
+
+### Top K Frequent Elements(빈도 높은 요소 Top K)
+정수 배열 nums와 정수 k가 주어지면 가장 빈도가 높은 요소 k개를 반환합니다.   
+답의 순서는 상관없습니다.
+
+**input**
+* 1 <= nums.length <= 105
+* k는 [1, 배열에 포함된 고유한 요소의 갯수] 범위에 있습니다.
+* 정답은 고유합니다.
+
+**example**
+```
+Input: nums = [1,1,1,2,2,3], k = 2
+Output: [1,2]
+```
+
+**풀이**
+```
+public int[] topKFrequent(int[] nums, int k) {
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int num : nums) { // Map에 숫자와 빈도수를 저장한다.
+        map.put(num, map.getOrDefault(num, 0) + 1);
+    }
+
+    PriorityQueue<Map.Entry<Integer, Integer>> queue = new PriorityQueue<>((a, b) -> { // Max Heap 생성, Map은 Entry로 넣어야 한다.
+        return b.getValue() - a.getValue();
+    });
+
+    for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+        queue.offer(entry);
+    }
+
+    int[] result = new int[k];
+    for (int i = 0; i < k; i++) { // k개 만큼 key를 가져와서 결과에 저장
+        result[i] = queue.poll().getKey();
+    }
+
+    return result;
 }
 ```
 
