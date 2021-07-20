@@ -2,6 +2,7 @@
 * [JDK, JRE, JVM](#jdk-jre-jvm)
 * [public static void main(String args[])](#public-static-void-mainstring-args)
 * [Java가 플랫폼에 독립적인 이유](#java가-플랫폼에-독립적인-이유)
+
 * [Java가 100% 객체 지향적이지 않은 이유](#java가-100-객체-지향적이지-않은-이유)
 * [Wrapper 클래스](#wrapper-클래스)
 * [Constructor(생성자)](#constructor생성자)
@@ -55,36 +56,41 @@ JDK
 * JRE + 개발 도구가 포함되어 있습니다.
 
 JRE
-* Java Runtime Environment의 약자입니다.
-* Java bytecode(바이트코드)를 실행할 수 있는 런타임 환경을 말합니다.
-* JVM을 구현하는 것입니다.
+* Java Runtime Environment을 의미합니다.
+* JRE는 Java bytecode(바이트코드)를 실행할 수 있는 런타임 환경을 말합니다.
+* 물리적으로 존재하는 JVM을 구현합니다.
 
 JVM
 * Java Virtual Machine의 약자입니다.
-* Java bytecode(바이트코드)를 실행할 수 있는 런타임 환경을 제공하는 스펙입니다.
+* 가상 머신입니다.
+* Java bytecode(바이트코드)가 실행될 수 있는 런타임 환경을 제공하는 스펙입니다.
+* JVM은 스펙, 구현, 런타임 인스턴스 3가지 측면이 있습니다.
 
 [맨위로](#java)
 
 ## public static void main(String args[])
-main()은 Java 프로그램의 시작점입니다.   
+Java의 main()은 Java 프로그램의 진입점입니다.     
 항상 public static void main(String[] args)로 작성됩니다.   
-
 * public
-  * 접근 제어자입니다.
-  * 모든 클래스에서 이 메서드에 접근할 수 있습니다.
+  * public은 접근 제어자입니다.
+  * public은 이 메서드가 모든 클래스에서 접근할 수 있음을 의미합니다.
 * static
-  * 클래스 인스턴스를 생성하지 않고도 접근할 수 있습니다.
-  * main() 메서드가 static이 아니라면 JVM이 main()을 검색할 때 에러가 발생합니다.
+  * 클래스 기반임을 식별하는 Java의 키워드입니다.
+  * main()은 Java에서 static으로 만들어지므로 클래스의 인스턴스를 만들지 않고도 접근할 수 있습니다.
+  * main이 static으로 만들어지지 않은 경우 객체가 만들어지기 전에 JVM이 main()을 호출하고 클래스를 통해 static 메서드만 직접 호출할 수 있으므로 컴파일러에서 오류가 발생합니다.
 * void
-  * 리턴 타입입니다.
-  * 값을 반환하지 않습니다.
+  * 메서드의 리턴 타입입니다.
+  * void는 값을 반환하지 않는 메서드를 정의합니다.
 * main
-  * JVM이 애플리케이션을 시작할 때 검색하는 메서드 이름입니다.
+  * 특정 시그니처만 있는 애플리케이션의 시작점으로 JVM이 검색하는 메소드의 이름입니다.
+  * 메인 실행이 발생하는 메소드입니다.
+* String args[]
+  * 메인 메소드에 전달되는 매개변수입니다.
 
 [맨위로](#java)
 
 ## Java가 플랫폼에 독립적인 이유
-Java는 운영 체제에 관계없이 모든 시스템에서 실행될 수 있는 바이트코드이기 때문에 플랫폼에 독립적이라고 합니다.   
+Java는 기본 운영 체제에 관계없이 모든 시스템에서 실행할 수 있는 바이트코드이기 때문에 플랫폼에 독립적이라고 합니다.   
 
 [맨위로](#java)
 
