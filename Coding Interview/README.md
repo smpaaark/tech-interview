@@ -23,6 +23,8 @@
 * [HashTable](#hashtable)
   * [Roman to Integer(로마 숫자를 정수로 변환)](#roman-to-integer로마-숫자를-정수로-변환)
   * [Linked List Cycle(링크드리스트 싸이클)](#linked-list-cycle링크드리스트-싸이클-1)
+* [recursion]()
+  * [Reverse Linked List(링크드 리스트 뒤집기)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -118,6 +120,12 @@ public int removeDuplicates(int[] nums) {
 * 두 리스트의 노드 갯수는 [0, 50] 범위입니다.
 * -100 <= Node.val <= 100
 * l1과 l2 모두 오름차순 정렬되어 있습니다.
+
+**example**
+```
+Input: l1 = [1,2,4], l2 = [1,3,4]
+Output: [1,1,2,3,4,4]
+```
 
 **풀이**
 ```
@@ -842,6 +850,79 @@ public boolean hasCycle(ListNode head) {
     }
 
     return false; // 다 돌때 까지 true가 아니기 때문에 false 리턴
+}
+```
+
+[맨위로](#coding-interview)
+
+## recursion
+### Reverse Linked List(링크드 리스트 뒤집기)
+단일 링크드 리스트 head가 주어지면 뒤집어서 반환합니다.   
+
+**input**
+* 리스트의 노드 수는 [0, 5000] 범위에 있습니다.
+* -5000 <= Node.val <= 5000
+* 재귀로 구현합니다.
+
+**example**
+```
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+```
+
+**풀이**
+```
+public ListNode reverseList(ListNode head) {
+    return recursion(head, null);
+}
+
+private ListNode recursion(ListNode node, ListNode prevNode) {
+    if (node == null) { // node가 null이면 prevNode가 새로운 head가 되어 리턴된다.
+        return prevNode;
+    }
+
+    ListNode next = node.next; // 다음 노드를 임시로 저장해둔다.
+    node.next = prevNode; // 현재 노드의 다음 노드를 이전 노드를 가리키게 한다.
+    return recursion(next, node); // next 노드(현재 노드가 됨)와 현재노드(이전 노드가 됨)를 전달하여 함수를 호출한다.
+}
+```
+
+[맨위로](#coding-interview)
+
+### Palindrome Linked List(회문 링크드 리스트)
+단일 링크드 리스트의 head가 주어지고 해당 리스트가 회문이면 true를 반환합니다.
+> 회문(palindrome): 앞에서 읽으나 뒤에서 읽으나 같은 것
+
+**input**
+* 리스트 노드의 수는 [1, 105] 범위에 있습니다.
+* 0 <= Node.val <= 9
+
+**example**
+```
+Input: head = [1,2,2,1]
+Output: true
+```
+
+**풀이**
+```
+public boolean isPalindrome2(ListNode head) {
+    if (head == null) { // 리스트의 끝까지 간 후 초기 결과 true로 세팅한다.
+        return true;
+    }
+
+    if (node == null) { // head 노드를 저장해 둔다.
+        node = head;
+    }
+
+    boolean bool = isPalindrome2(head.next); // 꼬리까지 간다. 꼬리까지 간 후 돌아왔을때 초기 bool은 true
+
+    if (head.val == node.val) {    // 처음 head는 꼬리이며, node는 헤드이다. 값을 비교하여 같으면 node를 한칸 옮긴다.
+        node = node.next;
+    } else { // 같지 않으면 false를 리턴한다.
+        bool = false;
+    }
+
+    return bool;
 }
 ```
 
