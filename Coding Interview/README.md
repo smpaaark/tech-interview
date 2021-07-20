@@ -906,7 +906,7 @@ Output: true
 
 **풀이**
 ```
-public boolean isPalindrome2(ListNode head) {
+public boolean isPalindrome(ListNode head) {
     if (head == null) { // 리스트의 끝까지 간 후 초기 결과 true로 세팅한다.
         return true;
     }
@@ -915,7 +915,7 @@ public boolean isPalindrome2(ListNode head) {
         node = head;
     }
 
-    boolean bool = isPalindrome2(head.next); // 꼬리까지 간다. 꼬리까지 간 후 돌아왔을때 초기 bool은 true
+    boolean bool = isPalindrome(head.next); // 꼬리까지 간다. 꼬리까지 간 후 돌아왔을때 초기 bool은 true
 
     if (head.val == node.val) {    // 처음 head는 꼬리이며, node는 헤드이다. 값을 비교하여 같으면 node를 한칸 옮긴다.
         node = node.next;
