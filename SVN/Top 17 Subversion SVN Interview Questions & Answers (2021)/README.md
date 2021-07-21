@@ -1,6 +1,6 @@
 # Top 17 Subversion SVN Interview Questions & Answers (2021)
 * [SVN](#svn)
-* [Git과 SVN Repsitory의 차이점](#git과-svn-repsitory의-차이점)
+* [Git과 SVN Repository의 차이점](#git과-svn-repository의-차이점)
 * [SVN Repository에 저장해야하는 것들](#svn-repository에-저장해야하는-것들)
 * [참고](#참고)
 
@@ -14,7 +14,7 @@ SVN 저장소는 파일에 대한 변경 사항에 대한 전체 기록을 제�
 
 [맨위로](#top-17-subversion-svn-interview-questions--answers-2021)
 
-## Git과 SVN Repsitory의 차이점
+## Git과 SVN Repository의 차이점
 * Git이 멀티 브랜치 또는 태그에서 "커밋"을 지원하지 않는다는 것입니다.    
 Subversion을 사용하면 저장소 레이아웃의 모든 위치에 폴더를 만들 수 있습니다.
 * Git은 변경할 수 없는 반면 Subversion을 사용하면 커밋한 사람이 태그를 브랜치로 처리하고 태그 루트 아래에 여러 리비전을 만들 수 있습니다.
