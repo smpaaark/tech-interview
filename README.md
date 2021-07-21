@@ -5,7 +5,7 @@
 * [Spring MVC](https://github.com/smpark1020/tech-interview/tree/master/Spring%20MVC)
 * [Spring Data JPA](https://github.com/smpark1020/tech-interview/tree/master/Spring%20Data%20JPA#spring-data-jpa)
 * [JPA](https://github.com/smpark1020/tech-interview/tree/master/JPA#jpa)
-* [Querydsl]()
+* [ElasticSearch]()
 * [Mybatis]()
 * [JUnit]()
 * [Maven]()
