@@ -26,9 +26,9 @@
 * [recursion](#recursion)
   * [Reverse Linked List(링크드 리스트 뒤집기)](#reverse-linked-list링크드-리스트-뒤집기)
   * [Palindrome Linked List(회문 링크드 리스트)](#palindrome-linked-list회문-링크드-리스트)
-* [Backtracking]()
-  * [Letter Combinations of a Phone Number(전화번호의 문자 조합)]()
-  * [Generate Parentheses(괄호 생성)]()
+* [Backtracking](#backtracking)
+  * [Letter Combinations of a Phone Number(전화번호의 문자 조합)](#letter-combinations-of-a-phone-number전화번호의-문자-조합)
+  * [Generate Parentheses(괄호 생성)](#generate-parentheses괄호-생성)
 
 * [참고](#참고)
 
