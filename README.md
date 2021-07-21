@@ -2,7 +2,7 @@
 * [Java](https://github.com/smpark1020/tech-interview/tree/master/Java)
 * [Spring](https://github.com/smpark1020/tech-interview/tree/master/Spring)
 * [Spring Boot](https://github.com/smpark1020/tech-interview/tree/master/Spring%20Boot)
-* [Spring MVC]()
+* [Spring MVC](https://github.com/smpark1020/tech-interview/tree/master/Spring%20MVC)
 * [Spring Data JPA]()
 * [JPA]()
 * [Querydsl]()
