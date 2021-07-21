@@ -7,7 +7,7 @@
 * [JPA](https://github.com/smpark1020/tech-interview/tree/master/JPA#jpa)
 * [ElasticSearch](https://github.com/smpark1020/tech-interview/tree/master/ElasticSearch#elasticsearch)
 * [Mybatis](https://github.com/smpark1020/tech-interview/tree/master/Mybatis#mybatis)
-* [JUnit]()
+* [JUnit](https://github.com/smpark1020/tech-interview/tree/master/JUnit#junit)
 * [Maven]()
 * [Git]()
 * [AWS EC2]()
