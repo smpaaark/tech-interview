@@ -4,7 +4,7 @@
 * [Spring Boot](https://github.com/smpark1020/tech-interview/tree/master/Spring%20Boot)
 * [Spring MVC](https://github.com/smpark1020/tech-interview/tree/master/Spring%20MVC)
 * [Spring Data JPA](https://github.com/smpark1020/tech-interview/tree/master/Spring%20Data%20JPA#spring-data-jpa)
-* [JPA]()
+* [JPA](https://github.com/smpark1020/tech-interview/tree/master/JPA#jpa)
 * [Querydsl]()
 * [Mybatis]()
 * [JUnit]()
