@@ -6,7 +6,7 @@
 * [Spring Data JPA](https://github.com/smpark1020/tech-interview/tree/master/Spring%20Data%20JPA#spring-data-jpa)
 * [JPA](https://github.com/smpark1020/tech-interview/tree/master/JPA#jpa)
 * [ElasticSearch](https://github.com/smpark1020/tech-interview/tree/master/ElasticSearch#elasticsearch)
-* [Mybatis]()
+* [Mybatis](https://github.com/smpark1020/tech-interview/tree/master/Mybatis#mybatis)
 * [JUnit]()
 * [Maven]()
 * [Git]()
