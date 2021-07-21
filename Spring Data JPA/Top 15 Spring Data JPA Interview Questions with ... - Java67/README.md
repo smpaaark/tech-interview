@@ -1,10 +1,10 @@
 # Top 15 Spring Data JPA Interview Questions with ... - Java67
-* [JPA]()
-* [JPA 이점]()
-* [Spring Data Repository]()
+* [JPA](#jpa)
+* [JPA 이점](#jpa-이점)
+* [Spring Data Repository](#spring-data-repository)
 * [참고](#참고)
 
-[Spring Data JPA 목차로]()
+[Spring Data JPA 목차로](https://github.com/smpark1020/tech-interview/tree/master/Spring%20Data%20JPA#spring-data-jpa)
 
 ## JPA
 JPA는 Java Persistence API를 나타냅니다.   
@@ -13,9 +13,9 @@ JPA는 Java Persistence API를 나타냅니다.
 Java 애플리케이션에서 데이터베이스와의 상호 작용은 매우 일반적이므로 JPA는 이러한 상호 작용을 표준화하기 위해 만들어졌습니다. 
 
 Hibernate와 같은 Java 세계에서 사용할 수 있는 많은 인기 있는 JPA 구현체가 있습니다.   
-![1]()   
+![1](https://raw.githubusercontent.com/smpark1020/tech-interview/master/Spring%20Data%20JPA/Top%2015%20Spring%20Data%20JPA%20Interview%20Questions%20with%20...%20-%20Java67/1.PNG)   
 
-[맨위로]()
+[맨위로](#top-15-spring-data-jpa-interview-questions-with----java67)
 
 ## JPA 이점
 * JPA는 데이터베이스와 상호 작용하는 부담을 줄입니다. 
@@ -23,7 +23,7 @@ Hibernate와 같은 Java 세계에서 사용할 수 있는 많은 인기 있는 
 * 사용자 친화적입니다.
 * JPA 제공자(ex. Hibernate)는 애플리케이션 병합을 돕습니다. 
 
-[맨위로]()
+[맨위로](#top-15-spring-data-jpa-interview-questions-with----java67)
 
 ## Spring Data Repository
 Spring Data Repository는 JPA의 매우 중요한 기능입니다.   
@@ -32,9 +32,9 @@ Spring Data Repository는 JPA의 매우 중요한 기능입니다.
 이것은 Repository 인터페이스를 사용하여 제공되는 핵심 추상화이기도 합니다.   
 관리할 도메인 클래스와 도메인 클래스의 id 타입을 타입 매개변수로 사용합니다.   
 
-[맨위로]()
+[맨위로](#top-15-spring-data-jpa-interview-questions-with----java67)
 
 ## 참고
 * [Top 15 Spring Data JPA Interview Questions with ... - Java67](https://www.java67.com/2021/01/spring-data-jpa-interview-questions-answers-java.html)
 
-[맨위로]()
+[맨위로](#top-15-spring-data-jpa-interview-questions-with----java67)
