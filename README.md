@@ -9,7 +9,7 @@
 * [Mybatis](https://github.com/smpark1020/tech-interview/tree/master/Mybatis#mybatis)
 * [JUnit](https://github.com/smpark1020/tech-interview/tree/master/JUnit#junit)
 * [Maven](https://github.com/smpark1020/tech-interview/tree/master/Maven#maven)
-* [Git]()
+* [Git](https://github.com/smpark1020/tech-interview/tree/master/Git#git)
 * [AWS EC2]()
 * [AWS RDS]()
 * [Database]()
