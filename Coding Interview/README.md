@@ -26,6 +26,10 @@
 * [recursion](#recursion)
   * [Reverse Linked List(링크드 리스트 뒤집기)](#reverse-linked-list링크드-리스트-뒤집기)
   * [Palindrome Linked List(회문 링크드 리스트)](#palindrome-linked-list회문-링크드-리스트)
+* [Backtracking]()
+  * [Letter Combinations of a Phone Number(전화번호의 문자 조합)]()
+  * [Generate Parentheses(괄호 생성)]()
+
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -924,6 +928,92 @@ public boolean isPalindrome(ListNode head) {
     }
 
     return bool;
+}
+```
+
+[맨위로](#coding-interview)
+
+## Backtracking
+### Letter Combinations of a Phone Number(전화번호의 문자 조합)
+2~9의 숫자가 포함된 문자열이 주어지면 숫자가 나타낼 수 있는 모든 가능한 문자 조합을 반환합니다.   
+순서에 관계없이 답을 반환합니다.   
+
+전화 버튼과 마찬가지로 숫자와 문자 매핑이 아래에 나와 있습니다.   
+1은 어떤 문자에도 매핑되지 않습니다.   
+
+**input**
+* 0 <= digits.length <= 4
+* digits[i]는 ['2', '9'] 범위의 숫자입니다.
+
+**example**
+```
+Input: digits = "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+```
+
+**풀이**
+```
+private String[] array = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+public List<String> letterCombinations(String digits) {
+    List<String> resultList = new ArrayList<>();
+
+    if (digits.length() > 0) { // 입력 값이 "" 이면 빈 리스트 리턴
+        backTracking(resultList, digits, 0, "");
+    }
+
+    return resultList;
+}
+
+private void backTracking(List<String> resultList, String digits, int index, String combination) {
+    if (index == digits.length()) { // index 값이 digits의 길이와 같으면 결과에 추가하고 리턴한다.
+        resultList.add(combination);
+        return;
+    }
+
+    String str = array[digits.charAt(index) - '0']; // 현재 숫자를 가져온다.
+    for (char c : str.toCharArray()) { // 현재 숫자에 포함된 문자들을 순회하며 백트래킹을 진행한다.
+        backTracking(resultList, digits, index + 1, combination + c);
+    }
+}
+```
+
+[맨위로](#coding-interview)
+
+### Generate Parentheses(괄호 생성)
+n 괄호 쌍이 주어지면 잘 구성된 괄호의 모든 조합을 생성하는 함수를 작성합니다.
+
+**input**
+* 1 <= n <= 8
+
+**example**
+```
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+```
+
+**풀이**
+```
+public List<String> generateParenthesis(int n) {
+    List<String> resultList = new ArrayList<>();
+    backTracking(resultList, "", 0, 0, n);
+
+    return resultList;
+}
+
+private void backTracking(List<String> resultList, String str, int open, int close, int n) {
+    if (str.length() == n * 2) { // 문자열이 n * 2이면 완성된 것이므로 리스트에 추가한다.
+        resultList.add(str);
+        return;
+    }
+
+    if (open < n) { // open이 n보다 작으면 추가할 수 있다.
+        backTracking(resultList, str + "(", open + 1, close, n);
+    }
+
+    if (close < open) { // close는 open보다 작아야 추가할 수 있다.
+        backTracking(resultList, str + ")", open, close + 1, n);
+    }
 }
 ```
 
