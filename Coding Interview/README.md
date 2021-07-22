@@ -29,7 +29,9 @@
 * [Backtracking](#backtracking)
   * [Letter Combinations of a Phone Number(전화번호의 문자 조합)](#letter-combinations-of-a-phone-number전화번호의-문자-조합)
   * [Generate Parentheses(괄호 생성)](#generate-parentheses괄호-생성)
-
+* [Dynamic Programming]()
+  * [Maximum Subarray(부분배열 합의 최대값)]()
+  * [Climbing Stairs(계단 오르기)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -1014,6 +1016,75 @@ private void backTracking(List<String> resultList, String str, int open, int clo
     if (close < open) { // close는 open보다 작아야 추가할 수 있다.
         backTracking(resultList, str + ")", open, close + 1, n);
     }
+}
+```
+
+[맨위로](#coding-interview)
+
+## Dynamic Programming
+### Maximum Subarray(부분배열 합의 최대값)
+정수 배열 nums가 주어지면 가장 큰 합을 가지는 연속적인 부분배열(최소한 하나의 숫자를 포함)을 찾아 그 합을 반환합니다.   
+
+**input**
+* 1 <= nums.length <= 3 * 10^4
+* -105 <= nums[i] <= 105
+
+**example**
+```
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: [4,-1,2,1]이 가장 큰 합 = 6입니다.
+```
+
+**풀이**
+```
+public int maxSubArray(int[] nums) {
+    int max = nums[0]; // 결과로 반환할 최대값
+    int prevMaxSum = nums[0]; // 이전 배열 값의 최대값
+    for (int i = 1; i < nums.length; i++) {
+        prevMaxSum = Math.max(nums[i], nums[i] + prevMaxSum); // 이전 배열 값의 최대값을 구한다. (현재 값과 (이전 값 + 현재값) 중 최대값)
+        max = Math.max(prevMaxSum, max); // 결과로 반활할 최대값을 새로 저장한다.
+    }
+
+    return max; // 최대값 반환
+}
+```
+
+[맨위로](#coding-interview)
+
+### Climbing Stairs(계단 오르기)
+당신은 계단을 오르고 있습니다.   
+정상 n에 도달하려면 단계가 필요합니다.   
+
+매번 1개 또는 2개 오를 수 있습니다.   
+정상에 오를 수 있는 모든 경우의 수를 반환합니다.   
+
+**input**
+* 1 <= n <= 45
+
+**example**
+```
+Input: n = 2
+Output: 2
+Explanation: 정상에 오르는 방법에는 두 가지가 있습니다. 
+1. 1 step + 1 step
+2. 2 steps
+```
+
+**풀이**
+```
+public int climbStairs(int n) {
+    if (n <= 2) { // 2개 까지는 n 반환
+        return n;
+    }
+    int[] dp = new int[n + 1];
+    dp[1] = 1;
+    dp[2] = 2;
+    for (int i = 3; i <= n; i++) { // (dp[i - 2] 계단에서 +2로 오는 경우) + (dp[i - 1] 계단에서 +1로 오는 경우)
+        dp[i] = dp[i - 2] + dp[i - 1];
+    }
+
+    return dp[n];
 }
 ```
 
