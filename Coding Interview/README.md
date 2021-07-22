@@ -29,9 +29,9 @@
 * [Backtracking](#backtracking)
   * [Letter Combinations of a Phone Number(전화번호의 문자 조합)](#letter-combinations-of-a-phone-number전화번호의-문자-조합)
   * [Generate Parentheses(괄호 생성)](#generate-parentheses괄호-생성)
-* [Dynamic Programming]()
-  * [Maximum Subarray(부분배열 합의 최대값)]()
-  * [Climbing Stairs(계단 오르기)]()
+* [Dynamic Programming](#dynamic-programming)
+  * [Maximum Subarray(부분배열 합의 최대값)](#maximum-subarray부분배열-합의-최대값)
+  * [Climbing Stairs(계단 오르기)](#climbing-stairs계단-오르기)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
