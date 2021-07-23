@@ -32,6 +32,9 @@
 * [Dynamic Programming]()
   * [Maximum Subarray(부분배열 합의 최대값)]()
   * [Climbing Stairs(계단 오르기)]()
+* [Sorting]()
+  * [Merge Sorted Array(배열의 병합 정렬)]()
+  * [Majority Element(과반수 요소)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -1085,6 +1088,78 @@ public int climbStairs(int n) {
     }
 
     return dp[n];
+}
+```
+
+[맨위로](#coding-interview)
+
+## Sorting
+### Merge Sorted Array(배열의 병합 정렬)
+오름차순으로 정렬된 두 정수 배열 nums1, nums2과 각 배열의 요소 수를 나타내는 두 정수 m과 n이 주어집니다.   
+
+nums1과 nums2를 오름차순으로 병합 정렬합니다.  
+
+최종 정렬된 배열은 함수에 의해 반환되지 않고 대신 nums1 배열 내부에 저장 되어야 합니다.    
+이를 수용하기 위해 nums1 배열의 길이는 m + n이고, 첫번째 부터 요소 m개는 병합해야 하는 요소를 나타냅니다.   
+그리고 마지막 n개의 요소는 0으로 설정되며 무시해야 합니다.   
+nums2의 길이는 n 입니다.   
+
+**input**   
+* nums1.length == m + n
+* nums2.length == n
+* 0 <= m, n <= 200
+* 1 <= m + n <= 200
+* -109 <= nums1[i], nums2[j] <= 109
+* 시간 복잡도 O(m + n)으로 구현합니다.
+
+**example**
+```
+Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+Output: [1,2,2,3,5,6]
+Explanation: 병합할 배열은 [1,2,3] 및 [2,5,6]입니다. 
+병합 결과는 [ 1 , 2 ,2, 3 ,5,6] 입니다.
+```
+
+**풀이**
+```
+public void merge(int[] nums1, int m, int[] nums2, int n) {
+    int tail1 = m - 1; // nums1의 끝 index
+    int tail2 = n - 1; // nums2의 끝 index
+    int finished = m + n - 1; // 결과 배열의 끝 index
+
+    while (tail1 >= 0 && tail2 >= 0) {
+        nums1[finished--] = (nums1[tail1] > nums2[tail2]) ? nums1[tail1--] : nums2[tail2--]; // 끝부터 큰 숫자를 순차적으로 넣는다.
+    }
+
+    while (tail2 >= 0) { // tail2가 남았으면 나머지 배열에 넣는다. 이 때 tail2는 안남고 tail1만 남았으면 nums1을 리턴하는 것이기 때문에 추가 작업 없이 남겨두면 된다.
+        nums1[finished--] = nums2[tail2--];
+    }
+}
+```
+
+[맨위로](#coding-interview)
+
+### Majority Element(과반수 요소)
+n 크기의 배열 nums가 주어지면 과반수 요소를 반환합니다.      
+과반수 요소는 여러 ⌊n / 2⌋번 이상 나타나는 요소입니다 .   
+과반수 요소가 항상 배열에 존재한다고 가정할 수 있습니다.   
+
+**input**
+* n == nums.length
+* 1 <= n <= 5 * 104
+* -231 <= nums[i] <= 231 - 1
+
+**example**
+```
+Input: nums = [3,2,3]
+Output: 3
+```
+
+**풀이**
+```
+public int majorityElement(int[] nums) {
+    Arrays.sort(nums); // 배열을 정렬한다.
+    return nums[nums.length / 2]; // majority 수는 length / 2 개 이상 있기 때문에 정렬을 하게 되면 항상 중간 요소의 값이 된다.
 }
 ```
 
