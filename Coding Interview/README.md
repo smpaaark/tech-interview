@@ -35,6 +35,9 @@
 * [Sorting](#sorting)
   * [Merge Sorted Array(배열의 병합 정렬)](#merge-sorted-array배열의-병합-정렬)
   * [Majority Element(과반수 요소)](#majority-element과반수-요소)
+* [Binary Search]()
+  * [Sqrt(x)(제곱근 x)]()
+  * [Intersection of Two Arrays II(두 배열의 교집합 2)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -1160,6 +1163,106 @@ Output: 3
 public int majorityElement(int[] nums) {
     Arrays.sort(nums); // 배열을 정렬한다.
     return nums[nums.length / 2]; // majority 수는 length / 2 개 이상 있기 때문에 정렬을 하게 되면 항상 중간 요소의 값이 된다.
+}
+```
+
+[맨위로](#coding-interview)
+
+## Binary Search
+### Sqrt(x)(제곱근 x)
+음이 아닌 정수 n이 주어지면, 제곱근 x를 구하여 반환합니다.   
+
+반환 유형이 정수이므로 소수 자릿수가 잘리고 결과의 정수 부분만 반환됩니다.   
+
+참고: 내장된 라이브러리를 사용할 수 없습니다.    
+ex) pow(x, 0.5)
+
+**input**
+* 0 <= x <= 2^31 - 1
+
+**example**
+```
+Input: x = 4
+Output: 2
+```
+
+**풀이**
+```
+public int mySqrt(int x) {
+    if (x == 0) { // x == 0이면 0 반환
+        return 0;
+    }
+
+    int start = 1; // x > 0이면 정답은 0보다 크기 때문에 start를 1로 잡는다.
+    int end = x;
+    while (start <= end) {
+        int mid = (start + end) / 2; // 중간 값
+        if (mid <= x / mid && (mid + 1) > x / (mid + 1)) {// 결과 조건
+            return mid;
+        } else if (mid > x / mid) {
+            end = mid - 1;
+        } else {
+            start = mid + 1;
+        }
+    }
+
+    return start;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Intersection of Two Arrays II(두 배열의 교집합 2)
+두 정수 배열 nums1과 nums2가 주어지면 두 배열의 교집합 배열을 반환합니다.   
+결과의 각 요소는 두 배열에 모두 표시되는 횟수만큼 나타나야 하며 원하는 순서로 결과를 반환할 수 있습니다.  
+
+**input**
+* 1 <= nums1.length, nums2.length <= 1000
+* 0 <= nums1[i], nums2[i] <= 1000
+
+**풀이**
+```
+public int[] intersect(int[] nums1, int[] nums2) {
+    Arrays.sort(nums1); // nums1을 오름차순 정렬
+    List<Integer> nums1List = new ArrayList<>();
+    for (int num : nums1) { // ArrayList에 담는다.
+        nums1List.add(num);
+    }
+
+    List<Integer> ret = new ArrayList<>();
+    for (int num: nums2) {
+        int idx = search(nums1List, num); // 이진 탐색
+        if (idx != -1) {  // nums1List에 있으면 ret에 추가
+            nums1List.remove(idx); // 추가 했으니 nums1List에서 제거한다.
+            ret.add(num);
+        }
+    }
+
+    int[] retArr = new int[ret.size()];
+    int i = 0;
+    for (int num : ret) { // ret를 retArr배열로 옮겨 담는다.
+        retArr[i++] = num;
+    }
+
+    return retArr;
+}
+
+public int search(List<Integer> nums, int key) { // 이진 탐색
+    int high = nums.size() - 1;
+    int low = 0;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        if (nums.get(mid) == key) {
+            return mid;
+        } else if (nums.get(mid) > key) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    return -1;
 }
 ```
 
