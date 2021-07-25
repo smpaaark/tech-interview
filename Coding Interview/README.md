@@ -38,6 +38,9 @@
 * [Binary Search]()
   * [Sqrt(x)(제곱근 x)]()
   * [Intersection of Two Arrays II(두 배열의 교집합 2)]()
+* [DFS]()
+  * [Binary Tree Inorder Traversal(이진 트리 중위 순회)]()
+  * [Symmetric Tree(대칭 트리)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -264,7 +267,7 @@ public List<Integer> inorderTraversal(TreeNode root) {
     Stack<TreeNode> stack = new Stack<>();
     TreeNode currentNode = root; // 현재 노드
     while (currentNode != null || !stack.isEmpty()) { // !stack.isEmpty는 오른쪽 노드가 null일 경우 stack에 남아있는 노드로 계속 진행해야 되기 때문에 조건이 있어야 한다.
-        while (currentNode != null) { // 왼쪽 노드를 stack에 push 한다.
+        while (currentNode != null) { // 현재 노드를 stack에 push하고 왼쪽노드로 바꾼다. -> 이것을 왼쪽 끝 노드까지 반복
             stack.push(currentNode);
             currentNode = currentNode.left;
         }
@@ -1263,6 +1266,85 @@ public int search(List<Integer> nums, int key) { // 이진 탐색
     }
 
     return -1;
+}
+```
+
+[맨위로](#coding-interview)
+
+## DFS
+### Binary Tree Inorder Traversal(이진 트리 중위 순회)
+이진 트리의 루트가 주어지면 노드의 값을 중위 순회로 반환합니다.   
+
+**input**
+* 트리의 노드 수 범위는 [0, 100] 입니다..
+* -100 <= Node.val <= 100
+
+**example**
+```
+Input: root = [1,null,2,3]
+Output: [1,3,2]
+```
+
+**풀이**
+```
+public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> resultList = new ArrayList<>();
+    dfs(root, resultList);
+
+    return resultList;
+}
+
+private void dfs(TreeNode root, List<Integer> resultList) { // dfs 로직
+    if (root != null) {
+        if (root.left != null) {
+            dfs(root.left, resultList); // 왼쪽 노드 먼저 재귀
+        }
+
+        resultList.add(root.val); // 현재 노드 추가
+        
+        if (root.right != null) {
+            dfs(root.right, resultList); // 오른쪽 노드 재귀
+        }
+    }
+}
+```
+
+[맨위로](#coding-interview)
+
+### Symmetric Tree(대칭 트리)
+이진 트리의 루트가 주어지면 대칭 트리인지 확인합니다.   
+(즉, 중앙을 중심으로 대칭이 됩니다.)
+
+**input**
+* 트리의 노드 수는 [1, 1000] 범위에 있습니다.
+* -100 <= Node.val <= 100
+
+**example**
+```
+Input: root = [1,2,2,3,4,4,3]
+Output: true
+```
+
+**풀이**
+```
+public boolean isSymmetric(TreeNode root) {
+    return dfs(root.left, root.right);
+}
+
+private boolean dfs(TreeNode left, TreeNode right) {
+    if (left == null && right == null) { // 둘다 null이면 true
+        return true;
+    }
+
+    if ((left == null && right != null) || (left != null && right == null)) { // 한쪽만 null이면 false
+        return false;
+    }
+
+    if (left.val != right.val) { // 둘다 null이 아니지만 val이 다르면 false
+        return false;
+    }
+
+    return dfs(left.left, right.right) && dfs(left.right, right.left); // 자식 노드 dfs 호출
 }
 ```
 
