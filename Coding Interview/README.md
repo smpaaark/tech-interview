@@ -41,6 +41,9 @@
 * [DFS](#dfs)
   * [Binary Tree Inorder Traversal(이진 트리 중위 순회)](#binary-tree-inorder-traversal이진-트리-중위-순회-1)
   * [Symmetric Tree(대칭 트리)](#symmetric-tree대칭-트리-1)
+* [BFS]()
+  * [Symmetric Tree(대칭 트리)]()
+  * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -1345,6 +1348,101 @@ private boolean dfs(TreeNode left, TreeNode right) {
     }
 
     return dfs(left.left, right.right) && dfs(left.right, right.left); // 자식 노드 dfs 호출
+}
+```
+
+[맨위로](#coding-interview)
+
+### Symmetric Tree(대칭 트리)
+이진 트리의 루트가 주어지면 대칭 트리인지 확인합니다.   
+(즉, 중앙을 중심으로 대칭이 됩니다.)
+
+**input**
+* 트리의 노드 수는 [1, 1000] 범위에 있습니다.
+* -100 <= Node.val <= 100
+
+**example**
+```
+Input: root = [1,2,2,3,4,4,3]
+Output: true
+```
+
+**풀이**
+```
+public boolean isSymmetric(TreeNode root) {
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root.left);
+    queue.offer(root.right);
+
+    while (!queue.isEmpty()) {
+        TreeNode left = queue.poll();
+        TreeNode right = queue.poll();
+
+        if ((left == null && right != null) || (left != null && right == null)) {
+            return false;
+        }
+
+        if (left != null && right != null) {
+            if (left.val != right.val) {
+                return false;
+            }
+
+            queue.offer(left.left);
+            queue.offer(right.right);
+            queue.offer(left.right);
+            queue.offer(right.left);
+        }
+    }
+
+    return true;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Maximum Depth of Binary Tree(이진 트리의 최대 깊이)
+이진 트리의 루트가 주어지면 최대 깊이를 반환합니다.   
+
+이진 트리의 최대 깊이는 루트 노드에서 가장 먼 리프 노드까지 가장 긴 경로를 따라가는 노드 수입니다.   
+
+**input**
+* 트리 노드의 수는 [0, 104] 범위에 있습니다.
+* -100 <= Node.val <= 100
+
+**example**
+```
+Input: root = [3,9,20,null,null,15,7]
+Output: 3
+```
+
+**풀이**
+```
+public int maxDepth(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root);
+
+    int maxDepth = 0;
+    while (!queue.isEmpty()) {
+        int qSize = queue.size();
+        while (qSize-- > 0) { // 현재까지 queue에 들어있는 node들의 depth는 모두 같다.
+            TreeNode node = queue.poll();
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+
+        maxDepth++; // depth를 1 증가시킨다.
+    }
+
+    return maxDepth;
 }
 ```
 
