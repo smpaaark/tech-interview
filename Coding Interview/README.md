@@ -41,9 +41,9 @@
 * [DFS](#dfs)
   * [Binary Tree Inorder Traversal(이진 트리 중위 순회)](#binary-tree-inorder-traversal이진-트리-중위-순회-1)
   * [Symmetric Tree(대칭 트리)](#symmetric-tree대칭-트리-1)
-* [BFS]()
-  * [Symmetric Tree(대칭 트리)]()
-  * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)]()
+* [BFS](#bfs)
+  * [Symmetric Tree(대칭 트리)](#symmetric-tree대칭-트리-2)
+  * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)](#maximum-depth-of-binary-tree이진-트리의-최대-깊이-1)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -1353,6 +1353,7 @@ private boolean dfs(TreeNode left, TreeNode right) {
 
 [맨위로](#coding-interview)
 
+## BFS
 ### Symmetric Tree(대칭 트리)
 이진 트리의 루트가 주어지면 대칭 트리인지 확인합니다.   
 (즉, 중앙을 중심으로 대칭이 됩니다.)
