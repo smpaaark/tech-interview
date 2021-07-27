@@ -44,9 +44,9 @@
 * [BFS](#bfs)
   * [Symmetric Tree(대칭 트리)](#symmetric-tree대칭-트리-2)
   * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)](#maximum-depth-of-binary-tree이진-트리의-최대-깊이-1)
-* [Bit Manipulation]()
-  * [Single Number(1개만 존재하는 수 찾기)]()
-  * [Reverse Bits(비트 뒤집기)]()
+* [Bit Manipulation](#bit-manipulation)
+  * [Single Number(1개만 존재하는 수 찾기)](#single-number1개만-존재하는-수-찾기)
+  * [Reverse Bits(비트 뒤집기)](#reverse-bits비트-뒤집기)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
