@@ -44,6 +44,9 @@
 * [BFS](#bfs)
   * [Symmetric Tree(대칭 트리)](#symmetric-tree대칭-트리-2)
   * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)](#maximum-depth-of-binary-tree이진-트리의-최대-깊이-1)
+* [Bit Manipulation]()
+  * [Single Number(1개만 존재하는 수 찾기)]()
+  * [Reverse Bits(비트 뒤집기)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -1444,6 +1447,78 @@ public int maxDepth(TreeNode root) {
     }
 
     return maxDepth;
+}
+```
+
+[맨위로](#coding-interview)
+
+## Bit Manipulation
+### Single Number(1개만 존재하는 수 찾기)
+비어있지 않은 정수 배열 nums가 주어지고, 하나를 제외하고 모든 요소는 두 번씩 존재합니다.   
+하나만 존재하는 수를 찾습니다.   
+
+시간복잡도 O(n)으로 구현합니다.   
+
+**input**
+* 1 <= nums.length <= 3 * 10^4
+* -3 * 10^4 <= nums[i] <= 3 * 10^4
+* 배열의 각 요소는 한 번만 나타나는 하나의 요소를 제외하고 두 번 나타납니다.
+
+**example**
+```
+Input: nums = [2,2,1]
+Output: 1
+```
+
+**풀이**
+```
+public int singleNumber(int[] nums) {
+    int result = 0;
+    for (int num : nums) {
+        result ^= num; // XOR은 자기 자신과 같은 숫자랑 연산할 경우 0이되고, 0이랑 연산하면 자기 자신이 된다.
+    }
+
+    return result;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Reverse Bits(비트 뒤집기)
+주어지는 32비트 unsigned integer를 뒤집습니다.   
+
+* Java와 같은 일부 언어에는 unsigned integer 유형이 없습니다.   
+이 경우 입력과 출력 모두 signed integer 유형으로 제공됩니다.   
+정수의 내부 이진 표현은 signed이든 unsigned이든 동일하므로 구현에 영향을 주지 않아야 합니다.   
+* Java에서 컴파일러는 2의 보수 표기법을 사용하여 signed integer를 나타냅니다.    
+
+**input**
+* 입력은 길이 32의 이진 문자열이어야 합니다.
+
+**example**
+```
+Input: n = 11111111111111111111111111111101
+Output:   3221225471 (10111111111111111111111111111111)
+Explanation: 입력 이진 문자열 11111111111111111111111111111101는 부호없는 정수 4294967293이고, 그래서 3221225471(이진 표현=10111111111111111111111111111111)을 반환합니다.
+```
+
+**풀이**
+```
+public int reverseBits(int n) {
+    if (n == 0) {
+        return 0;
+    }
+
+    int result = 0;
+    for (int i = 0; i < 32; i++) { // 32번 반복
+        result <<= 1; // result 비트를 왼쪽으로 1번 이동
+        if ((n & 1) == 1) { // n의 1의 자리가 1이면 result에 1을 더한다.
+            result++;
+        }
+        n >>= 1; // n의 다음 비트를 확인하기 위해 오른쪽으로 1번 이동
+    }
+
+    return result;
 }
 ```
 
