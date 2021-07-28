@@ -47,9 +47,9 @@
 * [Bit Manipulation](#bit-manipulation)
   * [Single Number(1개만 존재하는 수 찾기)](#single-number1개만-존재하는-수-찾기)
   * [Reverse Bits(비트 뒤집기)](#reverse-bits비트-뒤집기)
-* [String]()
-  * [Longest Common Prefix(가장 긴 공통 접두사)]()
-  * [Implement strStr()(strStr() 구현)]()
+* [String](#string)
+  * [Longest Common Prefix(가장 긴 공통 접두사)](#longest-common-prefix가장-긴-공통-접두사)
+  * [Implement strStr()(strStr() 구현)](#implement-strstrstrstr-구현)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
