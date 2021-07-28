@@ -47,6 +47,9 @@
 * [Bit Manipulation](#bit-manipulation)
   * [Single Number(1개만 존재하는 수 찾기)](#single-number1개만-존재하는-수-찾기)
   * [Reverse Bits(비트 뒤집기)](#reverse-bits비트-뒤집기)
+* [String]()
+  * [Longest Common Prefix(가장 긴 공통 접두사)]()
+  * [Implement strStr()(strStr() 구현)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -1519,6 +1522,81 @@ public int reverseBits(int n) {
     }
 
     return result;
+}
+```
+
+[맨위로](#coding-interview)
+
+## String
+### Longest Common Prefix(가장 긴 공통 접두사)
+문자열 배열 중에서 가장 긴 공통 접두사 찾는 함수를 작성합니다.   
+
+공통 접두사가 없으면 빈 문자열 ""을 반환합니다.   
+
+**input**
+* 1 <= strs.length <= 200
+* 0 <= strs[i].length <= 200
+* strs[i]는 영문 소문자로만 구성되어 있습니다.
+
+**example**
+```
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+```
+
+**풀이**
+```
+public String longestCommonPrefix(String[] strs) {
+    String result = strs[0]; // 0번 문자열로 결과 초기화
+    for (int i = 1; i < strs.length; i++) {
+        while (strs[i].indexOf(result) != 0) { // 접두사 일치하는 문자열 찾을때까지 뒤의 1자리씩 줄이면서 반복
+            result = result.substring(0, result.length() - 1);
+        }
+    }
+
+    return result;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Implement strStr()(strStr() 구현)
+strStr()을 구현합니다.   
+
+haystack에서 처음으로 발견된 needle의 index를 반환하고, 발견되지 않을 경우 -1을 반환합니다.   
+
+needle이 빈 문자열이면 무엇을 반환합니까?    
+이것은 인터뷰 중에 물어보는 훌륭한 질문입니다.   
+
+needle이 빈 문자열일 때 0을 반환합니다.   
+이것은 C의 strstr() 및 Java의 indexOf()와 일치합니다.   
+
+**input**
+* 0 <= haystack.length, needle.length <= 5 * 10^4
+* haystack과 needle은 소문자 영어 문자로만 구성되어 있습니다.
+
+**example**
+```
+Input: haystack = "hello", needle = "ll"
+Output: 2
+```
+
+**풀이**
+```
+public int strStr(String haystack, String needle) {
+    for (int i = 0; i <= haystack.length() - needle.length(); i++) {
+        for (int needleIndex = 0; needleIndex <= needle.length(); needleIndex++) {
+            if (needleIndex == needle.length()) {
+                return i;
+            }
+
+            if (needle.charAt(needleIndex) != haystack.charAt(i + needleIndex)) {
+                break;
+            }
+        }
+    }
+
+    return -1;
 }
 ```
 
