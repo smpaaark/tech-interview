@@ -50,6 +50,9 @@
 * [String](#string)
   * [Longest Common Prefix(가장 긴 공통 접두사)](#longest-common-prefix가장-긴-공통-접두사)
   * [Implement strStr()(strStr() 구현)](#implement-strstrstrstr-구현)
+* [Divide and Conquer]()
+  * [Maximum Subarray(부분배열 합의 최대값)]()
+  * [vert Sorted Array to Binary Search Tree(정렬된 배열을 이진 검색 트리로 변환)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -1597,6 +1600,108 @@ public int strStr(String haystack, String needle) {
     }
 
     return -1;
+}
+```
+
+[맨위로](#coding-interview)
+
+## Divide and Conquer
+### Maximum Subarray(부분배열 합의 최대값)
+정수 배열 nums가 주어지면 가장 큰 합을 가지는 연속적인 부분배열(최소한 하나의 숫자를 포함)을 찾아 그 합을 반환합니다.   
+
+**input**
+* 1 <= nums.length <= 3 * 10^4
+* -105 <= nums[i] <= 105
+
+**example**
+```
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: [4,-1,2,1]이 가장 큰 합 = 6입니다.
+```
+
+**풀이**
+```
+public int maxSubArray(int[] nums) {
+    return divideAndConquer(nums, 0, nums.length - 1);
+}
+
+private int divideAndConquer(int[] nums, int start, int end) {
+    if (start >= end) { // 1개까지 분할되면 그 값을 리턴
+        return nums[start];
+    }
+
+    int mid = (start + end) / 2;
+    int leftMax = divideAndConquer(nums, start, mid); // 왼쪽의 최대값
+    int rightMax = divideAndConquer(nums,mid + 1, end); // 오른쪽의 최대값
+    int midMax = divideAndConquerMid(nums, start, mid, end); // 중간의 최대값
+    return Math.max(midMax, Math.max(leftMax, rightMax)); // 셋 중에 가장 큰 값
+}
+
+private int divideAndConquerMid(int[] nums, int start, int mid, int end) {
+    int leftMax = Integer.MIN_VALUE;
+    int sum = 0;
+    for (int i = mid - 1; i >= start; i--) { // mid 왼쪽부터 내려가면서 최대 값을 구한다.
+        sum += nums[i];
+        if (sum > leftMax) {
+            leftMax = sum;
+        }
+    }
+
+    int rightMax = Integer.MIN_VALUE;
+    sum = 0;
+    for (int i = mid; i <= end; i++) { // mid부터 올라가면서 최대 값을 구한다.
+        sum += nums[i];
+        if (sum > rightMax) {
+            rightMax = sum;
+        }
+    }
+
+    // 위에서 구한 left와 right와 left + right중 최대값을 리턴
+    if (leftMax != Integer.MIN_VALUE && rightMax != Integer.MIN_VALUE) {
+        return Math.max(leftMax + rightMax, Math.max(leftMax, rightMax));
+    }
+
+    return Math.max(leftMax, rightMax);
+}
+```
+
+[맨위로](#coding-interview)
+
+## Convert Sorted Array to Binary Search Tree(정렬된 배열을 이진 검색 트리로 변환)
+요소가 오름차순으로 정렬된 정수 배열 nums가 주어지면 높이 균형 이진 검색 트리로 변환합니다.   
+
+높이 균형 이진 트리는 모든 노드의 두 개의 하위 노드의 깊이가 하나 이상 차이가 나지 않는 이진 트리이니다.
+
+**input**
+* 1 <= nums.length <= 10^4
+* -10^4 <= nums[i] <= 10^4
+* nums는 오름차순으로 정렬됩니다.
+
+**example**
+```
+Input: nums = [-10,-3,0,5,9]
+Output: [0,-3,9,-10,null,5]
+Explanation: [0,-10,5,null,-3,null,9]도 허용됩니다:
+```
+
+**풀이**
+```
+public TreeNode sortedArrayToBST(int[] nums) {
+    return divideAndConquer(nums, 0, nums.length - 1);
+}
+
+private TreeNode divideAndConquer(int[] nums, int start, int end) {
+    if (start > end) { // start가 더 크면 null
+        return null;
+    }
+
+    int mid = (start + end) / 2; // 중간 index
+    TreeNode node = new TreeNode(nums[mid]); // 중간 index의 값을 node로 생성
+    node.left = divideAndConquer(nums, start, mid -1); // 분할하면서 왼쪽 결과를 left에 저장
+    node.right = divideAndConquer(nums, mid + 1, end); // 분할하면서 오른쪽 결과를 right에 저장
+
+    return node;
 }
 ```
 
