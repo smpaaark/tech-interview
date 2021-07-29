@@ -50,9 +50,9 @@
 * [String](#string)
   * [Longest Common Prefix(가장 긴 공통 접두사)](#longest-common-prefix가장-긴-공통-접두사)
   * [Implement strStr()(strStr() 구현)](#implement-strstrstrstr-구현)
-* [Divide and Conquer]()
-  * [Maximum Subarray(부분배열 합의 최대값)]()
-  * [vert Sorted Array to Binary Search Tree(정렬된 배열을 이진 검색 트리로 변환)]()
+* [Divide and Conquer](#divide-and-conquer)
+  * [Maximum Subarray(부분배열 합의 최대값)](#maximum-subarray부분배열-합의-최대값-1)
+  * [vert Sorted Array to Binary Search Tree(정렬된 배열을 이진 검색 트리로 변환)](#convert-sorted-array-to-binary-search-tree정렬된-배열을-이진-검색-트리로-변환)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
