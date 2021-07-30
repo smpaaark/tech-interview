@@ -53,9 +53,9 @@
 * [Divide and Conquer](#divide-and-conquer)
   * [Maximum Subarray(부분배열 합의 최대값)](#maximum-subarray부분배열-합의-최대값-1)
   * [vert Sorted Array to Binary Search Tree(정렬된 배열을 이진 검색 트리로 변환)](#convert-sorted-array-to-binary-search-tree정렬된-배열을-이진-검색-트리로-변환)
-* [Greedy]()
-  * [Best Time to Buy and Sell Stock II(주식을 사고 팔기 가장 좋은 시기)]()
-  * [Container With Most Water(가장 많은 물을 담을 수 있는 용기 찾기)]()
+* [Greedy](#greedy)
+  * [Best Time to Buy and Sell Stock II(주식을 사고 팔기 가장 좋은 시기)](#best-time-to-buy-and-sell-stock-ii주식을-사고-팔기-가장-좋은-시기)
+  * [Container With Most Water(가장 많은 물을 담을 수 있는 용기 찾기)](#container-with-most-water가장-많은-물을-담을-수-있는-용기-찾기)
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
