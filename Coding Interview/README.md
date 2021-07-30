@@ -53,6 +53,9 @@
 * [Divide and Conquer](#divide-and-conquer)
   * [Maximum Subarray(부분배열 합의 최대값)](#maximum-subarray부분배열-합의-최대값-1)
   * [vert Sorted Array to Binary Search Tree(정렬된 배열을 이진 검색 트리로 변환)](#convert-sorted-array-to-binary-search-tree정렬된-배열을-이진-검색-트리로-변환)
+* [Greedy]()
+  * [Best Time to Buy and Sell Stock II(주식을 사고 팔기 가장 좋은 시기)]()
+  * [Container With Most Water(가장 많은 물을 담을 수 있는 용기 찾기)]()
 * [참고](#참고)
 
 [목차로](https://github.com/smpark1020/tech-interview#%EB%AA%A9%EC%B0%A8)
@@ -1702,6 +1705,98 @@ private TreeNode divideAndConquer(int[] nums, int start, int end) {
     node.right = divideAndConquer(nums, mid + 1, end); // 분할하면서 오른쪽 결과를 right에 저장
 
     return node;
+}
+```
+
+[맨위로](#coding-interview)
+
+## Greedy
+### Best Time to Buy and Sell Stock II(주식을 사고 팔기 가장 좋은 시기)
+prices[i]가 i날의 주식 가격인 prices 배열이 주어집니다.
+
+달성할 수 있는 최대 이익을 찾습니다.   
+원하는 만큼 거래를 할 수 있습니다.   
+(예: 한 주식을 여러번 매수하고 매도할 수 있습니다.)   
+
+참고: 동시에 여러 거래에 참여할 수 없습니다.   
+(즉, 다시 구매하기 전에 주식을 팔아야 합니다.)   
+
+**input**
+* 1 <= prices.length <= 3 * 10^4
+* 0 <= prices[i] <= 10^4
+
+**example**
+```
+Input: prices = [7,1,5,3,6,4]
+Output: 7
+Explanation: 2일째에 매수(가격 = 1)하고 3일째에 매도(가격 = 5), 이익 = 5-1 = 4. 
+그런 다음 4일차(가격=3)에 매수하고 5일차(가격=6)에 매도, 이익=6-3=3.
+```
+
+**풀이**
+```
+public int maxProfit(int[] prices) {
+    int result = 0;
+    int i = 0;
+
+    while (i < prices.length) {
+        // 가격이 오르기 시작하는 날 찾기
+        while (i < prices.length-1 && prices[i+1] <= prices[i]) {
+            i++;
+        }
+
+        // 가격이 오르기 시작하는 날의 가격 저장
+        int min = prices[i++];
+
+        // 가격이 떨어지는 날 찾기
+        while (i < prices.length-1 && prices[i+1] >= prices[i]) {
+            i++;
+        }
+        
+        result += i < prices.length ? prices[i++] - min : 0;
+    }
+    return result;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Container With Most Water(가장 많은 물을 담을 수 있는 용기 찾기)
+음이 아닌 정수가 n개 주어지고(a1, a2, ..., an ) (i, ai)는 좌표의 한 점을 나타냅니다.   
+n개의 수직 라인이 그려져 있고 라인 i는 (i, ai)와 (i, 0) 좌표를 이은 것입니다.   
+용기에 가장 많은 물이 담기도록 x축과 함께 용기를 형성하는 두 개의 선을 찾습니다.   
+
+주의 사항: 용기를 기울일 수 없습니다.
+
+**input**
+* n == height.length
+* 2 <= n <= 10^5
+* 0 <= height[i] <= 10^4
+
+**example**
+```
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: 위의 수직선은 배열[1,8,6,2,5,4,8,3,7]로 표시됩니다. 이 경우, 컨테이너가 포함할 수 있는 물의 최대 면적(파란색 부분)은 49입니다.
+```
+
+**풀이**
+```
+public int maxArea(int[] height) {
+    int left = 0;
+    int right = height.length - 1;
+    int maxArea = 0;
+
+    while (left < right) {
+        maxArea = Math.max(maxArea, Math.min(height[left], height[right]) * (right - left)); // 넓이 계산
+        if (height[left] < height[right]) { // left의 높이가 더 낮으면 left를 한칸 오른쪽으로 이동시킨다.
+            left++;
+        } else { // right 높이가 더 낮으면 right를 한칸 왼쪽으로 이동시킨다.
+            right--;
+        }
+    }
+
+    return maxArea;
 }
 ```
 
