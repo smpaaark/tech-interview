@@ -2,6 +2,8 @@
 * [Array](#array)
   * [Two Sum(두 수의 합)](#two-sum두-수의-합)
   * [Remove Duplicates from Sorted Array(정렬된 배열에서 중복 값 제거하기)](#remove-duplicates-from-sorted-array정렬된-배열에서-중복-값-제거하기)
+  * [Plus One(1 더하기)]()
+  * [Pascal's Triangle(파스칼의 삼각형)]()
 * [LinkedList](#linkedlist)
   * [Merge Two Sorted Lists(정렬된 두 리스트 병합하기)](#merge-two-sorted-lists정렬된-두-리스트-병합하기)
   * [Linked List Cycle(링크드리스트 싸이클)](#linked-list-cycle링크드리스트-싸이클)
@@ -137,6 +139,82 @@ public int removeDuplicates(int[] nums) {
     }
 
     return putIndex; // putIndex가 중복을 제거하고 남은 수들의 갯수이다.
+}
+```
+
+[맨위로](#coding-interview)
+
+### Plus One(1 더하기)
+음이 아닌 정수를 나타내는 비어 있지 않은 십진수 배열이 주어지면 1을 정수로 증가시킵니다.   
+
+가장 큰 자리수의 숫자가 목록의 맨 앞에 오도록 숫자가 저장되고 배열의 각 요소에는 단일 숫자가 포함됩니다.   
+
+정수가 숫자 0 자체를 제외하고는 맨 앞자리에 0을 포함하지 않는다고 가정할 수 있습니다.   
+
+**input**
+* 1 <= digits.length <= 100
+* 0 <= digits[i] <= 9
+
+**example**
+```
+Input: digits = [1,2,3]
+Output: [1,2,4]
+Explanation: 배열은 정수 123을 나타냅니다.
+```
+
+**풀이**
+```
+public int[] plusOne(int[] digits) {
+    for (int i = digits.length - 1; i >= 0; i--) {
+        if (digits[i]++ < 9) { // 현재 숫자가 9보다 작으면 1더하고 바로 리턴
+            return digits;
+        }
+
+        digits[i] = 0; // 현재 숫자가 9이면 1추가하면 10이므로 0으로 설정하고 다음 반복문으로 진행
+    }
+
+    int[] newDigits = new int[digits.length + 1]; // 여기까지 왔다는 것은 첫자리 수가 9여서 자릿수가 늘어났다는 것을 의미하므로 배열의 크기를 1 크게 생성
+    newDigits[0] = 1; // 0번째 요소만 1로 세팅하면 나머지는 모두 0으로 초기화됨
+
+    return newDigits;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Pascal's Triangle(파스칼의 삼각형)
+정수 numRows가 주어지면 파스칼의 삼각형의 numRows를 반환합니다.   
+파스칼의 삼각형에서는 각각의 숫자는 바로 위에 두 숫자의 합 입니다.   
+
+**input**
+* 1 <= numRows <= 30
+
+**example**
+```
+Input: numRows = 5
+Output: [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+```
+
+**풀이**
+```
+public List<List<Integer>> generate(int numRows) {
+    List<List<Integer>> result = new ArrayList<List<Integer>>();
+
+    for (int i = 0; i < numRows; i++) {
+        List<Integer> tempArray = new ArrayList<>();
+        for (int j = 0; j <= i; j++) {
+            if (j == 0 || j == i) { // 양 끝 요소이면 항상 1
+                tempArray.add(1);
+            } else { // 가운데 요소이면 위 리스트의 2개 요소 합
+                List<Integer> upArray = result.get(i - 1);
+                tempArray.add(upArray.get(j - 1) + upArray.get(j));
+            }
+        }
+
+        result.add(tempArray);
+    }
+
+    return result;
 }
 ```
 
