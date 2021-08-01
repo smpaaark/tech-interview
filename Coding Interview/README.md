@@ -7,6 +7,8 @@
 * [LinkedList](#linkedlist)
   * [Merge Two Sorted Lists(정렬된 두 리스트 병합하기)](#merge-two-sorted-lists정렬된-두-리스트-병합하기)
   * [Linked List Cycle(링크드리스트 싸이클)](#linked-list-cycle링크드리스트-싸이클)
+  * [Intersection of Two Linked Lists(두 링크드 리스트의 교차 노드)]()
+  * [Reverse Linked List(링크드 리스트 뒤집기)]()
 * [Stack](#stack)
   * [Valid Parentheses(유효한 괄호)](#valid-parentheses유효한-괄호)
   * [Binary Tree Inorder Traversal(이진 트리 중위 순회)](#binary-tree-inorder-traversal이진-트리-중위-순회)
@@ -298,6 +300,101 @@ public boolean hasCycle(ListNode head) {
     }
 
     return false; // while문을 빠져나오면 꼬리가 존재하는 것이므로 false 리턴
+}
+```
+
+[맨위로](#coding-interview)
+
+### Intersection of Two Linked Lists(두 링크드 리스트의 교차 노드)
+두 링크드리스트의 head인 headA와 headB가 주어지면 두 리스트가 교차하는 노드를 반환 합니다.   
+두 링크드리스트에 교차점이 없으면 null을 반환합니다.   
+
+테스트 케이스는 링크드 리스트에 사이클이 없도록 생성됩니다.   
+
+참고: 반환 후 리스트는 원래의 구조를 유지해야 합니다.
+
+입력   
+* intersectVal - 교차가 발생하는 노드의 값입니다. 0은 교차가 발생하지 않는 경우입니다.   
+* listA - 첫번째 링크드 리스트.
+* listB - 두번째 링크드 리스트.
+* skipA - listA의 헤드로부터 교차 노드에 도달하기 위해 건너뛰어야 하는 노드의 수
+* skipB - listB의 헤드로부터 교차 노드에 도달하기 위해 건너뛰어야 하는 노드의 수
+
+**input**
+* listA의 노드의 수는 m입니다.
+* listB의 노드의 수는 n입니다.
+* 0 <= m, n <= 3 * 10^4
+* 1 <= Node.val <= 10^5
+* 0 <= skipA <= m
+* 0 <= skipB <= n
+* intersectVal이 0인 경우 listA와 listB는 교차 되지 않습니다.
+* intersectVal == listA[skipA] == listB[skipB]인 경우 listA와 listB는 교차합니다.
+* 시간 복잡도 O(n), 공간 복잡도 O(1)로 구현합니다.
+
+**example**
+```
+Input: intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
+Output: Intersected at '8'
+Explanation: 교차된 노드의 값은 8입니다(두 리스트가 교차하는 경우 이 값은 0이 아니어야 함). 
+A는 헤드에서부터 [4,1,8,4,5]로 읽힙니다.    
+B는 헤드에서부터 [5,6,1,8,4,5]로 읽습니다.    
+A는 교차된 노드 앞에 2개의 노드가 있습니다.    
+B는 교차된 노드 앞에 3개의 노드가 있습니다.   
+```
+
+**풀이**
+```
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    // 둘 중 하나라도 null이면 null 리턴
+    if(headA == null || headB == null) {
+        return null;
+    }
+
+    ListNode a = headA;
+    ListNode b = headB;
+
+    // a와 b가 다르면 반복
+    while( a != b){
+
+        // null이면 상대 헤드값으로 새로 세팅한다.
+        a = a == null? headB : a.next;
+        b = b == null? headA : b.next;
+    }
+
+    // a와 b의 길이가 같을 경우에는 교차노드 또는 null이 바로 리턴된다.
+    // 길이가 다를 경우 위 반복문 내의 과정을 반복하다보면 교차 노드가 생기거나 null로 끝난다.
+    return a;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Reverse Linked List(링크드 리스트 뒤집기)
+단일 링크드 리스트 head가 주어지면 뒤집어서 반환합니다.   
+
+**input**
+* 리스트의 노드 수는 [0, 5000] 범위에 있습니다.
+* -5000 <= Node.val <= 5000
+* 반복문으로 구현합니다.
+
+**example**
+```
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+```
+
+**풀이**
+```
+public ListNode reverseList(ListNode head) {
+    ListNode prevNode = null; // 이전 노드
+    while (head != null) {
+        ListNode nextNode = head.next; // 기존 next 노드 임시로 저장
+        head.next = prevNode; // next를 이전 노드로 변경
+        prevNode = head; // 이전 노드를 현재노드로 변경
+        head = nextNode; // 현재 노드를 임시로 저장했던 nextNode로 변경
+    }
+
+    return prevNode;
 }
 ```
 
