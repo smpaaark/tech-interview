@@ -12,6 +12,7 @@
 * [Stack](#stack)
   * [Valid Parentheses(유효한 괄호)](#valid-parentheses유효한-괄호)
   * [Binary Tree Inorder Traversal(이진 트리 중위 순회)](#binary-tree-inorder-traversal이진-트리-중위-순회)
+  * [Min Stack(최소값 스택)]()
 * [Queue](#queue)
   * [First Unique Character in a String(문자열의 첫 고유한 문자)](#first-unique-character-in-a-string문자열의-첫-고유한-문자)
   * [Flatten Nested List Iterator(중첩된 리스트 Flatten(평탄화))](#flatten-nested-list-iterator중첩된-리스트-flatten평탄화)
@@ -468,6 +469,136 @@ public List<Integer> inorderTraversal(TreeNode root) {
     }
 
     return list;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Min Stack(최소값 스택)
+push, pop, top 및 일정한 시간에 최소값 검색 지원하는 스택을 설계합니다.   
+
+MinStack 클래스 구현
+* MinStack(): 스택 객체를 초기화합니다.
+* void push(val): 요소 val을 스택에 push합니다.
+* void pop(): 스택의 맨 위에 있는 요소를 제거합니다.
+* int top(): 스택의 최상위 요소를 가져옵니다.
+* int getMin(): 스택의 최소 요소를 검색합니다.
+
+**input**
+* -2^31 <= val <= 2^31 - 1
+* pop, top, getMin 은 스택이 비어있지 않을 때만 호출됩니다.   
+* push, pop, top, getMin은 최대 3 * 10^4번 호출됩니다.
+
+**example**
+```
+Input
+["MinStack","push","push","push","getMin","pop","top","getMin"]
+[[],[-2],[0],[-3],[],[],[],[]]
+
+Output
+[null,null,null,null,-3,null,0,-2]
+
+Explanation
+MinStack minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+minStack.getMin(); // return -3
+minStack.pop();
+minStack.top();    // return 0
+minStack.getMin(); // return -2
+```
+
+**풀이**
+```
+class MinStack {
+
+    Node head;
+
+    public MinStack() {
+
+    }
+
+    public void push(int val) { // 해당 노드의 min값은 항상 그 노드 기준의 min 값을 갖는다.
+        if (head == null) {
+            head = new Node(val, val);
+        } else {
+            Node newHead = new Node(val, Math.min(val, head.min), head);
+            head = newHead;
+        }
+    }
+
+    public void pop() {
+        head = head.next;
+    }
+
+    public int top() {
+        return head.val;
+    }
+
+    public int getMin() {
+        return head.min;
+    }
+
+}
+
+class Node {
+
+    int val;
+    int min;
+    Node next;
+
+    public Node(int val, int min) {
+        this.val = val;
+        this.min = min;
+    }
+
+    public Node(int val, int min, Node next) {
+        this.val = val;
+        this.min = min;
+        this.next = next;
+    }
+
+}
+```
+
+[맨위로](#coding-interview)
+
+### Palindrome Linked List(회문 링크드 리스트)
+단일 링크드 리스트의 head가 주어지고 해당 리스트가 회문이면 true를 반환합니다.
+> 회문(palindrome): 앞에서 읽으나 뒤에서 읽으나 같은 것
+
+**input**
+* 리스트 노드의 수는 [1, 105] 범위에 있습니다.
+* 0 <= Node.val <= 9
+
+**example**
+```
+Input: head = [1,2,2,1]
+Output: true
+```
+
+**풀이**
+```
+public boolean isPalindrome(ListNode head) {
+    // stack에 순차적으로 push 한다.
+    ListNode tempNode = head;
+    Stack<ListNode> stack = new Stack<>();
+    while (tempNode != null) {
+        stack.push(tempNode);
+        tempNode = tempNode.next;
+    }
+
+    // stack에서 빼면서 현재 값과 비교한다.
+    while (head != null) {
+        if (stack.pop().val != head.val) {
+            return false;
+        }
+
+        head = head.next;
+    }
+
+    return true;
 }
 ```
 
