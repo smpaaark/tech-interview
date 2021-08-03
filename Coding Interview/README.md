@@ -17,6 +17,7 @@
 * [Queue](#queue)
   * [First Unique Character in a String(문자열의 첫 고유한 문자)](#first-unique-character-in-a-string문자열의-첫-고유한-문자)
   * [Flatten Nested List Iterator(중첩된 리스트 Flatten(평탄화))](#flatten-nested-list-iterator중첩된-리스트-flatten평탄화)
+  * [Sliding Window Maximum()]()
 * [Tree](#tree)
   * [Symmetric Tree(대칭 트리)](#symmetric-tree대칭-트리)
   * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)](#maximum-depth-of-binary-tree이진-트리의-최대-깊이)
@@ -870,6 +871,60 @@ public int maxDepth(TreeNode root) {
     }
 
     return 1 + Math.max(maxDepth(root.left), maxDepth(root.right)); // left와 right 끝까지 갔다가 돌아오면서 max 값 + 1 리턴 
+}
+```
+
+[맨위로](#coding-interview)
+
+### Sliding Window Maximum(슬라이드 창문 최대값)
+정수 배열 nums가 주어지고 크기가 k인 슬라이드 창이 배열의 맨 왼쪽에서 맨 오른쪽으로 이동합니다.   
+창문에는 k개의 숫자만 표시됩니다.   
+(슬라이딩 창문이 한 위치씩 오른쪽으로 움직일 때 마다)
+
+슬라이드 창문의 최대 값을 반환합니다.   
+
+**input**
+* 1 <= nums.length <= 10^5
+* -10^4 <= nums[i] <= 10^4
+* 1 <= k <= nums.length
+
+**example**
+```
+Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+Output: [3,3,5,5,6,7]
+Explanation: 
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+```
+
+**풀이**
+```
+public int[] maxSlidingWindow(int[] nums, int k) {
+    int[] result = new int[nums.length - k + 1];
+    int resultIndex = 0;
+    Deque<Integer> queue = new ArrayDeque<>();
+
+    for (int i = 0; i < nums.length; i++) {
+        while (!queue.isEmpty() && queue.peek() < i - k + 1) { // max값이 k 범위 밖의 좌측 값이면 제거
+            queue.poll();
+        }
+        
+        while (!queue.isEmpty() && nums[queue.peekLast()] < nums[i]) { // 큐에 남아있는 오른쪽 값들이 현재 값보다 작으면 다 poll (의미 없는 값이기 때문에)
+            queue.pollLast();
+        }
+
+        queue.offer(i); // 현재 값 offer
+        if (i >= k - 1) { // 창 갯수가 채워졌을때부터 계속 result에 peek 값을 저장
+            result[resultIndex++] = nums[queue.peek()];
+        }
+    }
+    return result;
 }
 ```
 
