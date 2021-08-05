@@ -21,6 +21,8 @@
 * [Tree](#tree)
   * [Symmetric Tree(대칭 트리)](#symmetric-tree대칭-트리)
   * [Maximum Depth of Binary Tree(이진 트리의 최대 깊이)](#maximum-depth-of-binary-tree이진-트리의-최대-깊이)
+  * [Validate Binary Search Tree(이진 검색 트리 검증)]()
+  * [Binary Tree Level Order Traversal(이진 트리 레벨 순으로 순회)]()
 * [Heap](#heap)
   * [Kth Largest Element in an Array(배열에서 k번째로 큰 요소)](#kth-largest-element-in-an-array배열에서-k번째로-큰-요소)
   * [Top K Frequent Elements(빈도 높은 요소 Top K)](#top-k-frequent-elements빈도-높은-요소-top-k)
@@ -59,7 +61,7 @@
   * [Implement strStr()(strStr() 구현)](#implement-strstrstrstr-구현)
 * [Divide and Conquer](#divide-and-conquer)
   * [Maximum Subarray(부분배열 합의 최대값)](#maximum-subarray부분배열-합의-최대값-1)
-  * [vert Sorted Array to Binary Search Tree(정렬된 배열을 이진 검색 트리로 변환)](#convert-sorted-array-to-binary-search-tree정렬된-배열을-이진-검색-트리로-변환)
+  * [Convert Sorted Array to Binary Search Tree(정렬된 배열을 이진 검색 트리로 변환)](#convert-sorted-array-to-binary-search-tree정렬된-배열을-이진-검색-트리로-변환)
 * [Greedy](#greedy)
   * [Best Time to Buy and Sell Stock II(주식을 사고 팔기 가장 좋은 시기)](#best-time-to-buy-and-sell-stock-ii주식을-사고-팔기-가장-좋은-시기)
   * [Container With Most Water(가장 많은 물을 담을 수 있는 용기 찾기)](#container-with-most-water가장-많은-물을-담을-수-있는-용기-찾기)
@@ -925,6 +927,95 @@ public int maxDepth(TreeNode root) {
     }
 
     return 1 + Math.max(maxDepth(root.left), maxDepth(root.right)); // left와 right 끝까지 갔다가 돌아오면서 max 값 + 1 리턴 
+}
+```
+
+[맨위로](#coding-interview)
+
+### Validate Binary Search Tree(이진 검색 트리 검증)
+이진 트리의 루트가 주어지면 유효한 이진 검색 트리인지 확인합니다.   
+
+유효한 이진 검색 트리는 다음과 같이 정의됩니다.   
+* 노드의 왼쪽 하위 트리에는 노드 key 보다 작은 key가 있는 노드만 포함됩니다.
+* 노드의 오른쪽 하위 트리에는 노드 key 보다 큰 key가 있는 노드만 포함됩니다.
+* 왼쪽 및 오른쪽 하위 트리도 모두 이진 검색 트리여야 합니다.   
+
+**input**
+* 트리의 노드 수가 [1, 104] 범위에 있습니다.
+* -2^31 <= Node.val <= 2^31 - 1
+
+**example**
+```
+Input: root = [2,1,3]
+Output: true
+```
+
+**풀이**
+```
+public boolean isValidBST(TreeNode root) {
+    return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
+}
+
+private boolean validate(TreeNode root, long min, long max) {
+    if (root == null) {
+        return true;
+    }
+
+    if (root.val >= max || root.val <= min) {
+        return false;
+    }
+
+    // 왼쪽 노드의 max는 현재 값이 되고, 오른쪽 노드의 min은 현재 값이 된다.
+    return validate(root.left, min, root.val) && validate(root.right, root.val, max);
+}
+```
+
+[맨위로](#coding-interview)
+
+### Binary Tree Level Order Traversal(이진 트리 레벨 순으로 순회)
+이진 트리의 root가 주어지면 노드 값의 레벨 순으로 반환합니다.   
+(왼쪽에서 오른쪽 레벨 순으로)
+
+**input**
+* 트리의 노드 수가 [0, 2000] 범위에 있습니다.
+* -1000 <= Node.val <= 1000
+
+**example**
+```
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[9,20],[15,7]]
+```
+
+**풀이**
+```
+public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> result = new ArrayList<>();
+    if (root == null) { // root가 null이면 빈 배열 리턴
+        return result;
+    }
+
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root);
+    while (!queue.isEmpty()) {
+        List<Integer> list = new ArrayList<>(); // 현재 level의 리스트 생성
+        int size = queue.size(); // 현재까지의 큐 size를 담는다.
+        while (size-- > 0) { // 큐사이즈 만큼이 한 level이다.
+            TreeNode node = queue.poll();
+            list.add(node.val);
+
+            // 현재 poll한 노드의 좌우 노드가 존재하면 queue에 넣는다.
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        result.add(list); // size만큼 담은 list를 결과에 추가한다.
+    }
+
+    return result;
 }
 ```
 
