@@ -26,6 +26,8 @@
 * [Heap](#heap)
   * [Kth Largest Element in an Array(배열에서 k번째로 큰 요소)](#kth-largest-element-in-an-array배열에서-k번째로-큰-요소)
   * [Top K Frequent Elements(빈도 높은 요소 Top K)](#top-k-frequent-elements빈도-높은-요소-top-k)
+  * [Kth Smallest Element in a Sorted Matrix(정렬된 행렬에서 K번째로 작은 요소)]()
+  * [Merge k Sorted Lists(k개의 정렬된 리스트 병합)]()
 * [Graph](#graph)
   * [Course Schedule(강의 일정)](#course-schedule강의-일정)
   * [Course Schedule II(강의 일정 2)](#course-schedule-ii강의-일정-2)
@@ -1098,6 +1100,110 @@ public int[] topKFrequent(int[] nums, int k) {
 ```
 
 [맨위로](#coding-interview)
+
+### Kth Smallest Element in a Sorted Matrix(정렬된 행렬에서 K번째로 작은 요소)
+각 행과 열이 오름차순으로 정렬되는 n * n 행렬이 주어지면 행렬에서 k번쨰로 작은 요소를 반환합니다.   
+
+정렬된 순서에서 k번째로 작은 요소이지 k번째 구분 요소가 아닙니다.   
+
+**input**
+* n == matrix.length
+* n == matrix[i].length
+* 1 <= n <= 300
+* -10^9 <= matrix[i][j] <= 10^9
+* 행렬의 모든 행과 열은 오름차순으로 정렬됩니다.
+* 1 <= k <= n^2
+
+**example**
+```
+Input: matrix = [[1,5,9],[10,11,13],[12,13,15]], k = 8
+Output: 13
+Explanation: 행렬의 요소는 [1,5,9 ,10,11,12,13, 13,15]이고 8 번째로 작은 숫자는 13입니다.
+```
+
+**풀이**
+```
+public int kthSmallest(int[][] matrix, int k) {
+    PriorityQueue<Point> queue = new PriorityQueue<>();
+    for (int i = 0; i < matrix[0].length; i++) { // 0번 행의 수들을 모두 heap에 넣는다.
+        queue.offer(new Point(0, i, matrix[0][i]));
+    }
+
+    int n = matrix.length;
+    while (k-- > 1) { // k가 1보다 크면 반복한다.
+        Point point = queue.poll();
+        if (point.x < n - 1) { // poll한 값의 아래 요소와 오른쪽 요소의 값 비교를 위해 아래 요소를 heap에 넣는다.
+            queue.offer(new Point(point.x + 1, point.y, matrix[point.x + 1][point.y]));
+        }
+    }
+
+    return queue.peek().val;
+}
+```
+
+[맨위로](#coding-interview)
+
+### Merge k Sorted Lists(k개의 정렬된 리스트 병합)
+k개의 링크드리스트 배열이 주어지고, 각 링크드 리스트는 오름차순으로 정렬됩니다.   
+
+모든 링크드 리스트를 하나의 정렬된 링크드 리스트로 병합하고 반환합니다.
+
+**input**
+* k == lists.length
+* 0 <= k <= 10^4
+* 0 <= lists[i].length <= 500
+* -10^4 <= lists[i][j] <= 10^4
+* lists[i]는 오름차순으로 정렬됩니다.
+* lists[i].length의 합은 10^4를 넘지 않습니다.
+
+**example**
+```
+Input: lists = [[1,4,5],[1,3,4],[2,6]]
+Output: [1,1,2,3,4,4,5,6]
+Explanation: 링크드 리스트는 다음과 같습니다.
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+하나의 정렬된 리스트로 병합:
+1->1->2->3->4->4->5->6
+```
+
+**풀이**
+```
+public ListNode mergeKLists(ListNode[] lists) {
+    if (lists.length == 0) {
+        return null;
+    }
+
+    PriorityQueue<ListNode> heap = new PriorityQueue<>((a, b) -> {
+        return a.val - b.val;
+    });
+
+    for (ListNode node : lists) { // null이 아닌 ListNode만 heap에 추가한다.
+        if (node != null) {
+            heap.offer(node);
+        }
+    }
+
+    ListNode fakeHead = new ListNode();
+    ListNode currentNode = fakeHead;
+    while (!heap.isEmpty()) {
+        ListNode node = heap.poll();
+        currentNode.next = node;
+        if (node.next != null) { // 현재 poll한 노드의 next를 heap에 넣어준다.
+            heap.offer(node.next);
+        }
+        currentNode = currentNode.next;
+    }
+
+    return fakeHead.next;
+}
+```
+
+[맨위로](#coding-interview)
+
 
 ## Graph
 ### Course Schedule(강의 일정)
