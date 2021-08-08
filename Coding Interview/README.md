@@ -652,8 +652,14 @@ public boolean isPalindrome(ListNode head) {
 없으면 -1을 반환합니다.   
 
 **input**
-* 1 <= s.length <= 105
+* 1 <= s.length <= 10^5
 * s는 영어 소문자로만 구성됩니다.   
+
+**example**
+```
+Input: s = "leetcode"
+Output: 0
+```
 
 **풀이**
 ```
