@@ -318,7 +318,7 @@ pos는 파라미터로 전달되지 않습니다.
 ```
 Input: head = [3,2,0,-4], pos = 1
 Output: true
-Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+Explanation: 링크드 리스트 꼬리가 index 1번 노드에 연결되는 cycle이 있습니다.
 ```
 
 **풀이**
