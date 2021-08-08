@@ -446,8 +446,14 @@ public ListNode reverseList(ListNode head) {
 2. 여는 괄호는 올바른 순서로 닫혀야 합니다.
 
 **input**
-* 1 <= s.length <= 104
+* 1 <= s.length <= 10^4
 * s는 괄호 '()[]{}'로만 이루어져 있습니다.
+
+**example**
+```
+Input: s = "()"
+Output: true
+```
 
 **풀이**
 ```
