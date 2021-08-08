@@ -86,6 +86,13 @@
 * 정답은 무조건 1개 존재합니다.
 * 시간복잡도 O(n^2)보다 빠른 복잡도로 풀어야 합니다.
 
+**example**
+```
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Output: nums[0] + nums[1] == 9이므로 [0, 1]을 반환합니다.
+```
+
 **풀이**  
 ```
 public int[] twoSum(int[] nums, int target) {
