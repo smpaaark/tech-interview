@@ -271,13 +271,28 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         return l1;
     }
 
-    if(l1.val < l2.val){ // l1보다 l2가 크면 l1.next와 l2 비교
-        l1.next = mergeTwoLists(l1.next, l2);
-        return l1;
-    } else{ // l1이 l2보다 크거나 같으면 l2.next와 l1 비교
-        l2.next = mergeTwoLists(l1, l2.next);
-        return l2;
+    ListNode tempHead = new ListNode();
+    ListNode currentNode = tempHead;
+    while (l1 != null && l2 != null) {
+        if (l1.val < l2.val) { // l1보다 l2가 크면 다음 노드는 l1이 되고, l1은 다음 노드로 넘어간다.
+            currentNode.next = l1;
+            l1 = l1.next;
+        } else { // l2보다 l1이 크거나 같으면 다음 노드는 l2이 되고, l2는 다음 노드로 넘어간다.
+            currentNode.next = l2;
+            l2 = l2.next;
+        }
+
+        currentNode = currentNode.next; // 현재 노드 다음 노드로 변경한다.
     }
+
+    // l1과 l2중 하나가 null이 아닐 경우 다음 노드를 null이 아닌 노드를 가리키게 하면 된다.
+    if (l1 != null) {
+        currentNode.next = l1;
+    } else if (l2 != null){
+        currentNode.next = l2;
+    }
+
+    return tempHead.next;
 }
 ```
 
