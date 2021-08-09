@@ -1141,7 +1141,7 @@ public int[] topKFrequent(int[] nums, int k) {
 [맨위로](#coding-interview)
 
 ### Kth Smallest Element in a Sorted Matrix(정렬된 행렬에서 K번째로 작은 요소)
-각 행과 열이 오름차순으로 정렬되는 n * n 행렬이 주어지면 행렬에서 k번쨰로 작은 요소를 반환합니다.   
+각 행과 열이 오름차순으로 정렬되는 n * n 행렬이 주어지면 행렬에서 k번째로 작은 요소를 반환합니다.   
 
 정렬된 순서에서 k번째로 작은 요소이지 k번째 구분 요소가 아닙니다.   
 
