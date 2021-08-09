@@ -1461,13 +1461,13 @@ head가 주어지면 링크드리스트에 cycle이 있는지 확인합니다.
 
 노드를 계속 따라가다가 이미 순회한 노드가 있을 경우가 cycle이 존재하는 경우입니다.   
 내부적으로 pos는 꼬리 노드의 next 노드의 index입니다.   
-post는 파라미터로 전달되지 않습니다.   
+pos는 파라미터로 전달되지 않습니다.   
 
 링크드리스트에 cycle이 있으면 true를 반환합니다.   
 없으면 false를 반환합니다.
 
 **input**
-* 리스트의 노드 수의 범위는 [0, 104] 입니다.
+* 리스트의 노드 수의 범위는 [0, 10^4] 입니다.
 * -10^5 <= Node.val <= 10^5
 * pos는 -1이거나 유요한 index입니다.
 
@@ -1475,7 +1475,7 @@ post는 파라미터로 전달되지 않습니다.
 ```
 Input: head = [3,2,0,-4], pos = 1
 Output: true
-Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+Explanation: 링크드리스트에 꼬리가 1번 index 노드에 연결되는 cycle이 있습니다.
 ```
 
 **풀이**
