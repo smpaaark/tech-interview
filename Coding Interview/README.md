@@ -1072,8 +1072,8 @@ public List<List<Integer>> levelOrder(TreeNode root) {
 이 요소는 k번째 요소가 아니라 정렬된 순서에서의 k번째로 큰 요소입니다.
 
 **input**
-* 1 <= k <= nums.length <= 104
-* -104 <= nums[i] <= 104
+* 1 <= k <= nums.length <= 10^4
+* -10^4 <= nums[i] <= 10^4
 
 **example**
 ```
