@@ -1178,6 +1178,20 @@ public int kthSmallest(int[][] matrix, int k) {
 
     return queue.peek().val;
 }
+
+class Point {
+
+     int x;
+     int y;
+     int val;
+
+     public Point(int x, int y, int val) {
+         this.x = x;
+         this.y = y;
+         this.val = val;
+     }
+
+ }
 ```
 
 [맨위로](#coding-interview)
