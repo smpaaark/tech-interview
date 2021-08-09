@@ -1260,7 +1260,7 @@ public ListNode mergeKLists(ListNode[] lists) {
 
 ## Graph
 ### Course Schedule(강의 일정)
-0부터 numCours - 1까지 총 numCours개의 강의를 수강해야 합니다.
+0부터 numCours - 1까지 총 numCours개의 강의를 수강해야 합니다.   
 ai 강의를 수강하려면 bi 강의를 먼저 수강해야한다는 전제조건이 prerequisites[i] = [ai, bi]로 주어집니다.   
 * 예를 들어 pair[0, 1]는 0 강의를 수강하려면 1 강의를 먼저 수강해야한다는 전제조건입니다.   
 
@@ -1278,8 +1278,8 @@ ai 강의를 수강하려면 bi 강의를 먼저 수강해야한다는 전제조
 ```
 Input: numCourses = 2, prerequisites = [[1,0]]
 Output: true
-Explanation: There are a total of 2 courses to take. 
-To take course 1 you should have finished course 0. So it is possible.
+Explanation: 총 2개의 과정을 수강해야 합니다.
+코스 1을 수강하려면 코스 0을 완료해야 합니다. 
 ```
 
 **풀이**
