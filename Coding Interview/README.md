@@ -1079,9 +1079,6 @@ public List<List<Integer>> levelOrder(TreeNode root) {
 ```
 Input: nums = [3,2,1,5,6,4], k = 2
 Output: 5
-=======
-
->>>>>>> 538fb899f7bb11f81f49ff6ee41107dc97d5f1e2
 ```
 
 **풀이**
