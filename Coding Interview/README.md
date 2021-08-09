@@ -1663,7 +1663,7 @@ private void backTracking(List<String> resultList, String str, int open, int clo
 
 **input**
 * 1 <= nums.length <= 3 * 10^4
-* -105 <= nums[i] <= 105
+* -10^5 <= nums[i] <= 10^5
 
 **example**
 ```
